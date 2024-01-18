@@ -2,14 +2,14 @@ import PersonCard from "@/components/main/mission/PersonCard";
 
 const page = () => {
     return (
-        <div className="home overflow-hidden h-fit bg-transparent mx-auto box-border max-w-10xl w-full py-28">
+        <div className="home overflow-hidden h-fit bg-transparent mx-auto box-border max-w-10xl w-full">
             <h1
-                className="text-6xl bg-gradient-to-t text-foreground w-fit mx-auto sm:text-5xl md:text-6xl  font-roboto tracking-tight bg-clip-text font-bold text-center"
+                className="text-6xl bg-gradient-to-t text-foreground w-fit mx-auto sm:text-5xl md:text-6xl font-roboto tracking-tight bg-clip-text font-bold text-center"
             >
                 A mission to provide opportunity
             </h1>
-            <div className="flex flex-col justify-center items-center mt-8">
-                <div className="text-center w-9/12 md:w-7/12 lg:w-6/12 xl:w-5/12 text-foreground">
+            <div className="flex flex-col justify-center items-center">
+                <div className="text-center w-9/12 lg:w-8/12 xl:w-7/12 text-foreground mt-4">
                     <p className="mt-6 leading-relaxed">
                         Our mission is to provide accessible, personalized and high-quality
                         education opportunities to everyone. We believe that in the modern

@@ -5,7 +5,7 @@ import { textSlide, textFade } from "@/components/animations/framerAnimations";
 const TextAnimation = () => {
     return (
         <motion.div
-            className="flex flex-col gap-5 backdrop-blur-md max-w-[800px] w-fit p-0 sm:p-5 mt-10 mx-auto md:mx-0"
+            className="flex flex-col gap-5 max-w-[800px] w-fit p-0 sm:p-5 mt-10 mx-auto md:mx-0"
             initial='hidden'
             whileInView='visible'
             viewport={{ once: true }}
@@ -18,7 +18,7 @@ const TextAnimation = () => {
                 Become Omniscient
             </motion.h1>
             <motion.p
-                className="text-lg sm:text-2xl md:text-3xl text-muted-foreground text-left whitespace-normal p-2 sm:p-0 sm:whitespace-nowrap"
+                className="text-lg sm:text-xl md:text-2xl text-muted-foreground text-left whitespace-normal p-2 sm:p-0 sm:whitespace-nowrap"
                 variants={textFade}
                 custom={1.2}
             >
