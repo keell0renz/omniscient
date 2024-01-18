@@ -49,7 +49,7 @@ const page = () => {
 
     return (
         <div className="flex flex-col w-screen h-screen">
-            <div className="top-0 right-0 absolute mt-24 h-3/4 w-screen">
+            <div className="top-0 right-0 absolute mt-20 h-3/4 w-screen">
                 <ReactFlow
                     nodes={homeNodes}
                     edges={homeEdges}
@@ -59,6 +59,7 @@ const page = () => {
                     zoomOnScroll={false}
                     zoomOnDoubleClick={false}
                     zoomOnPinch={false}
+                    preventScrolling={false}
                 >
                     <Background />
                 </ReactFlow>
