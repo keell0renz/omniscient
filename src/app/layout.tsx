@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { ThemeProvider } from '@/components/Theme-provider';
 import { ClerkProvider } from '@clerk/nextjs';
+import { dark } from "@clerk/themes";
 
 export const metadata: Metadata = {
   title: "Cognitar",
@@ -19,7 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ClerkProvider>
+        <ClerkProvider
+                appearance={{
+                  baseTheme: dark,
+                  variables: {
+                    colorPrimary: "#0284c7",
+                    colorBackground: "#041220",
+                  },
+                }}
+          >
           <ThemeProvider attribute="class" defaultTheme="dark">
             {children}
           </ThemeProvider>
