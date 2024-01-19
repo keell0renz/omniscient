@@ -78,7 +78,7 @@ const page = () => {
   const nodeTypes = { CustomNode: CustomNode };
 
   return (
-    <div className="flex flex-col w-screen h-screen">
+    <div className="flex flex-col">
       <div className="top-0 right-0 absolute mt-20 h-3/4 w-screen">
         <ReactFlow
           defaultNodes={homeNodes}
