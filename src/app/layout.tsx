@@ -1,7 +1,7 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { ThemeProvider } from '@/components/Theme-provider';
-import { ClerkProvider } from '@clerk/nextjs';
+import type { Metadata } from "next";
+import "./globals.css";
+import { ThemeProvider } from "@/components/Theme-provider";
+import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 
 export const metadata: Metadata = {
@@ -15,25 +15,25 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body>
         <ClerkProvider
-                appearance={{
-                  baseTheme: dark,
-                  variables: {
-                    colorPrimary: "#0284c7",
-                    colorBackground: "#041220",
-                  },
-                }}
-          >
+          appearance={{
+            baseTheme: dark,
+            variables: {
+              colorPrimary: "#0284c7",
+              colorBackground: "#041220",
+            },
+          }}
+        >
           <ThemeProvider attribute="class" defaultTheme="dark">
             {children}
           </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>
-  )
+  );
 }
