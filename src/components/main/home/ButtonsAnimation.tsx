@@ -13,8 +13,8 @@ const ButtonsAnimation = () => {
     toast({
       title: "🚀 In development!",
       description: "This functionality is currently in development, check out later. 😊",
-      className: "bg-blue-600",
-    }) 
+      className: "bg-blue-600 text-white",
+    })
   }
 
   return (
@@ -26,8 +26,8 @@ const ButtonsAnimation = () => {
       variants={buttonsFade}
       custom={2}
     >
-      <Link href="#" className="z-50" passHref>
-        <Button className="h-full w-32 rounded-xl font-semibold" variant={"outline"} onClick={handleClick}>
+      <Link href="/explore" className="z-50" passHref>
+        <Button className="h-full w-32 rounded-xl font-semibold" variant={"outline"}>
           Explore
         </Button>
       </Link>

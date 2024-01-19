@@ -9,7 +9,7 @@ const NavbarAuth = () => {
   if (!isSignedIn) {
     return (
       <Link href="/sign-in" className="transition-all duration-200">
-        <div className="border rounded-2xl py-1 px-3 shadow-md shadow-blue-700 hover:shadow-none transition-all duration-200 text-foreground hover:text-foreground/80">
+        <div className="whitespace-nowrap border rounded-2xl py-1 px-3 shadow-md shadow-blue-700 hover:shadow-none transition-all duration-200 text-foreground hover:text-foreground/80">
           Sign in
         </div>
       </Link>
