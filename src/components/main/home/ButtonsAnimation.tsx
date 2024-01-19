@@ -20,7 +20,7 @@ const ButtonsAnimation = () => {
         </Button>
       </Link>
       <Link href="/projects" className="z-50" passHref>
-        <Button className="h-full w-32 font-semibold bg-gradient-to-r from-blue-800 via-blue-700 to-blue-600 hover:from-blue-900 hover:via-blue-800 hover:to-blue-700 text-white rounded-xl">
+        <Button className="h-full w-32 font-semibold bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-900 hover:to-blue-700 text-white rounded-xl">
           Open
         </Button>
       </Link>
