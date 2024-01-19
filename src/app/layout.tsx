@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/Theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Cognitar",
@@ -31,6 +32,7 @@ export default function RootLayout({
         >
           <ThemeProvider attribute="class" defaultTheme="dark">
             {children}
+            <Toaster />
           </ThemeProvider>
         </ClerkProvider>
       </body>
