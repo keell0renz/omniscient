@@ -10,25 +10,39 @@ const page = () => {
   const homeNodes: Node[] = [
     {
       id: "1",
-      data: { label: "Omniscient", description: "Manages the hassle of your entire self-education process." },
+      data: {
+        label: "Omniscient",
+        description:
+          "Manages the hassle of your entire self-education process.",
+      },
       position: { x: 1590, y: 171 },
       type: "CustomNode",
     },
     {
       id: "2",
-      data: { label: "AI Tutor", description: "Your learning co-pilot with access to all your context and materials." },
+      data: {
+        label: "AI Tutor",
+        description:
+          "Your learning co-pilot with access to all your context and materials.",
+      },
       position: { x: 1150, y: 80 },
       type: "CustomNode",
     },
     {
       id: "3",
-      data: { label: "Roadmaps", description: "Experienced people share with others what and to learn." },
+      data: {
+        label: "Roadmaps",
+        description: "Experienced people share with others what and to learn.",
+      },
       position: { x: 1100, y: 260 },
       type: "CustomNode",
     },
     {
       id: "4",
-      data: { label: "Relevant Knowledge", description: "Relevant materials are collected and processed for you." },
+      data: {
+        label: "Relevant Knowledge",
+        description: "Relevant materials are collected and processed for you.",
+      },
       position: { x: 1228, y: 430 },
       type: "CustomNode",
     },
