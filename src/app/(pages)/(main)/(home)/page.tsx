@@ -15,7 +15,7 @@ const page = () => {
         description:
           "Manages the hassle of your entire self-education process.",
       },
-      position: { x: 1590, y: 171 },
+      position: { x: 1590, y: 170 },
       type: "CustomNode",
     },
     {
