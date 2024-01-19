@@ -61,7 +61,7 @@ const page = () => {
                     zoomOnPinch={false}
                     preventScrolling={false}
                 >
-                    <Background />
+                    <Background color="#49495c"/>
                 </ReactFlow>
             </div>
             <TextAnimation />
