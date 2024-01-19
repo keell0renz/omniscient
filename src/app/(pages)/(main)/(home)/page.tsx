@@ -40,9 +40,9 @@ const page = () => {
     ];
 
     const homeEdges: Edge[] = [
-        { id: "1", source: "1", target: "2", sourceHandle: "d", targetHandle: "b" },
-        { id: "2", source: "1", target: "3", sourceHandle: "d", targetHandle: "b" },
-        { id: "3", source: "1", target: "4", sourceHandle: "d", targetHandle: "b" },
+        { id: "1", source: "1", target: "2", sourceHandle: "d", targetHandle: "b", animated: true},
+        { id: "2", source: "1", target: "3", sourceHandle: "d", targetHandle: "b", animated: true },
+        { id: "3", source: "1", target: "4", sourceHandle: "d", targetHandle: "b", animated: true },
     ];
 
     const nodeTypes = { CustomNode: CustomNode };
