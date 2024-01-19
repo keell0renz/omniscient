@@ -2,7 +2,7 @@ import PersonCard from "@/components/main/mission/PersonCard";
 
 const page = () => {
   return (
-    <div className="home overflow-hidden h-fit bg-transparent mx-auto box-border max-w-10xl w-full">
+    <div className="home overflow-hidden h-fit bg-transparent mx-auto box-border max-w-10xl w-full -mt-10">
       <h1 className="text-6xl bg-gradient-to-t text-foreground w-fit mx-auto sm:text-5xl md:text-6xl font-roboto tracking-tight bg-clip-text font-bold text-center">
         A mission to provide opportunity
       </h1>

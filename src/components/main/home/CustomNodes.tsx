@@ -2,14 +2,19 @@ import { Handle, Position, NodeProps } from "reactflow";
 
 type CustomNodeData = {
   label: string;
-  databaseId: string;
+  description: string;
 };
 
 export default function CustomNode(props: NodeProps<CustomNodeData>) {
   return (
     <>
-      <div className="rounded-lg text-foreground bg-background border py-2 px-6">
-        {`${props.data.label}`}
+      <div className="flex flex-col rounded-2xl text-foreground/80 hover:text-foreground bg-background/70 border w-60 h-28">
+        <div className="w-full h-10 border-b bg-background rounded-t-2xl pl-3 pt-2 font-semibold">
+          {`${props.data.label}`}
+        </div>
+        <div className="pl-3 p-2 text-sm">
+        {`${props.data.description}`}
+        </div>
       </div>
       <div style={{ visibility: "hidden" }}>
         <Handle type="target" position={Position.Right} id="b" />
