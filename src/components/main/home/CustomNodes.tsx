@@ -13,7 +13,7 @@ export default function CustomNode(props: NodeProps<CustomNodeData>) {
           {`${props.data.label}`}
         </div>
         <div className="pl-3 p-2 text-sm text-foreground/80 hover:text-foreground">
-        {`${props.data.description}`}
+          {`${props.data.description}`}
         </div>
       </div>
       <div style={{ visibility: "hidden" }}>
