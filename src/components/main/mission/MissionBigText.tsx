@@ -8,7 +8,7 @@ const MissionBigText = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="min-h-screen space-y-20 text-left"
+            className="min-h-[80vh] space-y-10 text-left"
         >
             <motion.div
                 variants={textFade}
