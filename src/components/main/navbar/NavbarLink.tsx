@@ -9,7 +9,7 @@ const NavbarLink = ({ name, path }: NavbarLinkProps) => {
   return (
     <Link
       href={path}
-      className="text-foreground hover:text-foreground/80 transition-all duration-200"
+      className="text-foreground/80 hover:text-foreground transition-all duration-200"
     >
       {name}
     </Link>
