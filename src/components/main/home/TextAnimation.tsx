@@ -18,12 +18,12 @@ const TextAnimation = () => {
         Become Omniscient
       </motion.h1>
       <motion.p
-        className="text-lg sm:text-xl md:text-2xl text-muted-foreground text-left whitespace-normal p-2 sm:p-0 sm:whitespace-nowrap"
+        className="text-lg md:text-xl text-muted-foreground text-left whitespace-normal p-2 sm:p-0 sm:whitespace-nowrap z-10"
         variants={textFade}
         custom={1.2}
       >
-        Omniscient is a platform where you <br />
-        build, refine and socialize your knowledge at scale.
+        Omniscient is a platform where you build, refine <br />
+        and socialize your knowledge at scale.
       </motion.p>
     </motion.div>
   );

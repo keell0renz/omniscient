@@ -9,7 +9,6 @@ const page = () => {
       </h1>
       <div className="flex flex-col justify-center items-center">
         <div className="text-center w-9/12 lg:w-8/12 xl:w-7/12 text-foreground my-16">
-
           <MissionBigText />
 
           <hr className="w-full my-8" />
@@ -58,7 +57,7 @@ const page = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
