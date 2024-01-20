@@ -1,12 +1,16 @@
 "use client"
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
+import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import { useSearchParams } from 'next/navigation';
 
 const ExploreSearch = () => {
-    const { toast } = useToast()
+    const { toast } = useToast();
+
+    const [query, setQuery] = useState(useSearchParams().get('q'));
 
     const handleClick = () => {
         toast({
@@ -14,6 +18,10 @@ const ExploreSearch = () => {
             description: "This functionality is currently in development, check out later. 😊",
             className: "bg-blue-600 text-white",
         })
+    }
+
+    const handleSearchParams = (params: string) => {
+        setQuery(params)
     }
 
     const buttonHardcode = [
@@ -39,10 +47,12 @@ const ExploreSearch = () => {
         <div className="flex flex-col">
             <div className="flex mt-16 justify-center items-center" onClick={() => handleClick()}>
                 <Input
+                    value={query ? query : ""}
+                    onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search any project you want to.."
                     className="bg-foreground text-background rounded-full outline-none focus-visible:outline-none border border-muted-foreground p-5 mx-2 max-w-[600px]"
                 />
-                <SearchIcon className="w-5 h-5 -translate-x-10 cursor-pointer text-background" />
+                <SearchIcon className="w-5 h-5 cursor-pointer text-background -translate-x-10" />
             </div>
             <div className="flex flex-row flex-nowrap justify-center mt-2 gap-2">
                 {buttonHardcode.map((button) => (
@@ -50,7 +60,7 @@ const ExploreSearch = () => {
                         key={button.id}
                         variant="ghost"
                         className="w-fit my-2 h-8 rounded-full"
-                        onClick={() => handleClick()}
+                        onClick={() => handleSearchParams(button.title)}
                     >
                         {button.title}
                         <span className="ml-2">
