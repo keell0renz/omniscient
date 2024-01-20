@@ -9,6 +9,7 @@ import {
 import {
     Avatar,
     AvatarFallback,
+    AvatarImage
 } from "@/components/ui/avatar";
 import { useToast } from "@/components/ui/use-toast";
 import { cardFade } from "@/components/animations/framerAnimations";
@@ -19,43 +20,50 @@ const ExploreCards = () => {
     const handleClick = () => {
         toast({
             title: "🚀 In development!",
-            description: "This functionality is currently in development, check out later. 😊",
+            description: "These are just examples for now, check out later. 😊",
             className: "bg-blue-600 text-white",
         })
     }
 
     const hardcodedCards = [
         {
-            title: "sossoso",
-            description: "description",
-            author: "jajabuka"
+            title: "Computer Science Fundamentals",
+            description: "Dive into the core principles of computing, including algorithms, data structures, and computational theory.",
+            author: "techguru101",
+            image: "/images/techguru101.png"
         },
         {
-            title: "sosososo",
-            description: "description",
-            author: "bibibuka"
+            title: "Introduction to Programming",
+            description: "Begin your coding journey with fundamental concepts in popular programming languages like Python, Java, and C++.",
+            author: "codestarter",
+            image: "/images/codestarter.png"
         },
         {
-            title: "sosososo",
-            description: "description",
-            author: "memebuka"
+            title: "Prompt Engineering Essentials",
+            description: "Learn the art of crafting effective prompts for AI models, focusing on clarity, context, and creativity.",
+            author: "aicrafter",
+            image: "/images/aicrafter.png"
         },
         {
-            title: "sosososo",
-            description: "description",
-            author: "sosobuka"
+            title: "Data Science & Analytics",
+            description: "Explore data analysis, visualization, and machine learning to turn data into actionable insights.",
+            author: "datawizard",
+            image: "/images/datawizard.png"
         },
         {
-            title: "sosososo",
-            description: "description",
-            author: "sosobuka"
+            title: "Advanced TypeScript",
+            description: "Deepen your TypeScript knowledge with advanced topics like generics, decorators, and type manipulation.",
+            author: "typemaster",
+            image: "/images/typemaster.png"
         },
         {
-            title: "sosososo",
-            description: "description",
-            author: "sosobuka"
-        },
+            title: "Full-Stack Development with Next.js",
+            description: "Master full-stack web development using Next.js, from server-side rendering to API routes and front-end frameworks.",
+            author: "nextgendev",
+            image: "/images/nextgendev.png"
+        }
     ];
+    
 
     return (
         <>
@@ -74,12 +82,13 @@ const ExploreCards = () => {
                             {card.title}
                         </CardTitle>
                         <CardDescription
-                            className="text-lg truncate"
+                            className="text-lg truncate-2-lines"
                         >{card.description}</CardDescription>
                     </CardHeader>
                     <CardFooter className="flex flex-row justify-between">
                         <div className="flex items-center">
                             <Avatar>
+                                <AvatarImage src={card.image}/>
                                 <AvatarFallback>
                                     {card.author[0]}
                                 </AvatarFallback>

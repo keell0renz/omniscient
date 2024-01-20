@@ -1,4 +1,5 @@
 "use client"
+
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
@@ -27,33 +28,36 @@ const ExploreSearch = () => {
     const buttonHardcode = [
         {
             id: 1,
-            title: "New project"
+            title: "Data Science"
         },
         {
             id: 2,
-            title: "Frontend"
+            title: "TypeScript"
         },
         {
             id: 3,
-            title: "Backend"
+            title: "Python"
         },
         {
             id: 4,
-            title: "Marketing"
+            title: "DevOps"
         },
     ];
 
     return (
         <div className="flex flex-col">
-            <div className="flex mt-16 justify-center items-center" onClick={() => handleClick()}>
+            <form className="flex mt-16 justify-center items-center" onSubmit={(e) => {
+                e.preventDefault();
+                handleClick();
+            }}>
                 <Input
                     value={query ? query : ""}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search any project you want to.."
                     className="bg-foreground text-background rounded-full outline-none focus-visible:outline-none border border-muted-foreground p-5 mx-2 max-w-[600px]"
                 />
-                <SearchIcon className="w-5 h-5 cursor-pointer text-background -translate-x-10" />
-            </div>
+                <SearchIcon className="w-5 h-5 cursor-pointer text-background -translate-x-10" onClick={() => handleClick()} />
+            </form>
             <div className="flex flex-row flex-nowrap justify-center mt-2 gap-2">
                 {buttonHardcode.map((button) => (
                     <Button
