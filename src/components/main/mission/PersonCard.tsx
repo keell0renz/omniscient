@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 interface Contact {
   title: string;
   href: string;
@@ -7,12 +9,19 @@ interface PersonCardProps {
   name: string;
   title: string;
   avatar: string;
+  className?: string;
   contacts?: Contact[];
 }
 
-const PersonCard = ({ name, title, avatar, contacts }: PersonCardProps) => {
+const PersonCard = ({
+  name,
+  title,
+  avatar,
+  contacts,
+  className,
+}: PersonCardProps) => {
   return (
-    <div className="flex flex-row justify-start w-full">
+    <div className={cn("flex flex-row justify-start w-full", className)}>
       <div className="w-24 h-24 rounded-full overflow-hidden">
         <img src={avatar} alt="Avatar" className="object-cover w-full h-full" />
       </div>

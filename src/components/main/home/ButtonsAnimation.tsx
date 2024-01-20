@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -7,15 +7,16 @@ import { buttonsFade } from "@/components/animations/framerAnimations";
 import { useToast } from "@/components/ui/use-toast";
 
 const ButtonsAnimation = () => {
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const handleClick = () => {
     toast({
       title: "🚀 In development!",
-      description: "This functionality is currently in development, check out later. 😊",
-      className: "bg-blue-600",
-    }) 
-  }
+      description:
+        "This functionality is currently in development, check out later. 😊",
+      className: "bg-blue-600 text-white",
+    });
+  };
 
   return (
     <motion.div
@@ -26,13 +27,19 @@ const ButtonsAnimation = () => {
       variants={buttonsFade}
       custom={2}
     >
-      <Link href="#" className="z-50" passHref>
-        <Button className="h-full w-32 rounded-xl font-semibold" variant={"outline"} onClick={handleClick}>
+      <Link href="/explore" className="z-50" passHref>
+        <Button
+          className="h-full w-32 rounded-xl font-semibold"
+          variant={"outline"}
+        >
           Explore
         </Button>
       </Link>
       <Link href="#" className="z-50" passHref>
-        <Button className="h-full w-32 font-semibold bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-900 hover:to-blue-700 text-white rounded-xl" onClick={handleClick}>
+        <Button
+          className="h-full w-32 font-semibold bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-900 hover:to-blue-700 text-white rounded-xl"
+          onClick={handleClick}
+        >
           Open
         </Button>
       </Link>

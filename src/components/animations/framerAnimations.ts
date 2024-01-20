@@ -1,4 +1,4 @@
-import { Variants, easeIn, easeInOut, easeOut } from "framer-motion";
+import { Variants, easeInOut } from "framer-motion";
 
 export const gradientAnimation: Variants = {
   hidden: {
@@ -42,6 +42,21 @@ export const textSlide: Variants = {
 };
 
 export const textFade: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 100,
+  },
+  visible: (custom) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: custom * 0.8,
+      ease: easeInOut,
+    },
+  }),
+};
+
+export const cardFade: Variants = {
   hidden: {
     opacity: 0,
     y: 100,

@@ -1,20 +1,38 @@
+"use client"
 import { useUser, useClerk } from "@clerk/nextjs";
 import Link from "next/link";
 import { LogOutIcon, UserRoundCogIcon, NetworkIcon } from "lucide-react";
-
+import { useToast } from "@/components/ui/use-toast";
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogFooter, AlertDialogCancel, AlertDialogOverlay } from "@/components/ui/alert-dialog";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { UserProfile } from "@clerk/nextjs";
+import { useTheme } from "next-themes";
+import { useState } from "react";
 
 const UserAccount = () => {
   const { user } = useUser();
   const { signOut } = useClerk();
+  const { theme } = useTheme();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const userMail = user?.primaryEmailAddress?.emailAddress || "";
+
+  const { toast } = useToast();
+
+  const handleClick = () => {
+    toast({
+      title: "🚀 In development!",
+      description:
+        "This functionality is currently in development, check out later. 😊",
+      className: "bg-blue-600",
+    });
+  };
 
   if (!user) return;
 
@@ -44,18 +62,43 @@ const UserAccount = () => {
         <div className="flex flex-col rounded-md">
           <Link
             className="hover:bg-secondary rounded-lg p-3 inline-flex items-center gap-2"
-            href="/projects"
+            onClick={() => handleClick()}
+            href="#"
           >
             <NetworkIcon className="h-5 w-5 text-primary" />
             My Projects
           </Link>
-          <Link
-            className="hover:bg-secondary rounded-lg p-3 inline-flex items-center gap-2"
-            href="/user-profile"
-          >
-            <UserRoundCogIcon className="h-5 w-5 text-primary" />
-            Settings
-          </Link>
+          <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+            <AlertDialogTrigger asChild>
+              <div className="cursor-pointer hover:bg-secondary rounded-lg p-3 inline-flex items-center gap-2">
+                <UserRoundCogIcon className="h-5 w-5 text-primary" />
+                Settings
+              </div>
+            </AlertDialogTrigger>
+            <AlertDialogOverlay
+              onClick={() => setIsOpen(false)}
+            >
+              <AlertDialogContent className="w-full h-[90vh] max-w-[1200px]">
+                <div className="overflow-y-auto">
+                  <UserProfile
+                    appearance={{
+                      elements: {
+                        rootBox: "w-full max-w-[1200px] flex justify-center",
+                        card: "w-full bg-background rounded-none",
+                      },
+                      variables: {
+                        colorText: theme === 'dark' ? '#FFFFFF' : '#000000',
+                      },
+                    }}
+                    routing="hash"
+                  />
+                </div>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Close</AlertDialogCancel>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialogOverlay>
+          </AlertDialog>
           <p
             className="hover:bg-secondary rounded-lg p-3 cursor-pointer inline-flex items-center gap-2"
             onClick={() => signOut()}
