@@ -67,7 +67,7 @@ const ExploreCards = () => {
                     initial="hidden"
                     whileInView="visible"
                     variants={cardFade}
-                    custom={3}
+                    custom={1.5}
                 >
                     <CardHeader>
                         <CardTitle className="truncate flex flex-row justify-between text-2xl">
