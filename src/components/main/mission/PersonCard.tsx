@@ -13,7 +13,13 @@ interface PersonCardProps {
   contacts?: Contact[];
 }
 
-const PersonCard = ({ name, title, avatar, contacts, className }: PersonCardProps) => {
+const PersonCard = ({
+  name,
+  title,
+  avatar,
+  contacts,
+  className,
+}: PersonCardProps) => {
   return (
     <div className={cn("flex flex-row justify-start w-full", className)}>
       <div className="w-24 h-24 rounded-full overflow-hidden">

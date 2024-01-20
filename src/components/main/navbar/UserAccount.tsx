@@ -22,10 +22,11 @@ const UserAccount = () => {
   const handleClick = () => {
     toast({
       title: "🚀 In development!",
-      description: "This functionality is currently in development, check out later. 😊",
+      description:
+        "This functionality is currently in development, check out later. 😊",
       className: "bg-blue-600",
-    })
-  }
+    });
+  };
 
   if (!user) return;
 
