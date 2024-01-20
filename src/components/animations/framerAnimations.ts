@@ -1,4 +1,8 @@
-import { Variants, easeIn, easeInOut, easeOut } from "framer-motion";
+import { Variants, easeInOut } from "framer-motion";
+
+function getRandomArbitrary(min: number, max: number) {
+  return Math.random() * (max - min) + min;
+}
 
 export const gradientAnimation: Variants = {
   hidden: {
@@ -51,6 +55,21 @@ export const textFade: Variants = {
     y: 0,
     transition: {
       duration: custom * 0.8,
+      ease: easeInOut,
+    },
+  }),
+};
+
+export const cardFade: Variants = {
+  hidden: {
+    opacity: 0,
+    x: -800,
+  },
+  visible: (custom: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: getRandomArbitrary(1, custom),
       ease: easeInOut,
     },
   }),
