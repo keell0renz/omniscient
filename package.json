@@ -14,6 +14,8 @@
   "dependencies": {
     "@clerk/nextjs": "^4.29.4",
     "@clerk/themes": "^1.7.9",
+    "@planetscale/database": "^1.14.0",
+    "@prisma/adapter-planetscale": "^5.8.1",
     "@prisma/client": "^5.8.1",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -37,6 +39,7 @@
     "reactflow": "^11.10.2",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
+    "undici": "^6.4.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
