@@ -1,4 +1,5 @@
 "use client";
+import HomeAnimation from "@/components/main/home/HomeAnimation";
 import TextAnimation from "@/components/main/home/TextAnimation";
 import ButtonsAnimation from "@/components/main/home/ButtonsAnimation";
 import "reactflow/dist/style.css";
@@ -95,6 +96,9 @@ const page = () => {
       </div>
       <TextAnimation />
       <ButtonsAnimation />
+      {/* <div className="pointer-events-none -z-10 top-0 left-0 fixed w-screen h-screen overflow-hidden flex justify-end items-center">
+                <HomeAnimation />
+            </div> */}
     </div>
   );
 };

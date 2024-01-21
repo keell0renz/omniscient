@@ -2,6 +2,7 @@
 import { useUser, useClerk } from "@clerk/nextjs";
 import Link from "next/link";
 import { LogOutIcon, UserRoundCogIcon, NetworkIcon } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogFooter, AlertDialogCancel, AlertDialogOverlay } from "@/components/ui/alert-dialog";
 import {
   Popover,
@@ -21,6 +22,17 @@ const UserAccount = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const userMail = user?.primaryEmailAddress?.emailAddress || "";
+
+  const { toast } = useToast();
+
+  const handleClick = () => {
+    toast({
+      title: "🚀 In development!",
+      description:
+        "This functionality is currently in development, check out later. 😊",
+      className: "bg-blue-600",
+    });
+  };
 
   if (!user) return;
 
@@ -50,7 +62,8 @@ const UserAccount = () => {
         <div className="flex flex-col rounded-md">
           <Link
             className="hover:bg-secondary rounded-lg p-3 inline-flex items-center gap-2"
-            href="/projects"
+            onClick={() => handleClick()}
+            href="#"
           >
             <NetworkIcon className="h-5 w-5 text-primary" />
             My Projects
