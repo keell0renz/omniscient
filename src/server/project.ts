@@ -139,6 +139,7 @@ export async function editProject(schema: CreateProjectSchema, project_id: strin
         throw new Error(`Failed to update project: ${error}`)
     }
 
+    revalidateTag(`project_${project_id}`)
     revalidatePath("/projects")
 }
 
@@ -252,4 +253,5 @@ export async function importPublicProject(project_id: string) {
     }
 
     revalidatePath("/projects")
+    redirect("/projects")
 }
