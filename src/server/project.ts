@@ -228,9 +228,6 @@ export async function importPublicProject(project_id: string) {
             where: {
                 id: project_id,
                 public: true,
-                NOT: {
-                    user_id: userId
-                }
             }
         })
 
