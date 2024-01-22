@@ -11,6 +11,7 @@ import { Project } from "@prisma/client";
 import EditProject from "./EditProject";
 import PublishProject from "./PublishProject";
 import DeleteProject from "./DeleteProject";
+import SetAIContext from "./SetAIContext";
 import { useState } from "react";
 
 import { PopoverContext } from "@/components/project/cards/popover/context/PopoverContext";
@@ -31,6 +32,7 @@ export default function CardPopover({ project }: { project: Project }) {
         <PopoverContext.Provider value={{ setOpenPopover, project }}>
           <PublishProject />
           <EditProject />
+          <SetAIContext />
           <DeleteProject />
         </PopoverContext.Provider>
       </PopoverContent>
