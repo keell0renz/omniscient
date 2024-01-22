@@ -3,23 +3,29 @@
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const ExploreSearch = () => {
-  const { toast } = useToast();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
-  const [query, setQuery] = useState(useSearchParams().get("q"));
+  const searchQuery = searchParams.get("q")
+
+  const [query, setQuery] = useState(searchQuery);
 
   const handleClick = () => {
-    toast({
-      title: "🚀 In development!",
-      description:
-        "Search functionality is in development, check out later. 😊",
-      className: "bg-blue-600 text-white",
-    });
+    const params = new URLSearchParams(searchParams);
+    //params.set('p', '1');
+    if (query) {
+      params.set('q', query);
+    } else {
+      params.delete('q');
+    }
+    replace(`${pathname}?${params.toString()}`);
   };
 
   const handleSearchParams = (params: string) => {
@@ -48,7 +54,7 @@ const ExploreSearch = () => {
   return (
     <div className="flex flex-col">
       <form
-        className="flex mt-16 justify-center items-center"
+        className={`flex ${ searchQuery ? "" : "mt-16" } justify-center items-center`}
         onSubmit={(e) => {
           e.preventDefault();
           handleClick();
@@ -65,21 +71,23 @@ const ExploreSearch = () => {
           onClick={() => handleClick()}
         />
       </form>
-      <div className="flex flex-row flex-nowrap justify-center mt-2 gap-2">
-        {buttonHardcode.map((button) => (
-          <Button
-            key={button.id}
-            variant="ghost"
-            className="w-fit my-2 h-8 rounded-full"
-            onClick={() => handleSearchParams(button.title)}
-          >
-            {button.title}
-            <span className="ml-2">
-              <ArrowTopRightIcon />
-            </span>
-          </Button>
-        ))}
-      </div>
+      {!searchQuery && (
+        <div className="flex flex-row flex-nowrap justify-center mt-2 gap-2">
+          {buttonHardcode.map((button) => (
+            <Button
+              key={button.id}
+              variant="ghost"
+              className="w-fit my-2 h-8 rounded-full"
+              onClick={() => {handleSearchParams(button.title)}}
+            >
+              {button.title}
+              <span className="ml-2">
+                <ArrowTopRightIcon />
+              </span>
+            </Button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

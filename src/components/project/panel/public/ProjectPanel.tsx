@@ -1,7 +1,12 @@
 import { getPublicProjects } from "@/server/project";
 import { PublicProject as ProjectCard } from "../../cards";
 
-export default async function ProjectPanel() {
+interface ProjectPanelProps {
+  query?: string
+  currentPage?: number
+}
+
+export default async function ProjectPanel(props: ProjectPanelProps) {
   const projects = await getPublicProjects();
 
   return (
