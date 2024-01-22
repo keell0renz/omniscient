@@ -1,1 +1,1 @@
-export { default as ProjectPanel } from "./ProjectPanel"
+export { default as ProjectPanel } from "./ProjectPanel";

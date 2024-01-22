@@ -1,1 +1,1 @@
-export { default as PanelSkeleton } from "./PanelSceleton"
+export { default as PanelSkeleton } from "./PanelSceleton";
