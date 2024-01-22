@@ -5,8 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Navbar>
         <NavbarLink href="/" title="Home" />
-        <NavbarLink href="/projects" title="My Projects" />
-        <NavbarLink href="/projects/public" title="Public Projects" />
+        <NavbarLink href="/projects" title="Projects" />
       </Navbar>
       <div className="mt-8 mx-72">{children}</div>
     </>

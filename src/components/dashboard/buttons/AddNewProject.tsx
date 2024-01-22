@@ -13,7 +13,7 @@ export default function AddNewProject() {
     <>
       <Popover>
         <PopoverTrigger>
-          <div className="w-36 h-[40px] inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-semibold bg-secondary/30 border border-input hover:bg-accent hover:text-accent-foreground">
+          <div className="w-36 h-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 font-semibold bg-secondary/30 border border-input hover:bg-accent hover:text-accent-foreground">
             New Project...
             <span className="ml-2">
               <ChevronDown className="h-4 w-4" />

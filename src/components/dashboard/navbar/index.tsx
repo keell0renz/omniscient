@@ -21,7 +21,7 @@ export async function Navbar({ children }: { children: React.ReactNode }) {
         </div>
         <div></div>
       </div>
-      <div className="flex flex-row mx-2 space-x-1">{children}</div>
+      <div className="flex flex-row mx-2">{children}</div>
     </div>
   );
 }
