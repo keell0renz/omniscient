@@ -82,3 +82,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  scrollbar-width: thin;
+}
+
+.scrollbar-hide::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}

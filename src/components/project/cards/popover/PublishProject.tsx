@@ -7,6 +7,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogOverlay,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
@@ -50,24 +51,26 @@ export default function DeleteProject() {
           )}
         </div>
       </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This project will be {project.public && "un"}published.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <LoadingButton
-            onClick={() => onPublish()}
-            className="bg-blue-600 hover:bg-blue-800 text-foreground font-bold"
-            isLoading={isLoading}
-          >
-            {!project.public ? "Publish" : "Unpublish"}
-          </LoadingButton>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+      <AlertDialogOverlay>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This project will be {project.public && "un"}published.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <LoadingButton
+              onClick={() => onPublish()}
+              className="bg-blue-600 hover:bg-blue-800 text-foreground font-bold"
+              isLoading={isLoading}
+            >
+              {!project.public ? "Publish" : "Unpublish"}
+            </LoadingButton>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
     </AlertDialog>
   );
 }

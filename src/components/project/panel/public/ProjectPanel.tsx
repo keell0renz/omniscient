@@ -1,5 +1,5 @@
 import { getPublicProjects, searchPublicProjects } from "@/server/project";
-import { PublicProject as ProjectCard } from "../../cards";
+import { PublicProject as ProjectCard } from "@/components/project/cards"
 import { unstable_noStore as noStore } from "next/cache";
 
 interface ProjectPanelProps {
@@ -8,7 +8,7 @@ interface ProjectPanelProps {
 }
 
 export default async function ProjectPanel(props: ProjectPanelProps) {
-  let projects = undefined;
+  let projects;
 
   if (props.query) {
     noStore();

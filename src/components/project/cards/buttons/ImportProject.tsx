@@ -14,10 +14,13 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
 export default function ImportProject({ project }: { project: Project }) {
   const [isOpenedDialog, setIsOpenedDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { user } = useUser();
 
   async function handleImport() {
     setIsLoading(true);
@@ -25,6 +28,8 @@ export default function ImportProject({ project }: { project: Project }) {
     setIsOpenedDialog(false);
     setIsLoading(false);
   }
+
+  if (!user) return;
 
   return (
     <AlertDialog open={isOpenedDialog} onOpenChange={setIsOpenedDialog}>

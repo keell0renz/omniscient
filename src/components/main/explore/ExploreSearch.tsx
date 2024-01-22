@@ -54,7 +54,7 @@ const ExploreSearch = () => {
   return (
     <div className="flex flex-col">
       <form
-        className={`flex ${ searchQuery ? "" : "mt-16" } justify-center items-center`}
+        className={`flex mt-16 justify-center items-center w-full`}
         onSubmit={(e) => {
           e.preventDefault();
           handleClick();
@@ -73,30 +73,32 @@ const ExploreSearch = () => {
           placeholder="Search any project you want to.."
           className="bg-foreground text-background rounded-full outline-none focus-visible:outline-none border border-muted-foreground p-5 mx-2 max-w-[600px]"
         />
-        <SearchIcon
-          className="w-5 h-5 cursor-pointer text-background -translate-x-10"
-          onClick={() => handleClick()}
-        />
-        {query && (
-          <X
-            className="w-5 h-5 cursor-pointer text-background -translate-x-20"
-            onClick={() => {
-              setQuery(null);
-              handleClick(null);
-            }} 
+        <div className="-translate-x-16 grid grid-cols-2 grid-rows-1 w-12">
+          {query && (
+            <X
+              className="w-5 h-5 cursor-pointer text-background col-start-1"
+              onClick={() => {
+                setQuery(null);
+                handleClick(null);
+              }}
+            />
+          )}
+          <SearchIcon
+            className="w-5 h-5 cursor-pointer text-background col-start-2"
+            onClick={() => handleClick()}
           />
-        )}
+        </div>
       </form>
       {!searchQuery && (
-        <div className="flex flex-row flex-nowrap justify-center mt-2 gap-2">
+        <div className="flex flex-row flex-nowrap overflow-x-auto mx-auto w-full px-2 justify-start sm:justify-center mt-2 gap-2 scrollbar-hide">
           {buttonHardcode.map((button) => (
             <Button
               key={button.id}
               variant="ghost"
               className="w-fit my-2 h-8 rounded-full"
               onClick={() => {
-                setQuery(button.title)
-                handleClick(button.title)
+                setQuery(button.title);
+                handleClick(button.title);
               }}
             >
               {button.title}
@@ -105,6 +107,7 @@ const ExploreSearch = () => {
               </span>
             </Button>
           ))}
+          <div className="w-12 h-full" />
         </div>
       )}
     </div>
