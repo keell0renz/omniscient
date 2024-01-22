@@ -13,7 +13,7 @@ import {
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useContext } from "react";
-import { PopoverContext } from "@/components/context/PopoverContext";
+import { PopoverContext } from "@/components/project/cards/popover/context/PopoverContext";
 import LoadingButton from "@/components/ui/LoadingButton";
 
 export default function DeleteProject() {

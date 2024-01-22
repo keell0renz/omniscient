@@ -25,7 +25,7 @@ import { editProject } from "@/server/project";
 import { useState } from "react";
 import LoadingButton from "@/components/ui/LoadingButton";
 import { useContext } from "react";
-import { PopoverContext } from "@/components/context/PopoverContext";
+import { PopoverContext } from "@/components/project/cards/popover/context/PopoverContext";
 
 function EditProjectForm({
   setIsOpenedDialog,

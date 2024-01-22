@@ -13,7 +13,7 @@ import PublishProject from "./PublishProject";
 import DeleteProject from "./DeleteProject";
 import { useState } from "react";
 
-import { PopoverContext } from "@/components/context/PopoverContext";
+import { PopoverContext } from "@/components/project/cards/popover/context/PopoverContext";
 
 export default function CardPopover({ project }: { project: Project }) {
   const [openPopover, setOpenPopover] = useState(false);

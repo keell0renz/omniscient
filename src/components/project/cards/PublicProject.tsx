@@ -9,7 +9,7 @@ import {
 import { clerkClient } from "@clerk/nextjs";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import ImportProject from "./ImportProject";
+import ImportProject from "./buttons/ImportProject";
 
 export default async function PublicProject({ project }: { project: Project }) {
   const user = await clerkClient.users.getUser(project.user_id);

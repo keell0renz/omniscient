@@ -10,7 +10,7 @@ import { clerkClient } from "@clerk/nextjs";
 import Link from "next/link";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import CardPopover from "./CardPopover";
+import CardPopover from "./popover/CardPopover";
 import { Button } from "@/components/ui/button";
 
 export default async function Project({ project }: { project: Project }) {
