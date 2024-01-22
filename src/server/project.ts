@@ -32,12 +32,14 @@ export async function searchPublicProjects(query: string): Promise<Project[]> {
                     {
                         title: {
                             contains: query,
-                        }
+                        },
+                        public: true
                     },
                     {
                         description: {
                             contains: query,
-                        }
+                        },
+                        public: true
                     }
                 ]
             }
