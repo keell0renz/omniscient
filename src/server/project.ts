@@ -24,6 +24,29 @@ export async function getPublicProjects(): Promise<Project[]> {
     }
 }
 
+export async function searchPublicProjects(query: string): Promise<Project[]> {
+    try {
+        return await prisma.project.findMany({
+            where: {
+                OR: [
+                    {
+                        title: {
+                            contains: query,
+                        }
+                    },
+                    {
+                        description: {
+                            contains: query,
+                        }
+                    }
+                ]
+            }
+        })
+    } catch (error) {
+        throw new Error(`Failed to search public projects: ${error}`);
+    }
+}
+
 export async function getProjectsByUser(): Promise<Project[]> {
     const { userId } = auth()
 
