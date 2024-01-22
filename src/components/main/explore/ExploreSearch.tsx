@@ -17,7 +17,7 @@ const ExploreSearch = () => {
     toast({
       title: "🚀 In development!",
       description:
-        "This functionality is currently in development, check out later. 😊",
+        "Search functionality is in development, check out later. 😊",
       className: "bg-blue-600 text-white",
     });
   };
