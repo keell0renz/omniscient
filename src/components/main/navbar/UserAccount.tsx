@@ -1,9 +1,16 @@
-"use client"
+"use client";
 import { useUser, useClerk } from "@clerk/nextjs";
 import Link from "next/link";
 import { LogOutIcon, UserRoundCogIcon, NetworkIcon } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogFooter, AlertDialogCancel, AlertDialogOverlay } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogOverlay,
+} from "@/components/ui/alert-dialog";
 import {
   Popover,
   PopoverContent,
@@ -63,9 +70,7 @@ const UserAccount = () => {
                 Settings
               </div>
             </AlertDialogTrigger>
-            <AlertDialogOverlay
-              onClick={() => setIsOpen(false)}
-            >
+            <AlertDialogOverlay onClick={() => setIsOpen(false)}>
               <AlertDialogContent className="w-full h-[90vh] max-w-[1200px]">
                 <div className="overflow-y-auto">
                   <UserProfile
@@ -75,7 +80,7 @@ const UserAccount = () => {
                         card: "w-full bg-background rounded-none",
                       },
                       variables: {
-                        colorText: theme === 'dark' ? '#FFFFFF' : '#000000',
+                        colorText: theme === "dark" ? "#FFFFFF" : "#000000",
                       },
                     }}
                     routing="hash"

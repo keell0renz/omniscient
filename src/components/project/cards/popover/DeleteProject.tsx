@@ -23,7 +23,7 @@ export default function DeleteProject() {
 
   async function onDelete() {
     setIsLoading(true);
-    await deleteProjectById(project.id)
+    await deleteProjectById(project.id);
     setIsOpenedDialog(false);
     setOpenPopover?.(false);
     setIsLoading(false);

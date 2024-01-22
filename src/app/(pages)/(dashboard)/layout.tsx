@@ -1,4 +1,4 @@
-import { Navbar, NavbarLink } from "@/components/dashboard/navbar"
+import { Navbar, NavbarLink } from "@/components/dashboard/navbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

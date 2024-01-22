@@ -42,7 +42,7 @@ function CreateProjectForm({
 
   async function onCreate(input: CreateProjectSchema) {
     setIsLoading(true);
-    await createProject(input)
+    await createProject(input);
     setIsOpenedDialog(false);
     setOpenPopover?.(false);
     setIsLoading(false);
