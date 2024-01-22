@@ -20,7 +20,7 @@ export default async function Project({ project }: { project: Project }) {
     <Card className="w-full flex flex-col justify-between hover:border-primary cursor-pointer">
       <CardHeader>
         <CardTitle className="flex flex-row justify-between">
-          <div>
+          <div className="text-lg">
             {project.title}
             {project.public && (
               <span>
