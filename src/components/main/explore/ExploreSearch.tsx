@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "next/navigation";
+import { X } from "lucide-react";
 
 const ExploreSearch = () => {
   const searchParams = useSearchParams();
@@ -17,11 +18,10 @@ const ExploreSearch = () => {
 
   const [query, setQuery] = useState(searchQuery);
 
-  const handleClick = () => {
+  const handleClick = (queryValue: string | null = query) => {
     const params = new URLSearchParams(searchParams);
-    //params.set('p', '1');
-    if (query) {
-      params.set('q', query);
+    if (queryValue) {
+      params.set('q', queryValue);
     } else {
       params.delete('q');
     }
@@ -62,7 +62,14 @@ const ExploreSearch = () => {
       >
         <Input
           value={query ? query : ""}
+          autoFocus
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setQuery(null);
+              handleClick(null);
+            }
+          }}
           placeholder="Search any project you want to.."
           className="bg-foreground text-background rounded-full outline-none focus-visible:outline-none border border-muted-foreground p-5 mx-2 max-w-[600px]"
         />
@@ -70,6 +77,15 @@ const ExploreSearch = () => {
           className="w-5 h-5 cursor-pointer text-background -translate-x-10"
           onClick={() => handleClick()}
         />
+        {query && (
+          <X
+            className="w-5 h-5 cursor-pointer text-background -translate-x-20"
+            onClick={() => {
+              setQuery(null);
+              handleClick(null);
+            }} 
+          />
+        )}
       </form>
       {!searchQuery && (
         <div className="flex flex-row flex-nowrap justify-center mt-2 gap-2">
@@ -78,7 +94,10 @@ const ExploreSearch = () => {
               key={button.id}
               variant="ghost"
               className="w-fit my-2 h-8 rounded-full"
-              onClick={() => {handleSearchParams(button.title)}}
+              onClick={() => {
+                setQuery(button.title)
+                handleClick(button.title)
+              }}
             >
               {button.title}
               <span className="ml-2">

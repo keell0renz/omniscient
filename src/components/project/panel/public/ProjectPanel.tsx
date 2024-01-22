@@ -3,17 +3,16 @@ import { PublicProject as ProjectCard } from "../../cards";
 import { unstable_noStore as noStore } from "next/cache";
 
 interface ProjectPanelProps {
-  query?: string
-  currentPage?: number
+  query?: string;
+  currentPage?: number;
 }
 
 export default async function ProjectPanel(props: ProjectPanelProps) {
-  let projects = undefined
+  let projects = undefined;
 
   if (props.query) {
     noStore();
     projects = await searchPublicProjects(props.query);
-    
   } else {
     projects = await getPublicProjects();
   }
