@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { clerkClient } from "@clerk/nextjs";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import ImportProject from "./buttons/ImportProject";
 
 export default async function PublicProject({ project }: { project: Project }) {
@@ -17,13 +16,8 @@ export default async function PublicProject({ project }: { project: Project }) {
   return (
     <Card className="w-full flex flex-col justify-between hover:border-primary cursor-pointer">
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="text-xl">
           {project.title}
-          {project.public && (
-            <span>
-              <Badge className="ml-2 bg-blue-700 text-white">Public</Badge>
-            </span>
-          )}
         </CardTitle>
         <CardDescription>{project.description}</CardDescription>
       </CardHeader>

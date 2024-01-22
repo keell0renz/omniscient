@@ -32,7 +32,6 @@ export default function ImportProject({ project }: { project: Project }) {
         <LoadingButton
           variant="default"
           onClick={() => setIsOpenedDialog(true)}
-          className="z-[9999]"
           isLoading={isLoading}
         >
           Import
