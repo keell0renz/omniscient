@@ -2,8 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { Project } from "@prisma/client"
-import { unstable_cache } from "next/cache"
-import { revalidatePath, revalidateTag } from "next/cache"
+import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { 
     validateCreateProject, 
@@ -12,25 +11,17 @@ import {
     SetAIContextSchema 
 } from "@/schema/project"
 import { auth } from "@clerk/nextjs"
-import { error } from "console"
 
 export async function getPublicProjects(): Promise<Project[]> {
-    return await unstable_cache(
-        async (): Promise<Project[]> => {
-            try {
-                return await prisma.project.findMany({
-                    where: {
-                        public: true
-                    }
-                })
-        
-            } catch(error) {
-                throw new Error(`Failed to retrieve public projects: ${error}`);
+    try {
+        return await prisma.project.findMany({
+            where: {
+                public: true
             }
-        },
-        undefined,
-        { tags: ["public_projects"], revalidate: 60 * 60 }
-    )()
+        })
+    } catch (error) {
+        throw new Error(`Failed to retrieve public projects: ${error}`);
+    }
 }
 
 export async function getProjectsByUser(): Promise<Project[]> {
@@ -40,21 +31,15 @@ export async function getProjectsByUser(): Promise<Project[]> {
         throw new Error("Not authenticated!")
     }
 
-    return await unstable_cache(
-        async (): Promise<Project[]> => {
-            try {
-                return await prisma.project.findMany({
-                    where: {
-                        user_id: userId
-                    }
-                })
-            } catch (error) {
-                throw new Error(`Failed to retrieve projects by user: ${error}`)
+    try {
+        return await prisma.project.findMany({
+            where: {
+                user_id: userId
             }
-        },
-        undefined,
-        { tags: [`projects_${userId}`], revalidate: 60 * 60 }
-    )()
+        })
+    } catch (error) {
+        throw new Error(`Failed to retrieve projects by user: ${error}`)
+    }
 }
 
 export async function getProjectById(project_id: string): Promise<Project | null> {
@@ -64,22 +49,16 @@ export async function getProjectById(project_id: string): Promise<Project | null
         throw new Error("Not authenticated!")
     }
 
-    return await unstable_cache(
-        async (): Promise<Project | null> => {
-            try {
-                return await prisma.project.findFirst({
-                    where: {
-                        user_id: userId,
-                        id: project_id
-                    }
-                })
-            } catch (error) {
-                throw new Error(`Failed to retrieve user's project by id: ${error}`)
+    try {
+        return await prisma.project.findFirst({
+            where: {
+                user_id: userId,
+                id: project_id
             }
-        },
-        undefined,
-        { tags: [`project_${project_id}`], revalidate: 60 * 60 }
-    )()
+        })
+    } catch (error) {
+        throw new Error(`Failed to retrieve user's project by id: ${error}`)
+    }
 }
 
 export async function createProject(schema: CreateProjectSchema) {
@@ -139,7 +118,6 @@ export async function editProject(schema: CreateProjectSchema, project_id: strin
         throw new Error(`Failed to update project: ${error}`)
     }
 
-    revalidateTag(`project_${project_id}`)
     revalidatePath("/projects")
 }
 
