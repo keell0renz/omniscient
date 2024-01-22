@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { AddNewProject } from "@/components/dashboard/buttons";
 import { ProjectPanel } from "@/components/project/panel/dashboard";
-import PanelSceleton from "@/components/project/panel/PanelSceleton";
+import { PanelSkeleton } from "@/components/project/panel";
 import { Suspense } from "react";
 
 export default async function Page() {
@@ -16,7 +16,7 @@ export default async function Page() {
           <AddNewProject />
         </div>
       </div>
-      <Suspense fallback={<PanelSceleton />}>
+      <Suspense fallback={<PanelSkeleton />}>
         <ProjectPanel />
       </Suspense>
     </>
