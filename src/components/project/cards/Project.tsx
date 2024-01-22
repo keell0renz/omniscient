@@ -32,7 +32,7 @@ export default async function Project({ project }: { project: Project }) {
           </div>
           <CardPopover project={project} />
         </CardTitle>
-        <CardDescription>{project.description}</CardDescription>
+        <CardDescription className="truncate-2-lines">{project.description}</CardDescription>
       </CardHeader>
       <CardFooter className="flex flex-row justify-between">
         <div className="flex items-center">
