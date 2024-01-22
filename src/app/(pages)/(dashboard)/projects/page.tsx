@@ -11,8 +11,8 @@ export default async function Page() {
       <div className="flex justify-between mb-6">
         <div className="flex w-full gap-2">
           <Input
-            className="block w-full px-4 py-2 leading-tight focus:outline-none bg-secondary/30"
-            placeholder="Search"
+            className="block w-full px-4 py-1 leading-tight focus:outline-none bg-secondary/25 h-10 "
+            placeholder="Search your projects..."
           />
           <AddNewProject />
         </div>
