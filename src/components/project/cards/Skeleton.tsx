@@ -13,18 +13,21 @@ export default function ProjectSkeleton() {
       <CardHeader>
         <CardTitle className="flex flex-row justify-between">
           <div className="text-lg">
-            <Skeleton className="w-16" />
+            <Skeleton className="w-64 h-4" />
           </div>
         </CardTitle>
         <CardDescription>
-          <Skeleton className="w-24" />
+          <div className="flex flex-col space-y-1 justify-start pt-0.5">
+            <Skeleton className="w-52 h-3" />
+            <Skeleton className="w-52 h-3" />
+          </div>
         </CardDescription>
       </CardHeader>
       <CardFooter className="flex flex-row justify-between">
         <div className="flex items-center">
-          <Skeleton className="w-16 h-16 rounded-full" />
+          <Skeleton className="w-10 h-10 rounded-full" />
           <p className="text-sm ml-2">
-            <Skeleton className="w-10" />
+            <Skeleton className="w-24 h-3" />
           </p>
         </div>
       </CardFooter>
