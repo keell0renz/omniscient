@@ -54,7 +54,7 @@ const ExploreSearch = () => {
   return (
     <div className="flex flex-col">
       <form
-        className={`flex mt-16 justify-center items-center w-full`}
+        className="flex mt-16 justify-center items-center w-full relative"
         onSubmit={(e) => {
           e.preventDefault();
           handleClick();
@@ -73,10 +73,10 @@ const ExploreSearch = () => {
           placeholder="Search any project you want to.."
           className="bg-foreground text-background rounded-full outline-none focus-visible:outline-none border border-muted-foreground p-5 mx-2 max-w-[600px]"
         />
-        <div className="-translate-x-16 grid grid-cols-2 grid-rows-1 w-12">
+        <div className="absolute translate-x-[39vw] sm:translate-x-64 grid grid-cols-2 grid-rows-1 w-12">
           {query && (
             <X
-              className="w-5 h-5 cursor-pointer text-background col-start-1"
+              className="w-5 h-5 cursor-pointer duration-200 ease-in-out transition hover:text-blue-700 hover:scale-125 text-background col-start-1"
               onClick={() => {
                 setQuery(null);
                 handleClick(null);
@@ -84,7 +84,7 @@ const ExploreSearch = () => {
             />
           )}
           <SearchIcon
-            className="w-5 h-5 cursor-pointer text-background col-start-2"
+            className="w-5 h-5 cursor-pointer duration-200 ease-in-out transition hover:text-blue-700 hover:scale-125 text-background col-start-2"
             onClick={() => handleClick()}
           />
         </div>
@@ -107,7 +107,6 @@ const ExploreSearch = () => {
               </span>
             </Button>
           ))}
-          <div className="w-12 h-full" />
         </div>
       )}
     </div>
