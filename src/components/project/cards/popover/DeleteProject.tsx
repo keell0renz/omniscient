@@ -7,6 +7,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogOverlay,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
@@ -20,6 +21,14 @@ export default function DeleteProject() {
   const { project, setOpenPopover } = useContext(PopoverContext);
   const [isOpenedDialog, setIsOpenedDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  function handleOverlayClick(event: any) {
+    if (
+      event.target?.getAttribute('class')?.includes('bg-black/80')
+    ) {
+      setIsOpenedDialog(false);
+    }
+  }
 
   async function onDelete() {
     setIsLoading(true);
@@ -39,25 +48,27 @@ export default function DeleteProject() {
           Delete
         </div>
       </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            project.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <LoadingButton
-            onClick={() => onDelete()}
-            className="bg-red-500 hover:bg-red-800 text-foreground font-bold"
-            isLoading={isLoading}
-          >
-            Delete
-          </LoadingButton>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+      <AlertDialogOverlay onClick={(e) => handleOverlayClick(e)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              project.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <LoadingButton
+              onClick={() => onDelete()}
+              className="bg-red-500 hover:bg-red-800 text-foreground font-bold"
+              isLoading={isLoading}
+            >
+              Delete
+            </LoadingButton>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
     </AlertDialog>
   );
 }

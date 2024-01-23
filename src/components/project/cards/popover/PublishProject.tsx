@@ -22,6 +22,14 @@ export default function DeleteProject() {
   const [isOpenedDialog, setIsOpenedDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  function handleOverlayClick(event: any) {
+    if (
+      event.target?.getAttribute('class')?.includes('bg-black/80')
+    ) {
+      setIsOpenedDialog(false);
+    }
+  }
+
   async function onPublish() {
     setIsLoading(true);
     await setProjectPublicity(!project.public, project.id);
@@ -51,7 +59,7 @@ export default function DeleteProject() {
           )}
         </div>
       </AlertDialogTrigger>
-      <AlertDialogOverlay>
+      <AlertDialogOverlay onClick={(e) => handleOverlayClick(e)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>

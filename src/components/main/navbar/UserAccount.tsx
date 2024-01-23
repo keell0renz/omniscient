@@ -2,7 +2,6 @@
 import { useUser, useClerk } from "@clerk/nextjs";
 import Link from "next/link";
 import { LogOutIcon, UserRoundCogIcon, NetworkIcon } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -27,6 +26,14 @@ const UserAccount = () => {
   const { theme } = useTheme();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  function handleOverlayClick(event: any) {
+    if (
+      event.target?.getAttribute('class')?.includes('bg-black/80')
+    ) {
+      setIsOpen(false);
+    }
+  }
 
   const userMail = user?.primaryEmailAddress?.emailAddress || "";
 
@@ -70,7 +77,7 @@ const UserAccount = () => {
                 Settings
               </div>
             </AlertDialogTrigger>
-            <AlertDialogOverlay onClick={() => setIsOpen(false)}>
+            <AlertDialogOverlay onClick={(e) => handleOverlayClick(e)}>
               <AlertDialogContent className="w-full h-[90vh] max-w-[1200px]">
                 <div className="overflow-y-auto">
                   <UserProfile
