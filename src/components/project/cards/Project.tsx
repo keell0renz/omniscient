@@ -19,13 +19,15 @@ export default async function Project({ project }: { project: Project }) {
   return (
     <Card className="w-full flex flex-col justify-between hover:border-primary cursor-pointer">
       <CardHeader>
-        <CardTitle className="flex flex-row justify-between items-center gap-2">
-          <div className="flex flex-row gap-2 flex-nowrap w-full max-w-[300px]">
-            <p className="text-xl truncate">{project.title}</p>
+        <CardTitle className="flex flex-row justify-between">
+          <div className="text-xl">
+            {project.title}
             {project.public && (
-              <Badge className="bg-blue-700 text-white w-[60px]">
-                Public
-              </Badge>
+              <span>
+                <Badge className="ml-2 bg-blue-700 text-white truncate">
+                  Public
+                </Badge>
+              </span>
             )}
           </div>
           <CardPopover project={project} />

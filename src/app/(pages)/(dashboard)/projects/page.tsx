@@ -1,23 +1,24 @@
-import { Input } from "@/components/ui/input";
 import { AddNewProject } from "@/components/dashboard/buttons";
 import { ProjectPanel } from "@/components/project/panel/dashboard";
 import { PanelSkeleton } from "@/components/project/panel";
 import { Suspense } from "react";
+import ProjectSearch from "@/components/project/ProjectSearch";
 
-export default async function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams?: { q?: string; p?: number };
+}) {
   return (
     <>
-      <div className="flex justify-between mb-6">
-        <div className="flex w-full gap-2">
-          <Input
-            className="block w-full px-4 py-1 leading-tight focus:outline-none bg-secondary/25 h-10 "
-            placeholder="Search your projects..."
-          />
+      <div className="flex justify-between items-center mb-6 h-12 mx-2">
+        <div className="flex w-full gap-2 h-fit">
+          <ProjectSearch />
           <AddNewProject />
         </div>
       </div>
       <Suspense fallback={<PanelSkeleton />}>
-        <ProjectPanel />
+        <ProjectPanel query={searchParams?.q} currentPage={searchParams?.p} />
       </Suspense>
     </>
   );
