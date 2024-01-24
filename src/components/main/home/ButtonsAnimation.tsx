@@ -1,22 +1,12 @@
-"use client";
-
+"use client"
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { buttonsFade } from "@/components/animations/framerAnimations";
-import { useToast } from "@/components/ui/use-toast";
+import { useUser } from "@clerk/nextjs";
 
 const ButtonsAnimation = () => {
-  const { toast } = useToast();
-
-  const handleClick = () => {
-    toast({
-      title: "🚀 In development!",
-      description:
-        "This functionality is currently in development, check out later. 😊",
-      className: "bg-blue-600 text-white",
-    });
-  };
+  const { user } = useUser();
 
   return (
     <motion.div
@@ -35,10 +25,9 @@ const ButtonsAnimation = () => {
           Explore
         </Button>
       </Link>
-      <Link href="#" className="z-50" passHref>
+      <Link href={`${user ? "/projects" : "/sign-in?redirect_url=projects"}`} className="z-50" passHref>
         <Button
           className="h-full w-32 font-semibold bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-900 hover:to-blue-700 text-white rounded-xl"
-          onClick={handleClick}
         >
           Open
         </Button>
