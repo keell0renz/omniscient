@@ -1,7 +1,7 @@
 "use client";
 import { useUser, useClerk } from "@clerk/nextjs";
 import Link from "next/link";
-import { LogOutIcon, UserRoundCogIcon, NetworkIcon } from "lucide-react";
+import { LogOutIcon, UserRoundCogIcon, LayoutDashboard } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -67,7 +67,7 @@ const UserAccount = () => {
             className="hover:bg-secondary rounded-lg p-3 inline-flex items-center gap-2"
             href="/projects"
           >
-            <NetworkIcon className="h-5 w-5 text-primary" />
+            <LayoutDashboard className="h-5 w-5 text-primary" />
             Dashboard
           </Link>
           <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
