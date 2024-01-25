@@ -17,7 +17,9 @@ export default async function PublicProject({ project }: { project: Project }) {
     <Card className="w-full flex flex-col justify-between hover:border-primary cursor-pointer">
       <CardHeader>
         <CardTitle className="text-xl">{project.title}</CardTitle>
-        <CardDescription className="truncate-2-lines">{project.description}</CardDescription>
+        <CardDescription className="truncate-2-lines">
+          {project.description}
+        </CardDescription>
       </CardHeader>
       <CardFooter className="flex justify-between items-center">
         <div className="flex items-center">

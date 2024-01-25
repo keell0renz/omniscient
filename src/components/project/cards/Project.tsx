@@ -13,8 +13,14 @@ import { Badge } from "@/components/ui/badge";
 import CardPopover from "./popover/CardPopover";
 import { Button } from "@/components/ui/button";
 
-export default async function Project({ project }: { project: (Project & { parent_user_id?: string }) }) {
-  const parent_user = project.parent_user_id? await clerkClient.users.getUser(project.parent_user_id) : null;
+export default async function Project({
+  project,
+}: {
+  project: Project & { parent_user_id?: string };
+}) {
+  const parent_user = project.parent_user_id
+    ? await clerkClient.users.getUser(project.parent_user_id)
+    : null;
 
   return (
     <Card className="w-full flex flex-col justify-between hover:border-primary cursor-pointer">
@@ -32,9 +38,17 @@ export default async function Project({ project }: { project: (Project & { paren
           </div>
           <CardPopover project={project} />
         </CardTitle>
-        <CardDescription className="truncate-2-lines">{project.description}</CardDescription>
+        <CardDescription className="truncate-2-lines">
+          {project.description}
+        </CardDescription>
       </CardHeader>
-      <CardFooter className={parent_user ? "flex flex-row justify-between" : "flex flex-row justify-end"}>
+      <CardFooter
+        className={
+          parent_user
+            ? "flex flex-row justify-between"
+            : "flex flex-row justify-end"
+        }
+      >
         {parent_user && (
           <div className="flex items-center">
             <Avatar>

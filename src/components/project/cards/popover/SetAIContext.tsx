@@ -43,7 +43,7 @@ function SetAIContextForm({
 
   async function onEdit(input: SetAIContextSchema) {
     setIsLoading(true);
-    await setAIContextForProject(input, project.id)
+    await setAIContextForProject(input, project.id);
     setIsLoading(false);
     setIsOpenedDialog(false);
     setOpenPopover?.(false);
@@ -57,7 +57,9 @@ function SetAIContextForm({
           name="ai_context"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-lg font-semibold">AI Context</FormLabel>
+              <FormLabel className="text-lg font-semibold">
+                AI Context
+              </FormLabel>
               <FormControl>
                 <Textarea
                   className="w-full h-64 resize-none"

@@ -23,9 +23,7 @@ export default function DeleteProject() {
   const [isLoading, setIsLoading] = useState(false);
 
   function handleOverlayClick(event: any) {
-    if (
-      event.target?.getAttribute('class')?.includes('bg-black/80')
-    ) {
+    if (event.target?.getAttribute("class")?.includes("bg-black/80")) {
       setIsOpenedDialog(false);
     }
   }

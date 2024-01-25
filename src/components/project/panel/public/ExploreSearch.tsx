@@ -14,16 +14,16 @@ const ExploreSearch = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const searchQuery = searchParams.get("q")
+  const searchQuery = searchParams.get("q");
 
   const [query, setQuery] = useState(searchQuery);
 
   const handleClick = (queryValue: string | null = query) => {
     const params = new URLSearchParams(searchParams);
     if (queryValue) {
-      params.set('q', queryValue);
+      params.set("q", queryValue);
     } else {
-      params.delete('q');
+      params.delete("q");
     }
     replace(`${pathname}?${params.toString()}`);
   };
@@ -65,7 +65,7 @@ const ExploreSearch = () => {
           autoFocus
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Escape') {
+            if (e.key === "Escape") {
               setQuery(null);
               handleClick(null);
             }

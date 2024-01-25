@@ -28,9 +28,7 @@ const UserAccount = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   function handleOverlayClick(event: any) {
-    if (
-      event.target?.getAttribute('class')?.includes('bg-black/80')
-    ) {
+    if (event.target?.getAttribute("class")?.includes("bg-black/80")) {
       setIsOpen(false);
     }
   }

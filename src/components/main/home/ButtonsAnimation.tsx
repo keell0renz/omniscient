@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -25,10 +25,12 @@ const ButtonsAnimation = () => {
           Explore
         </Button>
       </Link>
-      <Link href={`${user ? "/projects" : "/sign-in?redirect_url=projects"}`} className="z-50" passHref>
-        <Button
-          className="h-full w-32 font-semibold bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-900 hover:to-blue-700 text-white rounded-xl"
-        >
+      <Link
+        href={`${user ? "/projects" : "/sign-in?redirect_url=projects"}`}
+        className="z-50"
+        passHref
+      >
+        <Button className="h-full w-32 font-semibold bg-gradient-to-r from-blue-800 to-blue-600 hover:from-blue-900 hover:to-blue-700 text-white rounded-xl">
           Open
         </Button>
       </Link>
