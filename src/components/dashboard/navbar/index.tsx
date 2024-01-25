@@ -1,7 +1,7 @@
 export { default as NavbarLink } from "./Link";
 
 import { Slash } from "lucide-react";
-import Cognitar from "@/components/Logo";
+import Cognitar from "@/components/misc/Logo";
 import { currentUser } from "@clerk/nextjs";
 
 export async function Navbar({ children }: { children: React.ReactNode }) {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeftIcon } from "lucide-react";
-import ErrorAnimation from "@/components/error/ErrorAnimation";
+import ErrorAnimation from "@/components/misc/ErrorAnimation";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
