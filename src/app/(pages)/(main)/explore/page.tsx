@@ -1,4 +1,4 @@
-import ExploreSearch from "@/components/main/explore/ExploreSearch";
+import { ExploreSearch } from "@/components/project/panel/public";
 import { ProjectPanel } from "@/components/project/panel/public";
 import { PanelSkeleton } from "@/components/project/panel";
 import { Suspense } from "react";

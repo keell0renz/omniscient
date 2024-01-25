@@ -2,7 +2,7 @@ import { AddNewProject } from "@/components/dashboard/buttons";
 import { ProjectPanel } from "@/components/project/panel/dashboard";
 import { PanelSkeleton } from "@/components/project/panel";
 import { Suspense } from "react";
-import ProjectSearch from "@/components/project/ProjectSearch";
+import ProjectSearch from "@/components/project/panel/dashboard/ProjectSearch";
 
 export default function Page({
   searchParams,
