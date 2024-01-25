@@ -68,7 +68,7 @@ const UserAccount = () => {
             href="/projects"
           >
             <NetworkIcon className="h-5 w-5 text-primary" />
-            My Projects
+            Dashboard
           </Link>
           <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
             <AlertDialogTrigger asChild>
