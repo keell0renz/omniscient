@@ -17,7 +17,7 @@ export default async function Layout({
     <>
       <Navbar title={project?.title}>
         <NavbarLink href="/projects" title="Dashboard" />
-        <NavbarLink href={`/p/${params.project_id}`} title="Projects" />
+        <NavbarLink href={`/p/${params.project_id}`} title="Roadmap" />
       </Navbar>
       <div className="mt-8 min-h-screen overflow-x-hidden container mx-auto">
         {children}
