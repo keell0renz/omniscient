@@ -13,8 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import CardPopover from "./popover/CardPopover";
 import { Button } from "@/components/ui/button";
 
-export default async function Project({ project }: { project: Project }) {
-  const user = await clerkClient.users.getUser(project.user_id);
+export default async function Project({ project }: { project: (Project & { parent_user_id?: string }) }) {
+  const parent_user = project.parent_user_id? await clerkClient.users.getUser(project.parent_user_id) : null;
 
   return (
     <Card className="w-full flex flex-col justify-between hover:border-primary cursor-pointer">
@@ -34,23 +34,25 @@ export default async function Project({ project }: { project: Project }) {
         </CardTitle>
         <CardDescription className="truncate-2-lines">{project.description}</CardDescription>
       </CardHeader>
-      <CardFooter className="flex flex-row justify-between">
-        <div className="flex items-center">
-          <Avatar>
-            <AvatarImage src={user.imageUrl} />
-            <AvatarFallback>
-              {user.firstName &&
-                user.lastName &&
-                `${user.firstName[0]} ${user.lastName[0]}`}
-            </AvatarFallback>
-          </Avatar>
-          <p className="text-sm ml-2">
-            by @
-            {user.username
-              ? user.username
-              : `${user.firstName} ${user.lastName}`}
-          </p>
-        </div>
+      <CardFooter className={parent_user ? "flex flex-row justify-between" : "flex flex-row justify-end"}>
+        {parent_user && (
+          <div className="flex items-center">
+            <Avatar>
+              <AvatarImage src={parent_user.imageUrl} />
+              <AvatarFallback>
+                {parent_user.firstName &&
+                  parent_user.lastName &&
+                  `${parent_user.firstName[0]}${parent_user.lastName[0]}`}
+              </AvatarFallback>
+            </Avatar>
+            <p className="text-sm ml-2">
+              by @
+              {parent_user.username
+                ? parent_user.username
+                : `${parent_user.firstName} ${parent_user.lastName}`}
+            </p>
+          </div>
+        )}
         <Button asChild>
           <Link href={`/p/${project.id}`}>Open</Link>
         </Button>

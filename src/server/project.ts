@@ -49,7 +49,7 @@ export async function searchPublicProjects(query: string): Promise<Project[]> {
     }
 }
 
-export async function getProjectsByUser(): Promise<Project[]> {
+export async function getProjectsByUser(): Promise<(Project & { parent_user_id?: string })[]> {
     const { userId } = auth()
 
     if (!userId) {
@@ -57,11 +57,24 @@ export async function getProjectsByUser(): Promise<Project[]> {
     }
 
     try {
-        return await prisma.project.findMany({
+        const projects = await prisma.project.findMany({
             where: {
                 user_id: userId
+            },
+            include: {
+                parent: {
+                    select: {
+                        user_id: true
+                    }
+                }
             }
         })
+
+        // Map over the projects to include parent_user_id if the parent exists
+        return projects.map(project => ({
+            ...project,
+            parent_user_id: project.parent?.user_id
+        }));
     } catch (error) {
         throw new Error(`Failed to retrieve projects by user: ${error}`)
     }
