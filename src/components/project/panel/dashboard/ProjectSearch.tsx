@@ -36,7 +36,6 @@ const ProjectSearch = () => {
         >
             <Input
                 value={query ? query : ""}
-                autoFocus
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => {
                     if (e.key === 'Escape') {
