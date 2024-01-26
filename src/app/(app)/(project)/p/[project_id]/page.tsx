@@ -1,3 +1,4 @@
+import NodeManage from "@/components/project/nodeManage/NodeManage";
 import { Roadmap } from "@/components/roadmap";
 
 export default async function Page({
@@ -5,5 +6,10 @@ export default async function Page({
 }: {
   params: { project_id: string };
 }) {
-  return <Roadmap project_id={params.project_id} />;
+  return (
+    <>
+      <Roadmap project_id={params.project_id} />
+      <NodeManage />
+    </>
+  );
 }

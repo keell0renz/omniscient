@@ -3,6 +3,7 @@
 import "reactflow/dist/style.css";
 import ReactFlow, { Controls, Background } from "reactflow";
 import { Node, Edge, Connection } from "reactflow";
+import useNodeStore from "@/store/NodeStore";
 
 import "reactflow/dist/style.css";
 
@@ -11,25 +12,25 @@ import CustomNode from "./Node";
 const nodes = [
   {
     id: "1",
-    data: { label: "Computer Science", status: null, primary_key: "primary_key" },
+    data: { label: "Computer Science", status: "unknown", primary_key: "primary_key" },
     position: { x: 100, y: 100 },
     type: "Node",
   },
   {
     id: "2",
-    data: { label: "Computer Science", status: "learning", primary_key: "primary_key"  },
+    data: { label: "Computer Science", status: "learning", primary_key: "primary_key" },
     position: { x: 100, y: 200 },
     type: "Node",
   },
   {
     id: "3",
-    data: { label: "Computer Science", status: "skipped", primary_key: "primary_key"  },
+    data: { label: "Computer Science", status: "skipped", primary_key: "primary_key" },
     position: { x: 100, y: 300 },
     type: "Node",
   },
   {
     id: "4",
-    data: { label: "Computer Science", status: "finished", primary_key: "primary_key"  },
+    data: { label: "Computer Science", status: "finished", primary_key: "primary_key" },
     position: { x: 100, y: 400 },
     type: "Node",
   },
@@ -69,6 +70,7 @@ const edges = [
 ];
 
 export default function Roadmap({ project_id }: { project_id: string }) {
+  const { setCurrentNode } = useNodeStore();
   return (
     <div className="w-full h-full">
       <ReactFlow
@@ -77,9 +79,14 @@ export default function Roadmap({ project_id }: { project_id: string }) {
         nodeTypes={{ Node: CustomNode }}
         proOptions={{ hideAttribution: true }}
 
-        onNodeDragStop={	
+        onNodeDragStop={
           (event: React.MouseEvent, node: Node, nodes: Node[]) => {
             console.log(JSON.stringify(node))
+          }
+        }
+        onNodeClick={
+          (event: React.MouseEvent, node: Node) => {
+            setCurrentNode(node);
           }
         }
         onNodesDelete={
