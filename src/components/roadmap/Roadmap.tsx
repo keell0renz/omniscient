@@ -69,7 +69,6 @@ export default function Roadmap({ project_id }: { project_id: string }) {
         fitView
       >
         <Background color="#49495c" />
-        <Controls />
       </ReactFlow>
     </div>
   );
