@@ -2,33 +2,34 @@
 
 import "reactflow/dist/style.css";
 import ReactFlow, { Controls, Background } from "reactflow";
+import { Node, Edge, Connection } from "reactflow";
 
 import "reactflow/dist/style.css";
 
-import Node from "./Node";
+import CustomNode from "./Node";
 
 const nodes = [
   {
     id: "1",
-    data: { label: "Computer Science", status: null },
+    data: { label: "Computer Science", status: null, primary_key: "primary_key" },
     position: { x: 100, y: 100 },
     type: "Node",
   },
   {
     id: "2",
-    data: { label: "Computer Science", status: "learning" },
+    data: { label: "Computer Science", status: "learning", primary_key: "primary_key"  },
     position: { x: 100, y: 200 },
     type: "Node",
   },
   {
     id: "3",
-    data: { label: "Computer Science", status: "skipped" },
+    data: { label: "Computer Science", status: "skipped", primary_key: "primary_key"  },
     position: { x: 100, y: 300 },
     type: "Node",
   },
   {
     id: "4",
-    data: { label: "Computer Science", status: "finished" },
+    data: { label: "Computer Science", status: "finished", primary_key: "primary_key"  },
     position: { x: 100, y: 400 },
     type: "Node",
   },
@@ -63,10 +64,30 @@ export default function Roadmap({ project_id }: { project_id: string }) {
     <div className="w-full h-full">
       <ReactFlow
         defaultNodes={nodes}
-        defaultEdges={[]}
-        nodeTypes={{ Node: Node }}
+        defaultEdges={edges}
+        nodeTypes={{ Node: CustomNode }}
         proOptions={{ hideAttribution: true }}
-        fitView
+
+        onNodeDragStop={	
+          (event: React.MouseEvent, node: Node, nodes: Node[]) => {
+            console.log(JSON.stringify(node))
+          }
+        }
+        onNodesDelete={
+          (nodes: Node[]) => {
+            console.log(JSON.stringify(nodes))
+          }
+        }
+        onConnect={
+          (connection: Connection) => {
+            console.log(JSON.stringify(connection));
+          }
+        }
+        onEdgesDelete={
+          (edges: Edge[]) => {
+            console.log(JSON.stringify(edges));
+          }
+        }
       >
         <Background color="#49495c" />
       </ReactFlow>
