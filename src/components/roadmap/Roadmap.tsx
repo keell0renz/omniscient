@@ -42,6 +42,9 @@ const edges = [
     target: "2",
     sourceHandle: "d",
     targetHandle: "b",
+    data: {
+      primary_key: "primary_key"
+    }
   },
   {
     id: "dfdsfsdfsdg",
@@ -49,6 +52,9 @@ const edges = [
     target: "3",
     sourceHandle: "d",
     targetHandle: "b",
+    data: {
+      primary_key: "primary_key"
+    }
   },
   {
     id: "fgfdghdsdfs",
@@ -56,6 +62,9 @@ const edges = [
     target: "3",
     sourceHandle: "d",
     targetHandle: "b",
+    data: {
+      primary_key: "primary_key"
+    }
   },
 ];
 
