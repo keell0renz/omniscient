@@ -39,6 +39,7 @@
     "prisma": "^5.8.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-flow-renderer": "^10.3.17",
     "react-hook-form": "^7.49.3",
     "reactflow": "^11.10.2",
     "tailwind-merge": "^2.2.0",

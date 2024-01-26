@@ -17,9 +17,9 @@ const nodes = [
 ];
 
 const edges = [
-  { id: "1", source: "1", target: "2", sourceHandle: "d", targetHandle: "b", animated: true },
-  { id: "2", source: "1", target: "3", sourceHandle: "d", targetHandle: "b", animated: true },
-  { id: "3", source: "1", target: "4", sourceHandle: "d", targetHandle: "b", animated: true },
+  { id: "dsfdsfdsfsd", source: "1", target: "2", sourceHandle: "d", targetHandle: "b", animated: true },
+  { id: "dfdsfsdfsdg", source: "1", target: "3", sourceHandle: "d", targetHandle: "b", animated: true },
+  { id: "fgfdghdsdfs", source: "1", target: "3", sourceHandle: "d", targetHandle: "b", animated: true },
 ];
 
 export default function Roadmap({ project_id }: { project_id: string }) {
@@ -29,6 +29,7 @@ export default function Roadmap({ project_id }: { project_id: string }) {
                 defaultNodes={nodes}
                 defaultEdges={edges}
                 nodeTypes={{ Node: Node }}
+                proOptions={{ hideAttribution: true }}
             >
                 <Background />
                 <Controls />

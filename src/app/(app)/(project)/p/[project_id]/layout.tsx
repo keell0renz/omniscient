@@ -14,14 +14,14 @@ export default async function Layout({
   if (!project) notFound();
 
   return (
-    <>
+    <div className="flex flex-col h-screen w-screen">
       <Navbar title={project?.title}>
         <NavbarLink href="/projects" title="Dashboard" />
         <NavbarLink href={`/p/${params.project_id}`} title="Roadmap" />
       </Navbar>
-      <div className="mt-8 min-h-screen overflow-x-hidden container mx-auto">
+      <div className="w-full h-full">
         {children}
       </div>
-    </>
+    </div>
   );
 }

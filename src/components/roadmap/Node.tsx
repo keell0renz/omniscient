@@ -7,7 +7,7 @@ type CustomNodeData = {
   label: string;
 };
 
-export default function Node(props: NodeProps<CustomNodeData>) {
+export default function CustomNode(props: NodeProps<CustomNodeData>) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -19,29 +19,16 @@ export default function Node(props: NodeProps<CustomNodeData>) {
         {`${props.data.label}`}
       </div>
       <div style={{ visibility: isHovered ? "visible" : "hidden" }}>
-        {[Position.Top, Position.Right, Position.Bottom, Position.Left].map(
-          (pos) => (
-            <Handle
-              key={pos}
-              type="target"
-              position={pos}
-              id={pos.toLowerCase()}
-              className="p-1"
-            />
-          ),
-        )}
-        {[Position.Top, Position.Right, Position.Bottom, Position.Left].map(
-          (pos) => (
-            <Handle
-              key={pos}
-              type="source"
-              position={pos}
-              id={pos.toLowerCase()}
-              className="p-1"
-            />
-          ),
-        )}
+        <Handle type="target" position={Position.Top} id="a" className="p-1" /> 
+        <Handle type="source" position={Position.Top} id="a" className="p-1" /> 
+        <Handle type="target" position={Position.Right} id="b" className="p-1" /> 
+        <Handle type="source" position={Position.Right} id="b" className="p-1" /> 
+        <Handle type="target" position={Position.Bottom} id="c" className="p-1" /> 
+        <Handle type="source" position={Position.Bottom} id="c" className="p-1" /> 
+        <Handle type="target" position={Position.Left} id="d" className="p-1" /> 
+        <Handle type="source" position={Position.Left} id="d" className="p-1" />
       </div>
     </div>
   );
 }
+
