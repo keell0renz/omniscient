@@ -19,9 +19,7 @@ export default async function Layout({
         <NavbarLink href="/projects" title="Dashboard" />
         <NavbarLink href={`/p/${params.project_id}`} title="Roadmap" />
       </Navbar>
-      <div className="w-full h-full">
-        {children}
-      </div>
+      <div className="w-full h-full">{children}</div>
     </div>
   );
 }
