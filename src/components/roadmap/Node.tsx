@@ -7,7 +7,7 @@ type CustomNodeData = {
   label: string;
 };
 
-export default function CustomNode(props: NodeProps<CustomNodeData>) {
+export default function Node(props: NodeProps<CustomNodeData>) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
