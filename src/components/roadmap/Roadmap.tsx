@@ -14,7 +14,7 @@ const nodes = [
     id: "1",
     data: {
       label: "Computer Science",
-      status: "unknown",
+      status: "default",
       primary_key: "primary_key",
     },
     position: { x: 100, y: 100 },
