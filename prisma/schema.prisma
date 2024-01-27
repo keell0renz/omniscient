@@ -16,11 +16,32 @@ model Project {
   user_id     String
   title       String
   description String   @db.Text
-  ai_context  String?   @db.Text
+  ai_context  String?  @db.Text
   public      Boolean  @default(false)
   created_at  DateTime @default(now())
 
   imported_from_id String?
   parent           Project?  @relation("Import", fields: [imported_from_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
   children         Project[] @relation("Import")
+}
+
+model Node {
+  id         String  @id @default(uuid())
+  render_id  String  @default(uuid())
+  x_pos      String
+  y_pos      String
+  user_id    String
+  status     String  @default("default")
+  title      String?
+  about      String? @db.Text
+  ai_context String? @db.Text
+}
+
+model Edge {
+  id           String @id @default(uuid())
+  render_id    String @default(uuid())
+  source       String
+  target       String
+  sourceHandle String
+  targetHandle String
 }

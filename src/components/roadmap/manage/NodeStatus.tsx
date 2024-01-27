@@ -7,6 +7,7 @@ import {
 import { ChevronDown } from "lucide-react";
 import useNodeStore from "@/store/NodeStore";
 import { useState } from "react";
+import { editNodeStatus } from "@/server/roadmap";
 
 type status = "learning" | "skipped" | "finished" | "default";
 const statusButtons: status[] = ["default", "learning", "finished", "skipped"];
@@ -23,9 +24,10 @@ const NodeStatus = () => {
   const [status, setStatus] = useState<status>(currentNode?.data.status);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
-  function handleStatus(status: status) {
+  async function handleStatus(status: status) {
     setStatus(status);
     setIsPopoverOpen(false);
+    await editNodeStatus(status, currentNode?.data.primary_key)
     console.log("set " + status, currentNode);
   }
 

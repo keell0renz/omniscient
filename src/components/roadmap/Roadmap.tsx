@@ -4,114 +4,54 @@ import "reactflow/dist/style.css";
 import ReactFlow, { Controls, Background } from "reactflow";
 import { Node, Edge, Connection } from "reactflow";
 import useNodeStore from "@/store/NodeStore";
+import { createNode, createEdge, editNode, moveNode, deleteNodes, deleteEdges } from "@/server/roadmap";
 
 import "reactflow/dist/style.css";
 
 import CustomNode from "./Node";
 
-const nodes = [
-  {
-    id: "1",
-    data: {
-      label: "Computer Science",
-      status: "default",
-      primary_key: "primary_key",
-    },
-    position: { x: 100, y: 100 },
-    type: "Node",
-  },
-  {
-    id: "2",
-    data: {
-      label: "Computer Science",
-      status: "learning",
-      primary_key: "primary_key",
-    },
-    position: { x: 100, y: 200 },
-    type: "Node",
-  },
-  {
-    id: "3",
-    data: {
-      label: "Computer Science",
-      status: "skipped",
-      primary_key: "primary_key",
-    },
-    position: { x: 100, y: 300 },
-    type: "Node",
-  },
-  {
-    id: "4",
-    data: {
-      label: "Computer Science",
-      status: "finished",
-      primary_key: "primary_key",
-    },
-    position: { x: 100, y: 400 },
-    type: "Node",
-  },
-];
+const nodeTypes = { Node: CustomNode }
 
-const edges = [
-  {
-    id: "dsfdsfdsfsd",
-    source: "1",
-    target: "2",
-    sourceHandle: "d",
-    targetHandle: "b",
-    data: {
-      primary_key: "primary_key",
-    },
-  },
-  {
-    id: "dfdsfsdfsdg",
-    source: "1",
-    target: "3",
-    sourceHandle: "d",
-    targetHandle: "b",
-    data: {
-      primary_key: "primary_key",
-    },
-  },
-  {
-    id: "fgfdghdsdfs",
-    source: "1",
-    target: "3",
-    sourceHandle: "d",
-    targetHandle: "b",
-    data: {
-      primary_key: "primary_key",
-    },
-  },
-];
-
-export default function Roadmap({ project_id }: { project_id: string }) {
+export default function Roadmap({ nodes, edges }: { nodes: Node[], edges: Edge[] }) {
   const { setCurrentNode } = useNodeStore();
+
   return (
     <div className="w-full h-full">
       <ReactFlow
         defaultNodes={nodes}
         defaultEdges={edges}
-        nodeTypes={{ Node: CustomNode }}
+        nodeTypes={nodeTypes}
         proOptions={{ hideAttribution: true }}
-        onNodeDragStop={(
+        onNodeDragStop={async (
           event: React.MouseEvent,
           node: Node,
           nodes: Node[],
         ) => {
-          console.log(JSON.stringify(node));
+          if (node.dragging) {
+            await moveNode(node.data.primary_key, node.position.x, node.position.y)
+          }
         }}
         onNodeClick={(event: React.MouseEvent, node: Node) => {
           setCurrentNode(node);
         }}
-        onNodesDelete={(nodes: Node[]) => {
-          console.log(JSON.stringify(nodes));
+        onNodesDelete={async (nodes: Node[]) => {
+          const primary_keys: string[] = nodes.map(node => node.data.primary_key);
+          await deleteNodes(primary_keys)
         }}
-        onConnect={(connection: Connection) => {
-          console.log(JSON.stringify(connection));
+        onConnect={async (connection: Connection) => {
+          await createEdge(connection)
         }}
-        onEdgesDelete={(edges: Edge[]) => {
+        onEdgesDelete={async (edges: Edge[]) => {
           console.log(JSON.stringify(edges));
+        
+          const connections: Connection[] = edges.map(edge => ({
+            source: edge.source,
+            target: edge.target,
+            sourceHandle: edge.sourceHandle || null, // Coalesce undefined to null
+            targetHandle: edge.targetHandle || null, // Coalesce undefined to null
+          }));
+          
+          await deleteEdges(connections)
         }}
       >
         <Background color="#49495c" />

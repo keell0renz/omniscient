@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import useNodeStore from "@/store/NodeStore";
 import { useEffect } from "react";
 import NodeDelete from "./NodeDelete";
+import { editNode } from "@/server/roadmap";
 
 const NodeManage = () => {
   const { currentNode, setCurrentNode } = useNodeStore();
@@ -25,8 +26,9 @@ const NodeManage = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
 
-  function onEdit(input: GraphNodeSchema) {
+  async function onEdit(input: GraphNodeSchema) {
     setIsEditMode(false);
+    await editNode(input, currentNode?.data.primary_key)
     console.log("send for server", input);
   }
 

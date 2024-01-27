@@ -47,7 +47,7 @@ const NodeHandles = ({
 }) => (
   <div
     style={{
-      visibility: isHovered && !selected ? "visible" : "hidden",
+      visibility: isHovered ? "visible" : "hidden",
     }}
   >
     <Handle type="target" position={Position.Top} id="a" className="p-1" />
