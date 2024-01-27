@@ -12,6 +12,8 @@ import {
   deleteNodes,
   deleteEdges,
 } from "@/server/roadmap";
+import { ReactFlowProvider } from "reactflow";
+import { NodeManage } from ".";
 
 import "reactflow/dist/style.css";
 
@@ -29,50 +31,55 @@ export default function Roadmap({
   const { setCurrentNode } = useNodeStore();
 
   return (
-    <div className="w-full h-full">
-      <ReactFlow
-        defaultNodes={nodes}
-        defaultEdges={edges}
-        nodeTypes={nodeTypes}
-        proOptions={{ hideAttribution: true }}
-        onNodeDragStop={async (
-          event: React.MouseEvent,
-          node: Node,
-          nodes: Node[],
-        ) => {
-          if (node.dragging) {
-            await moveNode(
-              node.data.primary_key,
-              node.position.x,
-              node.position.y,
+    <ReactFlowProvider>
+      <div className="w-full h-full">
+        <ReactFlow
+          defaultNodes={nodes}
+          defaultEdges={edges}
+          nodeTypes={nodeTypes}
+          proOptions={{ hideAttribution: true }}
+          onNodeDragStop={async (
+            event: React.MouseEvent,
+            node: Node,
+            nodes: Node[],
+          ) => {
+            if (node.dragging) {
+              await moveNode(
+                node.data.project_id,
+                node.data.primary_key,
+                node.position.x,
+                node.position.y,
+              );
+            }
+          }}
+          onNodeClick={(event: React.MouseEvent, node: Node) => {
+            setCurrentNode(node);
+          }}
+          onNodesDelete={async (nodes: Node[]) => {
+            setCurrentNode(null);
+            const primary_keys: string[] = nodes.map(
+              (node) => node.data.primary_key,
             );
-          }
-        }}
-        onNodeClick={(event: React.MouseEvent, node: Node) => {
-          setCurrentNode(node);
-        }}
-        onNodesDelete={async (nodes: Node[]) => {
-          const primary_keys: string[] = nodes.map(
-            (node) => node.data.primary_key,
-          );
-          await deleteNodes(primary_keys);
-        }}
-        onConnect={async (connection: Connection) => {
-          await createEdge(connection);
-        }}
-        onEdgesDelete={async (edges: Edge[]) => {
-          const connections: Connection[] = edges.map((edge) => ({
-            source: edge.source,
-            target: edge.target,
-            sourceHandle: edge.sourceHandle || null, // Coalesce undefined to null
-            targetHandle: edge.targetHandle || null, // Coalesce undefined to null
-          }));
+            await deleteNodes(nodes[0].data.project_id, primary_keys);
+          }}
+          onConnect={async (connection: Connection) => {
+            await createEdge(nodes[0].data.project_id, connection);
+          }}
+          onEdgesDelete={async (edges: Edge[]) => {
+            const connections: Connection[] = edges.map((edge) => ({
+              source: edge.source,
+              target: edge.target,
+              sourceHandle: edge.sourceHandle || null, // Coalesce undefined to null
+              targetHandle: edge.targetHandle || null, // Coalesce undefined to null
+            }));
 
-          await deleteEdges(connections);
-        }}
-      >
-        <Background color="#49495c" />
-      </ReactFlow>
-    </div>
+            await deleteEdges(nodes[0].data.project_id, connections);
+          }}
+        >
+          <Background color="#49495c" />
+        </ReactFlow>
+      </div>
+      <NodeManage />
+    </ReactFlowProvider>
   );
 }

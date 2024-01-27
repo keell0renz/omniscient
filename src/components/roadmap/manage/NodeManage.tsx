@@ -28,8 +28,7 @@ const NodeManage = () => {
 
   async function onEdit(input: GraphNodeSchema) {
     setIsEditMode(false);
-    await editNode(input, currentNode?.data.primary_key);
-    console.log("send for server", input);
+    await editNode(currentNode?.data.project_id, input, currentNode?.data.primary_key);
   }
 
   function handleClose() {

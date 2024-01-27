@@ -13,10 +13,13 @@ import LoadingButton from "@/components/ui/LoadingButton";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Node } from "reactflow";
+import { useReactFlow } from "reactflow";
+import { DeleteElementsOptions } from "reactflow";
 
 const NodeDelete = ({ currentNode }: { currentNode: Node | null }) => {
   const [isOpenedDialog, setIsOpenedDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const reactflow = useReactFlow();
 
   function handleOverlayClick(event: any) {
     if (event.target?.getAttribute("class")?.includes("bg-black/80")) {
@@ -24,12 +27,17 @@ const NodeDelete = ({ currentNode }: { currentNode: Node | null }) => {
     }
   }
 
-  async function onDelete() {
-    console.log("delete node", currentNode);
-    setIsLoading(true);
-    setIsOpenedDialog(false);
-    setIsLoading(false);
-  }
+  const onDelete = () => {
+    if (currentNode) {
+      setIsLoading(true);
+      const deleteOptions: DeleteElementsOptions = {
+        nodes: [{ id: currentNode.id }],
+      };
+      reactflow.deleteElements(deleteOptions);
+      setIsOpenedDialog(false);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <AlertDialog open={isOpenedDialog} onOpenChange={setIsOpenedDialog}>

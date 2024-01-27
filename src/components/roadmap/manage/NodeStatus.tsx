@@ -27,8 +27,7 @@ const NodeStatus = () => {
   async function handleStatus(status: status) {
     setStatus(status);
     setIsPopoverOpen(false);
-    await editNodeStatus(status, currentNode?.data.primary_key);
-    console.log("set " + status, currentNode);
+    await editNodeStatus(currentNode?.data.project_id, status, currentNode?.data.primary_key);
   }
 
   return (

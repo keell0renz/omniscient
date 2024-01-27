@@ -28,6 +28,7 @@ model Project {
 model Node {
   id         String  @id @default(uuid())
   render_id  String  @default(uuid())
+  project_id String
   x_pos      String
   y_pos      String
   user_id    String
@@ -40,6 +41,7 @@ model Node {
 model Edge {
   id           String @id @default(uuid())
   render_id    String @default(uuid())
+  project_id   String
   source       String
   target       String
   sourceHandle String
