@@ -34,7 +34,7 @@ const NodeDelete = ({ currentNode }: { currentNode: Node | null }) => {
   return (
     <AlertDialog open={isOpenedDialog} onOpenChange={setIsOpenedDialog}>
       <AlertDialogTrigger asChild>
-        <Trash2 className="hover:text-blue-800 cursor-pointer" />
+        <Trash2 className="text-foreground/90 hover:text-foreground cursor-pointer" />
       </AlertDialogTrigger>
       <AlertDialogOverlay
         onClick={(e) => handleOverlayClick(e)}

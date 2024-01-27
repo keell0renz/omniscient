@@ -30,7 +30,7 @@ const NodeStatus = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="cursor-pointer w-1/2 h-[50px] text-xl inline-flex items-center justify-center hover:border-foreground/70 rounded-md border border-foreground">
+        <div className="cursor-pointer w-1/2 h-[50px] text-lg inline-flex items-center justify-center hover:border-foreground/70 rounded-xl border border-foreground">
           <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
             <circle
               cx="10"

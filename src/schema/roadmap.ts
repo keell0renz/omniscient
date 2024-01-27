@@ -7,7 +7,6 @@ export const GraphNodeValidator = z.object({
         .max(64, "Title too long!"),
     about: z
         .string()
-        .min(1, "Description is required.")
         .max(1024, "Description too long!"),
 });
 

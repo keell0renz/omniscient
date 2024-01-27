@@ -62,7 +62,7 @@ const NodeManage = () => {
         <div className="flex flex-row w-full gap-2">
           <NodeStatus />
           <Link href="#" className="w-1/2">
-            <div className="w-full h-[50px] text-xl inline-flex items-center justify-center hover:border-foreground/70 rounded-md border border-foreground">
+            <div className="w-full h-[50px] text-xl inline-flex items-center justify-center hover:border-foreground/70 rounded-xl border border-foreground">
               Open
             </div>
           </Link>
@@ -70,18 +70,18 @@ const NodeManage = () => {
         <Form {...form}>
           <form className="h-full" onSubmit={form.handleSubmit(onEdit)}>
             <div className="pt-3 h-full flex-col">
-              <div className="h-fit mb-10 flex flex-row flex-nowrap w-full items-center gap-2 justify-between">
+              <div className="h-fit mb-2 flex flex-row flex-nowrap w-full items-center justify-between">
                 <FormField
                   control={form.control}
                   name="title"
                   render={({ field }) => {
                     return (
                       <FormItem>
-                        <FormLabel className="text-md">Title</FormLabel>
                         <FormControl>
                           {isEditMode ? (
                             <input
-                              className="text-2xl bg-transparent focus-visible:outline-none"
+                              className="text-2xl bg-transparent focus-visible:outline-none max-w-64"
+                              placeholder="Untitled"
                               {...field}
                             />
                           ) : (
@@ -97,13 +97,13 @@ const NodeManage = () => {
                 <div className="flex flex-row flex-nowrap min-w-fit max-w-fit items-center gap-2">
                   {!isEditMode ? (
                     <Edit
-                      className="hover:text-blue-600 cursor-pointer"
+                      className="text-foreground/90 hover:text-foreground cursor-pointer"
                       onClick={() => setIsEditMode(!isEditMode)}
                     />
                   ) : (
                     <CheckCircle
                       onClick={form.handleSubmit(onEdit)}
-                      className="hover:text-green-600 cursor-pointer"
+                      className="text-foreground/90 hover:text-foreground cursor-pointer"
                     />
                   )}
                   <NodeDelete currentNode={currentNode} />
@@ -114,15 +114,15 @@ const NodeManage = () => {
                 name="about"
                 render={({ field }) => (
                   <FormItem className="h-full">
-                    <FormLabel className="text-md">Description</FormLabel>
                     <FormControl>
                       {isEditMode ? (
                         <Textarea
-                          className="p-0 text-lg resize-none w-full mt-5 max-w-full h-full bg-transparent focus-visible:ring-0 focus-visible:outline-none border-none scrollbar-hide"
+                          className="p-0 text-lg resize-none w-full mt-2 max-w-full h-full bg-transparent focus-visible:ring-0 focus-visible:outline-none border-none scrollbar-hide"
+                          placeholder="This node is about..."
                           {...field}
                         />
                       ) : (
-                        <p className="text-lg max-w-1/2 h-full mt-5 overflow-hidden overflow-ellipsis break-word">
+                        <p className="text-lg max-w-1/2 h-full mt-2 overflow-hidden overflow-ellipsis break-word">
                           {field.value}
                         </p>
                       )}
