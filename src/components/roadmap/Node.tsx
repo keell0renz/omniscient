@@ -71,10 +71,12 @@ export default function CustomNode(props: NodeProps<CustomNodeData>) {
       className="cursor-pointer"
     >
       <div
-        className={NodeBorder({
-          status: props.data.status,
-          selected: props.selected,
-        }) + ` ${!props.data.label && "text-foreground/70"}`}
+        className={
+          NodeBorder({
+            status: props.data.status,
+            selected: props.selected,
+          }) + ` ${!props.data.label && "text-foreground/70"}`
+        }
       >
         {props.data.label ? props.data.label : "Untitled"}
       </div>

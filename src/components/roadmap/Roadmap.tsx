@@ -24,14 +24,14 @@ const nodeTypes = { Node: CustomNode };
 function LocalRoadmap({
   nodes,
   edges,
-  project_id
+  project_id,
 }: {
   nodes: Node[];
   edges: Edge[];
-  project_id: string
+  project_id: string;
 }) {
   const { setCurrentNode } = useNodeStore();
-  const reactflow = useReactFlow()
+  const reactflow = useReactFlow();
 
   return (
     <>
@@ -52,19 +52,19 @@ function LocalRoadmap({
                 node.data.primary_key,
                 node.position.x,
                 node.position.y,
-                );
-              }
-            }}
-            onNodeClick={(event: React.MouseEvent, node: Node) => {
-              setCurrentNode(node);
+              );
+            }
+          }}
+          onNodeClick={(event: React.MouseEvent, node: Node) => {
+            setCurrentNode(node);
           }}
           onNodesDelete={async (nodes: Node[]) => {
             setCurrentNode(null);
             const primary_keys: string[] = nodes.map(
               (node) => node.data.primary_key,
-              );
-              await deleteNodes(project_id, primary_keys);
-            }}
+            );
+            await deleteNodes(project_id, primary_keys);
+          }}
           onConnect={async (connection: Connection) => {
             await createEdge(nodes[0].data.project_id, connection);
           }}
@@ -82,25 +82,25 @@ function LocalRoadmap({
             event.preventDefault(); // Prevent the default context menu from opening
             const x = event.clientX - 50; // X coordinate of the mouse pointer
             const y = event.clientY - 110; // Y coordinate of the mouse pointer
-        
+
             // Now you can use x and y for your purposes
-            const node = await createNode(project_id, x, y)
-            
-            reactflow.addNodes(node)
+            const node = await createNode(project_id, x, y);
+
+            reactflow.addNodes(node);
           }}
-          >
+        >
           <Background color="#49495c" />
         </ReactFlow>
       </div>
       <NodeManage />
-      </>
+    </>
   );
 }
 
 export default function Roadmap({
   nodes,
   edges,
-  project_id
+  project_id,
 }: {
   nodes: Node[];
   edges: Edge[];
@@ -108,7 +108,7 @@ export default function Roadmap({
 }) {
   return (
     <ReactFlowProvider>
-      <LocalRoadmap nodes={nodes} edges={edges} project_id={project_id}/>
+      <LocalRoadmap nodes={nodes} edges={edges} project_id={project_id} />
     </ReactFlowProvider>
-  )
+  );
 }

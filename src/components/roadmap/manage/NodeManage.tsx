@@ -91,7 +91,9 @@ const NodeManage = () => {
                               {...field}
                             />
                           ) : (
-                            <h2 className={`max-w-[290px] text-2xl truncate ${!field.value && "text-foreground/70"}`}>
+                            <h2
+                              className={`max-w-[290px] text-2xl truncate ${!field.value && "text-foreground/70"}`}
+                            >
                               {field.value ? field.value : "Untitled"}
                             </h2>
                           )}
@@ -128,7 +130,9 @@ const NodeManage = () => {
                           {...field}
                         />
                       ) : (
-                        <p className={`text-lg max-w-1/2 h-full mt-2 overflow-hidden overflow-ellipsis break-word ${!field.value && "text-foreground/70"}`}>
+                        <p
+                          className={`text-lg max-w-1/2 h-full mt-2 overflow-hidden overflow-ellipsis break-word ${!field.value && "text-foreground/70"}`}
+                        >
                           {field.value ? field.value : "No description"}
                         </p>
                       )}
