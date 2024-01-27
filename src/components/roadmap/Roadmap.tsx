@@ -66,7 +66,7 @@ function LocalRoadmap({
             await deleteNodes(project_id, primary_keys);
           }}
           onConnect={async (connection: Connection) => {
-            await createEdge(nodes[0].data.project_id, connection);
+            await createEdge(project_id, connection);
           }}
           onEdgesDelete={async (edges: Edge[]) => {
             const connections: Connection[] = edges.map((edge) => ({
@@ -92,7 +92,7 @@ function LocalRoadmap({
           <Background color="#49495c" />
         </ReactFlow>
       </div>
-      <NodeManage />
+      <NodeManage project_id={project_id} />
     </>
   );
 }

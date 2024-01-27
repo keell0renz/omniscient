@@ -20,16 +20,16 @@ import { useEffect } from "react";
 import NodeDelete from "./NodeDelete";
 import { editNode } from "@/server/roadmap";
 
-const NodeManage = () => {
+const NodeManage = ({ project_id }: { project_id: string }) => {
   const { currentNode, setCurrentNode } = useNodeStore();
-
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
 
   async function onEdit(input: GraphNodeSchema) {
     setIsEditMode(false);
+    setIsSheetOpen(false)
     await editNode(
-      currentNode?.data.project_id,
+      project_id,
       input,
       currentNode?.data.primary_key,
     );

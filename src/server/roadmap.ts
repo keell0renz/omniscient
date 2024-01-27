@@ -1,10 +1,12 @@
+"use server"
+
 import prisma from "@/lib/prisma"
 import { Project } from "@prisma/client"
 import { redirect } from "next/navigation"
-import { auth } from "@clerk/nextjs"
+import { auth, useOrganization } from "@clerk/nextjs"
 import { GraphNodeValidator, GraphNodeSchema } from "@/schema/roadmap"
 import { Node, Edge, Connection } from "reactflow"
-import { v4 as uuidv4 } from 'uuid';
+import { revalidatePath } from "next/cache"
 
 export async function getNodesByProjectId(project_id: string): Promise<Node[]> {
     const { userId } = auth()
@@ -30,7 +32,8 @@ export async function getNodesByProjectId(project_id: string): Promise<Node[]> {
             label: node_record.title,
             about: node_record.about,
             primary_key: node_record.id,
-            status: node_record.status
+            status: node_record.status,
+            project_id: node_record.project_id
         },
         type: "Node"
     }));
@@ -67,47 +70,166 @@ export async function getEdgesByProjectId(project_id: string): Promise<Edge[]> {
 }
 
 export async function createNode(project_id: string, x_pos: number, y_pos: number): Promise<Node>  {
-    const generatedId = uuidv4(); // Generate a new UUID v4
-    const generatedPrimaryKey = uuidv4(); // Generate a new UUID v4 for primary_key if needed
+    const { userId } = auth()
 
-    console.log(`Create Node - project_id: ${project_id}, x: ${x_pos}, y: ${y_pos}`);
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    const node_record = await prisma.node.create({
+        data: {
+            project_id: project_id,
+            user_id: userId,
+            x_pos: x_pos,
+            y_pos: y_pos
+        }
+    })
+
+    revalidatePath(`/p/${project_id}`)
 
     return {
-        id: generatedId,
+        id: node_record.render_id,
         data: {
-          label: null,
-          about: null,
-          status: "default",
-          primary_key: generatedPrimaryKey,
-          project_id: project_id
+          label: node_record.title,
+          about: node_record.about,
+          status: node_record.status,
+          primary_key: node_record.id,
+          project_id: node_record.project_id
         },
-        position: { x: x_pos, y: y_pos },
+        position: { x: node_record.x_pos, y: node_record.y_pos },
         type: "Node"
     }
 }
 
 export async function createEdge(project_id: string, connection: Connection) {
-    console.log(`Create Edge - project_id: ${project_id}, source: ${connection.source}, target: ${connection.target}, sourceHandle: ${connection.sourceHandle}, targetHandle: ${connection.targetHandle}`);
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    await prisma.edge.create({
+        data: {
+            project_id: project_id,
+            user_id: userId,
+            source: connection.source as string,
+            target: connection.target as string,
+            sourceHandle: connection.sourceHandle as string,
+            targetHandle: connection.targetHandle as string
+        }
+    })
+
+    revalidatePath(`/p/${project_id}`)
 }
 
 export async function editNode(project_id: string, schema: GraphNodeSchema, node_id: string) {
-    console.log(`Edit Node - project_id: ${project_id}, node_id: ${node_id}, schema: ${JSON.stringify(schema)}`);
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    const validated = GraphNodeValidator.safeParse(schema)
+
+    if(!validated.success) {
+        throw Error(`Validation error: ${validated.error}`)
+    }
+
+    await prisma.node.update({
+        where: {
+            id: node_id,
+            project_id: project_id,
+            user_id: userId
+        },
+        data: {
+            title: validated.data.title,
+            about: validated.data.about
+        }
+    })
+
+    revalidatePath(`/p/${project_id}`)
 }
 
 export async function editNodeStatus(project_id: string, status: "learning" | "skipped" | "finished" | "default", node_id: string) {
-    console.log(`Edit Node Status - project_id: ${project_id}, node_id: ${node_id}, status: ${status}`);
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    await prisma.node.update({
+        where: {
+            id: node_id,
+            project_id: project_id,
+            user_id: userId
+        },
+        data: {
+            status: status
+        }
+    })
+
+    revalidatePath(`/p/${project_id}`)
 }
 
-export async function moveNode(project_id: string, primary_key: string, x_pos: number, y_pos: number) {
-    console.log(`Move Node - project_id: ${project_id}, primary_key: ${primary_key}, x: ${x_pos}, y: ${y_pos}`);
+export async function moveNode(project_id: string, node_id: string, x_pos: number, y_pos: number) {
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    await prisma.node.update({
+        where: {
+            id: node_id,
+            project_id: project_id,
+            user_id: userId
+        },
+        data: {
+            x_pos: x_pos,
+            y_pos: y_pos
+        }
+    })
+
+    revalidatePath(`/p/${project_id}`)
 }
 
 export async function deleteNodes(project_id: string, primary_keys: string[]) {
-    console.log(`Delete Nodes - project_id: ${project_id}, primary_keys: ${primary_keys.join(', ')}`);
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    await prisma.node.deleteMany({
+        where: {
+            project_id: project_id,
+            user_id: userId,
+            OR: primary_keys.map((node_id) => ({ id: node_id }))
+        }
+    })
+
+    revalidatePath(`/p/${project_id}`)
 }
 
 export async function deleteEdges(project_id: string, connections: Connection[]) {
-    connections.forEach(connection => {
-        console.log(`Delete Edge - project_id: ${project_id}, source: ${connection.source}, target: ${connection.target}, sourceHandle: ${connection.sourceHandle}, targetHandle: ${connection.targetHandle}`);
-    });
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    await prisma.edge.deleteMany({
+        where: {
+            project_id: project_id,
+            user_id: userId,
+            OR: connections.map((connection) => ({
+                source: connection.source as string,
+                target: connection.target as string,
+                sourceHandle: connection.sourceHandle as string,
+                targetHandle: connection.targetHandle as string
+            }))
+        }
+    })
+
+    revalidatePath(`/p/${project_id}`)
 }
