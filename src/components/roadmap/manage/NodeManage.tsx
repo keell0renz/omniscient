@@ -18,7 +18,6 @@ import { Textarea } from "@/components/ui/textarea";
 import useNodeStore from "@/store/NodeStore";
 import { useEffect } from "react";
 import NodeDelete from "./NodeDelete";
-import { Button } from "@/components/ui/button";
 
 const NodeManage = () => {
   const { currentNode, setCurrentNode } = useNodeStore();
