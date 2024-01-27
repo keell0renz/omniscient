@@ -10,7 +10,7 @@ declare global {
 let prisma: PrismaClient;
 
 const connectionString = `${process.env.DATABASE_URL}`
-const client = new Client({ url: connectionString, fetch: undiciFetch })
+const client = new Client({ url: connectionString })
 const adapter = new PrismaPlanetScale(client)
 
 if (process.env.NODE_ENV === "production") {

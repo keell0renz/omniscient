@@ -6,52 +6,64 @@ import { GraphNodeValidator, GraphNodeSchema } from "@/schema/roadmap"
 import { Node, Edge, Connection } from "reactflow"
 import { v4 as uuidv4 } from 'uuid';
 
-const nodes = [
-    {
-      id: "1",
-      data: {
-        label: "Computer Science",
-        about: null,
-        status: "default",
-        primary_key: "primary_key",
-        project_id: "project_id"
-      },
-      position: { x: 100, y: 100 },
-      type: "Node",
-    },
-    {
-      id: "2",
-      data: {
-        label: "Computer Science",
-        about: null,
-        status: "learning",
-        primary_key: "primary_key",
-        project_id: "project_id"
-      },
-      position: { x: 100, y: 200 },
-      type: "Node",
-    },
-  ];
-  
-  const edges = [
-    {
-      id: "dsfdsfdsfsd",
-      source: "1",
-      target: "2",
-      sourceHandle: "d",
-      targetHandle: "b",
-      data: {
-        primary_key: "primary_key",
-      },
-    },
-  ];
-
 export async function getNodesByProjectId(project_id: string): Promise<Node[]> {
-    return nodes // Temporarily
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    const node_records = await prisma.node.findMany({
+         where: {
+            project_id: project_id,
+            user_id: userId
+        }
+    })
+
+    const nodes: Node[] = node_records.map((node_record) => ({
+        id: node_record.render_id,
+        position: {
+            x: node_record.x_pos,
+            y: node_record.y_pos
+        },
+        data: {
+            label: node_record.title,
+            about: node_record.about,
+            primary_key: node_record.id,
+            status: node_record.status
+        },
+        type: "Node"
+    }));
+
+    return nodes
 }
 
 export async function getEdgesByProjectId(project_id: string): Promise<Edge[]> {
-    return edges // Temporarily
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    const edge_records = await prisma.edge.findMany({
+        where: {
+            project_id: project_id,
+            user_id: userId
+        }
+    })
+
+    const edges: Edge[] = edge_records.map((edge_record) => ({
+        id: edge_record.render_id,
+        source: edge_record.source,
+        target: edge_record.target,
+        sourceHandle: edge_record.sourceHandle,
+        targetHandle: edge_record.targetHandle,
+        data: {
+            primary_key: edge_record.id
+        }
+    }));
+
+    return edges
 }
 
 export async function createNode(project_id: string, x_pos: number, y_pos: number): Promise<Node>  {
