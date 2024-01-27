@@ -11,6 +11,7 @@ import {
     SetAIContextSchema 
 } from "@/schema/project"
 import { auth } from "@clerk/nextjs"
+import { Node, Edge } from "@prisma/client"
 
 export async function getPublicProjects(): Promise<Project[]> {
     try {
@@ -226,6 +227,18 @@ export async function deleteProjectById(project_id: string): Promise<void> {
                 user_id: userId
             }
         });
+
+        await prisma.node.deleteMany({
+            where: {
+                project_id: project_id
+            }
+        })
+
+        await prisma.edge.deleteMany({
+            where: {
+                project_id: project_id
+            }
+        })
     } catch (error) {
         throw new Error(`Failed to delete project: ${error}`);
     }
@@ -251,7 +264,7 @@ export async function importPublicProject(project_id: string) {
             throw new Error(`Project not found or not public: ${project_id}`);
         }
 
-        await prisma.project.create({
+        const new_project = await prisma.project.create({
             data: {
                 title: parent_project.title,
                 description: parent_project.description,
@@ -259,6 +272,48 @@ export async function importPublicProject(project_id: string) {
                 user_id: userId,
                 imported_from_id: parent_project.id
             }
+        })
+
+        const parent_nodes = await prisma.node.findMany({
+            where: {
+                project_id: project_id
+            }
+        })
+
+        const parent_edges = await prisma.edge.findMany({
+            where: {
+                project_id: project_id
+            }
+        })
+
+        const mapped_nodes: Omit<Node, "id">[] = parent_nodes.map((node) => ({
+            title: node.title,
+            about: node.about,
+            status: "default",
+            user_id: userId,
+            project_id: new_project.id,
+            render_id: node.render_id,
+            x_pos: node.x_pos,
+            y_pos: node.y_pos,
+            ai_context: node.ai_context
+        }))
+
+        const mapped_edges: Omit<Edge, "id">[] = parent_edges.map((edge) => ({
+            render_id: edge.render_id,
+            user_id: userId,
+            project_id: new_project.id,
+            source: edge.source,
+            target: edge.target,
+            sourceHandle: edge.sourceHandle,
+            targetHandle: edge.targetHandle
+        }));
+
+        await prisma.node.createMany({
+            data: mapped_nodes
+        })
+
+        await prisma.edge.createMany({
+            data: mapped_edges
         })
 
     } catch (error) {

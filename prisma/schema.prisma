@@ -23,6 +23,8 @@ model Project {
   imported_from_id String?
   parent           Project?  @relation("Import", fields: [imported_from_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
   children         Project[] @relation("Import")
+
+  @@index([id])
 }
 
 model Node {
@@ -36,6 +38,9 @@ model Node {
   title      String?
   about      String? @db.Text
   ai_context String? @db.Text
+
+  @@index([id, project_id, user_id])
+  @@index([project_id, user_id])
 }
 
 model Edge {
@@ -47,4 +52,7 @@ model Edge {
   target       String
   sourceHandle String
   targetHandle String
+
+  @@index([id, project_id, user_id])
+  @@index([project_id, user_id])
 }
