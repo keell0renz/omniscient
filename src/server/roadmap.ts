@@ -1,5 +1,3 @@
-"use server"
-
 import prisma from "@/lib/prisma"
 import { Project } from "@prisma/client"
 import { revalidatePath } from "next/cache"

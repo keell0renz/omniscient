@@ -61,8 +61,6 @@ export default function Roadmap({
           await createEdge(connection);
         }}
         onEdgesDelete={async (edges: Edge[]) => {
-          console.log(JSON.stringify(edges));
-
           const connections: Connection[] = edges.map((edge) => ({
             source: edge.source,
             target: edge.target,
