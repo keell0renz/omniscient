@@ -31,30 +31,6 @@ const nodes = [
       position: { x: 100, y: 200 },
       type: "Node",
     },
-    {
-      id: "3",
-      data: {
-        label: "Computer Science",
-        about: null,
-        status: "skipped",
-        primary_key: "primary_key",
-        project_id: "project_id"
-      },
-      position: { x: 100, y: 300 },
-      type: "Node",
-    },
-    {
-      id: "4",
-      data: {
-        label: "Computer Science",
-        about: null,
-        status: "finished",
-        primary_key: "primary_key",
-        project_id: "project_id"
-      },
-      position: { x: 100, y: 400 },
-      type: "Node",
-    },
   ];
   
   const edges = [
@@ -62,26 +38,6 @@ const nodes = [
       id: "dsfdsfdsfsd",
       source: "1",
       target: "2",
-      sourceHandle: "d",
-      targetHandle: "b",
-      data: {
-        primary_key: "primary_key",
-      },
-    },
-    {
-      id: "dfdsfsdfsdg",
-      source: "1",
-      target: "3",
-      sourceHandle: "d",
-      targetHandle: "b",
-      data: {
-        primary_key: "primary_key",
-      },
-    },
-    {
-      id: "fgfdghdsdfs",
-      source: "1",
-      target: "3",
       sourceHandle: "d",
       targetHandle: "b",
       data: {

@@ -29,8 +29,8 @@ model Node {
   id         String  @id @default(uuid())
   render_id  String  @default(uuid())
   project_id String
-  x_pos      String
-  y_pos      String
+  x_pos      Float
+  y_pos      Float
   user_id    String
   status     String  @default("default")
   title      String?
@@ -41,6 +41,7 @@ model Node {
 model Edge {
   id           String @id @default(uuid())
   render_id    String @default(uuid())
+  user_id      String
   project_id   String
   source       String
   target       String
