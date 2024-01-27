@@ -25,7 +25,7 @@ const NodeStatus = () => {
 
   function handleStatus(status: status) {
     setStatus(status);
-    setIsPopoverOpen(false)
+    setIsPopoverOpen(false);
     console.log("set " + status, currentNode);
   }
 
@@ -33,9 +33,9 @@ const NodeStatus = () => {
     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
       <PopoverTrigger asChild>
         <div className="cursor-pointer w-1/2 h-[50px] text-md inline-flex items-center justify-center hover:border-foreground/70 rounded-xl border border-foreground">
-        <div className={`box h-3 w-3 rounded-full mr-2 ${statusColors[status]}`}>
-
-        </div>
+          <div
+            className={`box h-3 w-3 rounded-full mr-2 ${statusColors[status]}`}
+          ></div>
           {status!.charAt(0).toUpperCase() + status!.slice(1)}
           <span className="ml-2">
             <ChevronDown className="h-4 w-4" />
@@ -50,9 +50,9 @@ const NodeStatus = () => {
             className="h-[40px] w-full text-center flex flex-row justify-start"
             onClick={() => handleStatus(buttonStatus)}
           >
-            <div className={`box h-3 w-3 rounded-full mr-2 ${statusColors[buttonStatus]}`}>
-
-            </div>
+            <div
+              className={`box h-3 w-3 rounded-full mr-2 ${statusColors[buttonStatus]}`}
+            ></div>
             {buttonStatus.charAt(0).toUpperCase() + buttonStatus.slice(1)}
           </Button>
         ))}

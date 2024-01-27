@@ -18,9 +18,10 @@ import { Textarea } from "@/components/ui/textarea";
 import useNodeStore from "@/store/NodeStore";
 import { useEffect } from "react";
 import NodeDelete from "./NodeDelete";
+import { Button } from "@/components/ui/button";
 
 const NodeManage = () => {
-  const { currentNode } = useNodeStore();
+  const { currentNode, setCurrentNode } = useNodeStore();
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -33,6 +34,7 @@ const NodeManage = () => {
   function handleClose() {
     setIsEditMode(false);
     setIsSheetOpen(false);
+    setCurrentNode(null);
 
     form.reset({
       title: currentNode?.data.label || "",
