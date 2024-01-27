@@ -12,10 +12,10 @@ type status = "learning" | "skipped" | "finished" | "default";
 const statusButtons: status[] = ["default", "learning", "finished", "skipped"];
 
 const statusColors: Record<status, string> = {
-  learning: "bg-yellow-500", // Dark Orange
-  skipped: "bg-red-500", // Alizarin Red
-  finished: "bg-green-500", // Emerald Green
-  default: "bg-slate-400", // Dark Gray
+  learning: "bg-yellow-500",
+  skipped: "bg-red-500",
+  finished: "bg-green-500",
+  default: "bg-slate-400",
 };
 
 const NodeStatus = () => {
