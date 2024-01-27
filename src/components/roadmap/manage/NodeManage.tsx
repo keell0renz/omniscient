@@ -27,7 +27,8 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
 
   async function onEdit(input: GraphNodeSchema) {
     setIsEditMode(false);
-    setIsSheetOpen(false)
+    setIsSheetOpen(false);
+    setCurrentNode(null);
     await editNode(
       project_id,
       input,
