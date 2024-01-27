@@ -8,7 +8,13 @@ type CustomNodeData = {
   status: null | "learning" | "skipped" | "finished";
 };
 
-const NodeBorder = ({ status, selected }: { status: CustomNodeData['status'], selected: boolean }) => {
+const NodeBorder = ({
+  status,
+  selected,
+}: {
+  status: CustomNodeData["status"];
+  selected: boolean;
+}) => {
   const statusClasses = {
     learning: "border-yellow-500/60",
     skipped: "border-red-500/60",
@@ -32,7 +38,13 @@ const NodeBorder = ({ status, selected }: { status: CustomNodeData['status'], se
   return className;
 };
 
-const NodeHandles = ({ isHovered, selected }: { isHovered: boolean, selected: boolean }) => (
+const NodeHandles = ({
+  isHovered,
+  selected,
+}: {
+  isHovered: boolean;
+  selected: boolean;
+}) => (
   <div
     style={{
       visibility: isHovered && !selected ? "visible" : "hidden",
@@ -58,11 +70,15 @@ export default function CustomNode(props: NodeProps<CustomNodeData>) {
       onMouseLeave={() => setIsHovered(false)}
       className="cursor-pointer"
     >
-      <div className={NodeBorder({ status: props.data.status, selected: props.selected })}>
+      <div
+        className={NodeBorder({
+          status: props.data.status,
+          selected: props.selected,
+        })}
+      >
         {props.data.label}
       </div>
       <NodeHandles isHovered={isHovered} selected={props.selected} />
     </div>
   );
 }
-
