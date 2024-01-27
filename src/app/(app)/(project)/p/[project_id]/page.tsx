@@ -13,7 +13,7 @@ export default async function Page({
   ]);
   return (
     <>
-      <Roadmap nodes={nodes} edges={edges}/>
+      <Roadmap nodes={nodes} edges={edges} />
       <NodeManage />
     </>
   );

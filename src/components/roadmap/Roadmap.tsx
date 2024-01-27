@@ -4,15 +4,28 @@ import "reactflow/dist/style.css";
 import ReactFlow, { Controls, Background } from "reactflow";
 import { Node, Edge, Connection } from "reactflow";
 import useNodeStore from "@/store/NodeStore";
-import { createNode, createEdge, editNode, moveNode, deleteNodes, deleteEdges } from "@/server/roadmap";
+import {
+  createNode,
+  createEdge,
+  editNode,
+  moveNode,
+  deleteNodes,
+  deleteEdges,
+} from "@/server/roadmap";
 
 import "reactflow/dist/style.css";
 
 import CustomNode from "./Node";
 
-const nodeTypes = { Node: CustomNode }
+const nodeTypes = { Node: CustomNode };
 
-export default function Roadmap({ nodes, edges }: { nodes: Node[], edges: Edge[] }) {
+export default function Roadmap({
+  nodes,
+  edges,
+}: {
+  nodes: Node[];
+  edges: Edge[];
+}) {
   const { setCurrentNode } = useNodeStore();
 
   return (
@@ -28,30 +41,36 @@ export default function Roadmap({ nodes, edges }: { nodes: Node[], edges: Edge[]
           nodes: Node[],
         ) => {
           if (node.dragging) {
-            await moveNode(node.data.primary_key, node.position.x, node.position.y)
+            await moveNode(
+              node.data.primary_key,
+              node.position.x,
+              node.position.y,
+            );
           }
         }}
         onNodeClick={(event: React.MouseEvent, node: Node) => {
           setCurrentNode(node);
         }}
         onNodesDelete={async (nodes: Node[]) => {
-          const primary_keys: string[] = nodes.map(node => node.data.primary_key);
-          await deleteNodes(primary_keys)
+          const primary_keys: string[] = nodes.map(
+            (node) => node.data.primary_key,
+          );
+          await deleteNodes(primary_keys);
         }}
         onConnect={async (connection: Connection) => {
-          await createEdge(connection)
+          await createEdge(connection);
         }}
         onEdgesDelete={async (edges: Edge[]) => {
           console.log(JSON.stringify(edges));
-        
-          const connections: Connection[] = edges.map(edge => ({
+
+          const connections: Connection[] = edges.map((edge) => ({
             source: edge.source,
             target: edge.target,
             sourceHandle: edge.sourceHandle || null, // Coalesce undefined to null
             targetHandle: edge.targetHandle || null, // Coalesce undefined to null
           }));
-          
-          await deleteEdges(connections)
+
+          await deleteEdges(connections);
         }}
       >
         <Background color="#49495c" />
