@@ -74,9 +74,9 @@ export default function CustomNode(props: NodeProps<CustomNodeData>) {
         className={NodeBorder({
           status: props.data.status,
           selected: props.selected,
-        })}
+        }) + ` ${!props.data.label && "text-foreground/70"}`}
       >
-        {props.data.label}
+        {props.data.label ? props.data.label : "Untitled"}
       </div>
       <NodeHandles isHovered={isHovered} selected={props.selected} />
     </div>

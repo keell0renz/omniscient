@@ -4,12 +4,14 @@ import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs"
 import { GraphNodeValidator, GraphNodeSchema } from "@/schema/roadmap"
 import { Node, Edge, Connection } from "reactflow"
+import { v4 as uuidv4 } from 'uuid';
 
 const nodes = [
     {
       id: "1",
       data: {
         label: "Computer Science",
+        about: null,
         status: "default",
         primary_key: "primary_key",
         project_id: "project_id"
@@ -21,6 +23,7 @@ const nodes = [
       id: "2",
       data: {
         label: "Computer Science",
+        about: null,
         status: "learning",
         primary_key: "primary_key",
         project_id: "project_id"
@@ -32,6 +35,7 @@ const nodes = [
       id: "3",
       data: {
         label: "Computer Science",
+        about: null,
         status: "skipped",
         primary_key: "primary_key",
         project_id: "project_id"
@@ -43,6 +47,7 @@ const nodes = [
       id: "4",
       data: {
         label: "Computer Science",
+        about: null,
         status: "finished",
         primary_key: "primary_key",
         project_id: "project_id"
@@ -93,8 +98,24 @@ export async function getEdgesByProjectId(project_id: string): Promise<Edge[]> {
     return edges // Temporarily
 }
 
-export async function createNode(project_id: string, x_pos: number, y_pos: number) {
+export async function createNode(project_id: string, x_pos: number, y_pos: number): Promise<Node>  {
+    const generatedId = uuidv4(); // Generate a new UUID v4
+    const generatedPrimaryKey = uuidv4(); // Generate a new UUID v4 for primary_key if needed
+
     console.log(`Create Node - project_id: ${project_id}, x: ${x_pos}, y: ${y_pos}`);
+
+    return {
+        id: generatedId,
+        data: {
+          label: null,
+          about: null,
+          status: "default",
+          primary_key: generatedPrimaryKey,
+          project_id: project_id
+        },
+        position: { x: x_pos, y: y_pos },
+        type: "Node"
+    }
 }
 
 export async function createEdge(project_id: string, connection: Connection) {

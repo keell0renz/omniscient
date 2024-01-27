@@ -28,7 +28,11 @@ const NodeManage = () => {
 
   async function onEdit(input: GraphNodeSchema) {
     setIsEditMode(false);
-    await editNode(currentNode?.data.project_id, input, currentNode?.data.primary_key);
+    await editNode(
+      currentNode?.data.project_id,
+      input,
+      currentNode?.data.primary_key,
+    );
   }
 
   function handleClose() {
@@ -87,8 +91,8 @@ const NodeManage = () => {
                               {...field}
                             />
                           ) : (
-                            <h2 className="max-w-[290px] text-2xl truncate">
-                              {field.value}
+                            <h2 className={`max-w-[290px] text-2xl truncate ${!field.value && "text-foreground/70"}`}>
+                              {field.value ? field.value : "Untitled"}
                             </h2>
                           )}
                         </FormControl>
@@ -124,8 +128,8 @@ const NodeManage = () => {
                           {...field}
                         />
                       ) : (
-                        <p className="text-lg max-w-1/2 h-full mt-2 overflow-hidden overflow-ellipsis break-word">
-                          {field.value}
+                        <p className={`text-lg max-w-1/2 h-full mt-2 overflow-hidden overflow-ellipsis break-word ${!field.value && "text-foreground/70"}`}>
+                          {field.value ? field.value : "No description"}
                         </p>
                       )}
                     </FormControl>
