@@ -1,5 +1,6 @@
 import Cognitar from "@/components/misc/Logo";
 import { SquarePen } from "lucide-react";
+import Link from "next/link";
 
 async function NavbarChild({
   children,
@@ -32,11 +33,13 @@ export default async function Layout({
     <div className="flex flex-row h-screen w-screen">
       <Navbar>
         <NavbarChild className="flex flex-row justify-between items-center">
+        <Link href={`/p/${params.pid}/${params.nid}`}>
           <div className="flex flex-row justify-start space-x-2">
             <Cognitar height="26" width="26" />
             <h1 className="font-semibold">Omniscient</h1>
           </div>
           <SquarePen height={16} width={16} />
+        </Link>
         </NavbarChild>
       </Navbar>
       <div className="h-full w-full bg-slate-600/10">{children}</div>
