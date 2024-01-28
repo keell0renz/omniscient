@@ -38,6 +38,9 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
       setNodes(currentNodes);
     }
 
+    setIsSheetOpen(false);
+    setCurrentNode(null);
+
     await editNode(
       project_id,
       input,
@@ -61,6 +64,7 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
 
   useEffect(() => {
     setIsSheetOpen(!!currentNode); // Set isSheetOpen to true if currentNode is present, otherwise false
+    setIsEditMode(currentNode?.data.label === null)
     form.reset({
       label: currentNode?.data.label || "",
       about: currentNode?.data.about || "",
