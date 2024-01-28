@@ -1,4 +1,4 @@
-import { Navbar, NewChat, AIContext } from "@/components/node/navbar";
+import { Navbar } from "@/components/node/navbar";
 
 export default async function Layout({
   children,
@@ -9,10 +9,7 @@ export default async function Layout({
 }) {
   return (
     <div className="flex flex-row h-screen w-screen">
-      <Navbar>
-        <NewChat {...params} />
-        <AIContext {...params} />
-      </Navbar>
+      <Navbar params={params} />
       <div className="h-full w-full bg-slate-600/10">{children}</div>
     </div>
   );
