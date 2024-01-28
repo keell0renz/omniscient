@@ -10,5 +10,6 @@ export default async function Page({
     getNodesByProjectId(params.pid),
     getEdgesByProjectId(params.pid),
   ]);
+
   return <Roadmap nodes={nodes} edges={edges} project_id={params.pid} />;
 }
