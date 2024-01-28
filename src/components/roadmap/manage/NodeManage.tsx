@@ -21,7 +21,7 @@ import { editNode } from "@/server/roadmap";
 import { useReactFlow } from "reactflow";
 
 const NodeManage = ({ project_id }: { project_id: string }) => {
-  const { currentNode } = useNodeStore();
+  const { currentNode, setCurrentNode } = useNodeStore();
   const { getNodes, setNodes } = useReactFlow();
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -48,6 +48,7 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
   function handleClose() {
     setIsEditMode(false);
     setIsSheetOpen(false);
+    setCurrentNode(null);
   }
 
   const form = useForm<GraphNodeSchema>({
