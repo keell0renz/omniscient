@@ -6,5 +6,9 @@ export default async function Layout({
   children: React.ReactNode;
   params: { pid: string; nid: string };
 }) {
-    
+    return (
+        <div className="">
+
+        </div>
+    )
 }
