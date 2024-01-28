@@ -7,9 +7,9 @@ export default async function Layout({
   params,
 }: {
   children: React.ReactNode;
-  params: { project_id: string };
+  params: { pid: string };
 }) {
-  const project = await getProjectById(params.project_id);
+  const project = await getProjectById(params.pid);
 
   if (!project) notFound();
 
@@ -17,7 +17,7 @@ export default async function Layout({
     <div className="flex flex-col h-screen w-screen">
       <Navbar title={project?.title}>
         <NavbarLink href="/projects" title="Dashboard" />
-        <NavbarLink href={`/p/${params.project_id}`} title="Roadmap" />
+        <NavbarLink href={`/p/${params.pid}`} title="Roadmap" />
       </Navbar>
       <div className="w-full h-full overflow-hidden">{children}</div>
     </div>
