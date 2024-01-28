@@ -1,4 +1,3 @@
-import NavbarChild from "./NavbarChild";
 import {
   Dialog,
   DialogContent,
@@ -19,10 +18,10 @@ export default async function AIContext({
   return (
     <Dialog>
       <DialogTrigger>
-        <NavbarChild className="flex flex-row justify-start space-x-2">
+        <div className="flex flex-row justify-start space-x-2 px-4 py-2 rounded-lg hover:bg-secondary">
           <Bot />
           <h1>AI Context</h1>
-        </NavbarChild>
+        </div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

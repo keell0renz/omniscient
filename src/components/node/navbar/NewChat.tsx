@@ -1,4 +1,3 @@
-import NavbarChild from "./NavbarChild";
 import Link from "next/link";
 import Cognitar from "@/components/misc/Logo";
 import { SquarePen } from "lucide-react";
@@ -11,7 +10,7 @@ export default async function NewChat({
   nid: string;
 }) {
   return (
-    <NavbarChild>
+    <div className="px-4 py-2 rounded-lg hover:bg-secondary">
       <Link
         href={`/p/${pid}/n/${nid}`}
         className="flex flex-row justify-between items-center"
@@ -22,6 +21,6 @@ export default async function NewChat({
         </div>
         <SquarePen height={16} width={16} />
       </Link>
-    </NavbarChild>
+    </div>
   );
 }
