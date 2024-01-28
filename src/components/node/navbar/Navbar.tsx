@@ -15,7 +15,7 @@ export default async function Navbar({
         <AIContext {...params} />
       </div>
       <div className="flex flex-col flex-grow overflow-hidden">
-        <Articles params={params} />
+        {/* <Articles params={params} /> */}
         <Chats params={params} />
       </div>
     </div>
