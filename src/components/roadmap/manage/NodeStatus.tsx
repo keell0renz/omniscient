@@ -8,6 +8,7 @@ import { ChevronDown } from "lucide-react";
 import useNodeStore from "@/store/NodeStore";
 import { useState } from "react";
 import { editNodeStatus } from "@/server/roadmap";
+import { useReactFlow } from "reactflow";
 
 type status = "learning" | "skipped" | "finished" | "default";
 const statusButtons: status[] = ["default", "learning", "finished", "skipped"];
@@ -21,12 +22,22 @@ const statusColors: Record<status, string> = {
 
 const NodeStatus = () => {
   const { currentNode } = useNodeStore();
+  const { getNodes, setNodes } = useReactFlow();
   const [status, setStatus] = useState<status>(currentNode?.data.status);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   async function handleStatus(status: status) {
     setStatus(status);
     setIsPopoverOpen(false);
+
+    const currentNodes = getNodes();
+    const editedNodeIndex = currentNodes.findIndex(node => node.data.primary_key === currentNode?.data.primary_key);
+
+    if (editedNodeIndex !== -1) {
+      currentNodes[editedNodeIndex].data.status = status;
+      setNodes(currentNodes);
+    }
+
     await editNodeStatus(
       currentNode?.data.project_id,
       status,

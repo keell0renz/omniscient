@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const GraphNodeValidator = z.object({
-    title: z
+    label: z
         .string()
         .min(1, "Title is required.")
         .max(64, "Title too long!"),

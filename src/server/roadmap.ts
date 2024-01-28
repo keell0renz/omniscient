@@ -16,7 +16,7 @@ export async function getNodesByProjectId(project_id: string): Promise<Node[]> {
     }
 
     const node_records = await prisma.node.findMany({
-         where: {
+        where: {
             project_id: project_id,
             user_id: userId
         }
@@ -69,7 +69,7 @@ export async function getEdgesByProjectId(project_id: string): Promise<Edge[]> {
     return edges
 }
 
-export async function createNode(project_id: string, x_pos: number, y_pos: number): Promise<Node>  {
+export async function createNode(project_id: string, x_pos: number, y_pos: number): Promise<Node> {
     const { userId } = auth()
 
     if (!userId) {
@@ -90,11 +90,11 @@ export async function createNode(project_id: string, x_pos: number, y_pos: numbe
     return {
         id: node_record.render_id,
         data: {
-          label: node_record.title,
-          about: node_record.about,
-          status: node_record.status,
-          primary_key: node_record.id,
-          project_id: node_record.project_id
+            label: node_record.title,
+            about: node_record.about,
+            status: node_record.status,
+            primary_key: node_record.id,
+            project_id: node_record.project_id
         },
         position: { x: node_record.x_pos, y: node_record.y_pos },
         type: "Node"
@@ -131,7 +131,7 @@ export async function editNode(project_id: string, schema: GraphNodeSchema, node
 
     const validated = GraphNodeValidator.safeParse(schema)
 
-    if(!validated.success) {
+    if (!validated.success) {
         throw Error(`Validation error: ${validated.error}`)
     }
 
@@ -142,7 +142,7 @@ export async function editNode(project_id: string, schema: GraphNodeSchema, node
             user_id: userId
         },
         data: {
-            title: validated.data.title,
+            title: validated.data.label,
             about: validated.data.about
         }
     })

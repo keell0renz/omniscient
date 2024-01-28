@@ -1,5 +1,5 @@
 "use client";
-import { CheckCircle, Edit, Trash2 } from "lucide-react";
+import { CheckCircle, Edit } from "lucide-react";
 import Link from "next/link";
 import NodeStatus from "@/components/roadmap/manage/NodeStatus";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
@@ -12,23 +12,32 @@ import {
   FormField,
   FormControl,
   FormItem,
-  FormLabel,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import useNodeStore from "@/store/NodeStore";
 import { useEffect } from "react";
 import NodeDelete from "./NodeDelete";
 import { editNode } from "@/server/roadmap";
+import { useReactFlow } from "reactflow";
 
 const NodeManage = ({ project_id }: { project_id: string }) => {
-  const { currentNode, setCurrentNode } = useNodeStore();
+  const { currentNode } = useNodeStore();
+  const { getNodes, setNodes } = useReactFlow();
+
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
 
   async function onEdit(input: GraphNodeSchema) {
     setIsEditMode(false);
-    setIsSheetOpen(false);
-    setCurrentNode(null);
+
+    const currentNodes = getNodes();
+    const editedNodeIndex = currentNodes.findIndex(node => node.data.primary_key === currentNode?.data.primary_key);
+
+    if (editedNodeIndex !== -1) {
+      currentNodes[editedNodeIndex].data = { ...currentNodes[editedNodeIndex].data, ...input };
+      setNodes(currentNodes);
+    }
+
     await editNode(
       project_id,
       input,
@@ -39,18 +48,12 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
   function handleClose() {
     setIsEditMode(false);
     setIsSheetOpen(false);
-    setCurrentNode(null);
-
-    form.reset({
-      title: currentNode?.data.label || "",
-      about: currentNode?.data.about || "",
-    });
   }
 
   const form = useForm<GraphNodeSchema>({
     resolver: zodResolver(GraphNodeValidator),
     defaultValues: {
-      title: currentNode?.data.label || "",
+      label: currentNode?.data.label || "",
       about: currentNode?.data.about || "",
     },
   });
@@ -58,14 +61,14 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
   useEffect(() => {
     setIsSheetOpen(!!currentNode); // Set isSheetOpen to true if currentNode is present, otherwise false
     form.reset({
-      title: currentNode?.data.label || "",
+      label: currentNode?.data.label || "",
       about: currentNode?.data.about || "",
     });
   }, [currentNode]);
 
   return (
     <Sheet open={isSheetOpen} onOpenChange={handleClose}>
-      <SheetContent className="p-5 pr-10">
+      <SheetContent className="p-5 pr-10 focus-visible:outline-none">
         <div className="flex flex-row w-full gap-2">
           <NodeStatus />
           <Link href="#" className="w-1/2">
@@ -80,7 +83,7 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
               <div className="h-fit mb-2 flex flex-row flex-nowrap w-full items-center justify-between">
                 <FormField
                   control={form.control}
-                  name="title"
+                  name="label"
                   render={({ field }) => {
                     return (
                       <FormItem>
@@ -126,6 +129,12 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
                     <FormControl>
                       {isEditMode ? (
                         <Textarea
+                          onKeyDown={async (e) => {
+                            if (isEditMode && e.key === "Enter") {
+                              await form.handleSubmit(onEdit)();
+                              e.preventDefault();
+                            }
+                          }}
                           className="p-0 text-lg resize-none w-full mt-2 max-w-full h-full bg-transparent focus-visible:ring-0 focus-visible:outline-none border-none scrollbar-hide"
                           placeholder="This node is about..."
                           {...field}
