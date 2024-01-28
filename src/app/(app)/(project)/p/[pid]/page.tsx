@@ -1,11 +1,7 @@
 import { Roadmap } from "@/components/roadmap";
 import { getNodesByProjectId, getEdgesByProjectId } from "@/server/roadmap";
 
-export default async function Page({
-  params,
-}: {
-  params: { pid: string };
-}) {
+export default async function Page({ params }: { params: { pid: string } }) {
   const [nodes, edges] = await Promise.all([
     getNodesByProjectId(params.pid),
     getEdgesByProjectId(params.pid),

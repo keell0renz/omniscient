@@ -31,7 +31,9 @@ const NodeStatus = () => {
     setIsPopoverOpen(false);
 
     const currentNodes = getNodes();
-    const editedNodeIndex = currentNodes.findIndex(node => node.data.primary_key === currentNode?.data.primary_key);
+    const editedNodeIndex = currentNodes.findIndex(
+      (node) => node.data.primary_key === currentNode?.data.primary_key,
+    );
 
     if (editedNodeIndex !== -1) {
       currentNodes[editedNodeIndex].data.status = status;

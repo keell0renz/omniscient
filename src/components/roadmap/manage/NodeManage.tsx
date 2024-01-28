@@ -7,12 +7,7 @@ import { useState } from "react";
 import { GraphNodeValidator, GraphNodeSchema } from "@/schema/roadmap";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormField,
-  FormControl,
-  FormItem,
-} from "@/components/ui/form";
+import { Form, FormField, FormControl, FormItem } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import useNodeStore from "@/store/NodeStore";
 import { useEffect } from "react";
@@ -31,21 +26,22 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
     setIsEditMode(false);
 
     const currentNodes = getNodes();
-    const editedNodeIndex = currentNodes.findIndex(node => node.data.primary_key === currentNode?.data.primary_key);
+    const editedNodeIndex = currentNodes.findIndex(
+      (node) => node.data.primary_key === currentNode?.data.primary_key,
+    );
 
     if (editedNodeIndex !== -1) {
-      currentNodes[editedNodeIndex].data = { ...currentNodes[editedNodeIndex].data, ...input };
+      currentNodes[editedNodeIndex].data = {
+        ...currentNodes[editedNodeIndex].data,
+        ...input,
+      };
       setNodes(currentNodes);
     }
 
     setIsSheetOpen(false);
     setCurrentNode(null);
 
-    await editNode(
-      project_id,
-      input,
-      currentNode?.data.primary_key,
-    );
+    await editNode(project_id, input, currentNode?.data.primary_key);
   }
 
   function handleClose() {
@@ -64,7 +60,7 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
 
   useEffect(() => {
     setIsSheetOpen(!!currentNode); // Set isSheetOpen to true if currentNode is present, otherwise false
-    setIsEditMode(currentNode?.data.label === null)
+    setIsEditMode(currentNode?.data.label === null);
     form.reset({
       label: currentNode?.data.label || "",
       about: currentNode?.data.about || "",
