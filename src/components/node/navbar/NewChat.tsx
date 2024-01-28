@@ -2,7 +2,11 @@ import Link from "next/link";
 import Cognitar from "@/components/misc/Logo";
 import { SquarePen } from "lucide-react";
 
-export default async function NewChat({ params }: { params: { pid: string; nid: string } }) {
+export default async function NewChat({
+  params,
+}: {
+  params: { pid: string; nid: string };
+}) {
   return (
     <div className="px-4 py-2 rounded-lg hover:bg-secondary">
       <Link

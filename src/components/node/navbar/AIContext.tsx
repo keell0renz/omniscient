@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Dialog,
@@ -23,7 +23,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import LoadingButton from "@/components/ui/LoadingButton";
 
-function AIContextForm({ params, setOpen }: { params: { pid: string; nid: string }, setOpen: (set: boolean) => void }) {
+function AIContextForm({
+  params,
+  setOpen,
+}: {
+  params: { pid: string; nid: string };
+  setOpen: (set: boolean) => void;
+}) {
   const form = useForm<NodeAIContext>({
     resolver: zodResolver(validateSetNodeAIContext),
     defaultValues: {
@@ -35,7 +41,7 @@ function AIContextForm({ params, setOpen }: { params: { pid: string; nid: string
     console.log(input);
     console.log(params.pid);
     console.log(params.nid);
-    setOpen(false)
+    setOpen(false);
   }
 
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +54,9 @@ function AIContextForm({ params, setOpen }: { params: { pid: string; nid: string
           name="ai_context"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-lg font-semibold">AI Context</FormLabel>
+              <FormLabel className="text-lg font-semibold">
+                AI Context
+              </FormLabel>
               <FormControl>
                 <Textarea
                   className="w-full h-72 resize-none"
@@ -69,7 +77,11 @@ function AIContextForm({ params, setOpen }: { params: { pid: string; nid: string
   );
 }
 
-export default function AIContext({ params }: { params: { pid: string; nid: string } }) {
+export default function AIContext({
+  params,
+}: {
+  params: { pid: string; nid: string };
+}) {
   const [openDialog, setIsOpenedDialog] = useState(false);
   return (
     <Dialog open={openDialog} onOpenChange={setIsOpenedDialog}>
@@ -86,7 +98,7 @@ export default function AIContext({ params }: { params: { pid: string; nid: stri
             Here you can edit AI context of the current node.
           </DialogDescription>
         </DialogHeader>
-        <AIContextForm params={params} setOpen={setIsOpenedDialog}/>
+        <AIContextForm params={params} setOpen={setIsOpenedDialog} />
       </DialogContent>
     </Dialog>
   );
