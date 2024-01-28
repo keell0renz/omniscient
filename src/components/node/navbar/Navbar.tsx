@@ -11,8 +11,8 @@ export default async function Navbar({
   return (
     <div className="h-full w-72 flex flex-col justify-start pt-4 mx-2">
       <div className="flex flex-col justify-start">
-        <NewChat {...params} />
-        <AIContext {...params} />
+        <NewChat params={params} />
+        <AIContext params={params} />
       </div>
       <div className="flex flex-col flex-grow overflow-hidden">
         {/* <Articles params={params} /> */}
