@@ -1,4 +1,4 @@
-import { MoreHorizontal } from "lucide-react";
+import ChatPopover from "@/components/node/navbar/chat/ChatPopover";
 
 export default function Chat({
   chat_id,
@@ -10,7 +10,7 @@ export default function Chat({
   return (
     <div className="group py-2 px-2 rounded-lg hover:bg-secondary flex flex-row justify-between items-center">
       <h1 className="text-sm truncate w-64">{title}</h1>
-      <MoreHorizontal className="opacity-0 group-hover:opacity-100 w-6" />
+      <ChatPopover chat_id={chat_id} />
     </div>
   );
 }

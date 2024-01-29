@@ -1,14 +1,15 @@
-import { handler } from "@/server/openai";
+import AIChat from "@/components/node/navbar/chat/AIChat";
 
 export const runtime = "edge";
 
-export default async function Page({
+export default function Page({
   params,
 }: {
   params: { pid: string; nid: string };
 }) {
-  
   return (
-    <></>
+    <>
+      <AIChat />
+    </>
   )
 }

@@ -1,4 +1,4 @@
-import Chat from "./Chat";
+import Chat from "@/components/node/navbar/chat/Chat";
 
 export default function Chats({
   params,
