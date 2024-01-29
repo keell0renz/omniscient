@@ -1,8 +1,6 @@
 import NewChat from "./NewChat";
 import AIContext from "./AIContext";
 import Chats from "./chat/Chats";
-import Articles from "./article/Articles";
-
 export default async function Navbar({
   params,
 }: {
@@ -15,7 +13,6 @@ export default async function Navbar({
         <AIContext params={params} />
       </div>
       <div className="flex flex-col flex-grow overflow-hidden">
-        {/* <Articles params={params} /> */}
         <Chats params={params} />
       </div>
     </div>
