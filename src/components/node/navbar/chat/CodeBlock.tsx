@@ -2,7 +2,7 @@ import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-const CodeBlock = React.memo((props: any) => {
+const CodeBlock = ({ className, children }: any) => {
     const customStyle = {
         ...vscDarkPlus,
         'code[class*="language-"]': {
@@ -11,13 +11,15 @@ const CodeBlock = React.memo((props: any) => {
         },
     };
 
-    const language = props.className ? props.className.replace('language-', '') : 'javascript';
+    const language = className ? className.replace('language-', '') : 'javascript';
 
     return (
         <SyntaxHighlighter language={language} style={customStyle}>
-            {props.children}
+            {children}
         </SyntaxHighlighter>
     );
-});
+};
 
-export default CodeBlock;
+CodeBlock.displayName = 'CodeBlock';
+
+export default React.memo(CodeBlock);
