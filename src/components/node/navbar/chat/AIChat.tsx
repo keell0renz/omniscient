@@ -62,11 +62,11 @@ const AIChat = () => {
                     </div>
                 ))
             }
-            <div className="min-h-38 fixed w-full bottom-0 pt-16 flex flex-col items-center space-y-3 pb-4 sm:px-0">
+            <div className="fixed w-full bottom-0 pt-16 flex flex-col items-center space-y-3 pb-4 sm:px-0">
                 <form
                     ref={formRef}
                     onSubmit={handleSubmit}
-                    className="h-full bg-background w-full relative max-w-screen-md rounded-xl border bg-none px-4 shadow-lg shadow-blue-600/10"
+                    className="h-full bg-background w-full rounded-full relative max-w-screen-md border bg-none px-4 shadow-lg shadow-blue-600/10"
                 >
                     <Textarea
                         ref={inputRef}
@@ -84,7 +84,7 @@ const AIChat = () => {
                             }
                         }}
                         spellCheck={false}
-                        className="pt-6 pb-0 scrollbar-hide bg-background m-0 w-full h-fit text-lg resize-none border-0 pr-10 focus:ring-0 focus-visible:ring-0"
+                        className="max-h-10 rounded-full pt-4 pb-0 scrollbar-hide bg-background m-0 w-full h-fit text-lg resize-none border-0 pr-10 focus:ring-0 focus-visible:ring-0"
                     />
                     {isLoading ? (
                         <button
@@ -100,7 +100,7 @@ const AIChat = () => {
                         <button
                             className={
                                 clsx(
-                                    "absolute inset-y-0 right-3 my-auto flex h-8 w-8 items-center justify-center rounded-md transition-all border",
+                                    "absolute inset-y-0 right-3 my-auto flex h-8 w-8 items-center justify-center rounded-md transition-all",
                                     disabled
                                         ? "cursor-not-allowed bg-background"
                                         : "bg-blue-500 hover:bg-blue-600",
@@ -113,7 +113,7 @@ const AIChat = () => {
                         </button>
                     )}
                 </form>
-                <p className="text-md text-muted-foreground !mt-2">
+                <p className="text-md text-muted-foreground !m-0.5 p-1 rounded-full bg-background">
                     Bot can make mistakes. Be careful!
                 </p>
             </div>
