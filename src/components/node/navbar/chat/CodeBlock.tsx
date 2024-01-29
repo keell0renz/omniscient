@@ -1,25 +1,27 @@
-import React from 'react';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import React from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const CodeBlock = ({ className, children }: any) => {
-    const customStyle = {
-        ...vscDarkPlus,
-        'code[class*="language-"]': {
-            color: 'foreground',
-            fontSize: '16px',
-        },
-    };
+  const customStyle = {
+    ...vscDarkPlus,
+    'code[class*="language-"]': {
+      color: "foreground",
+      fontSize: "16px",
+    },
+  };
 
-    const language = className ? className.replace('language-', '') : 'javascript';
+  const language = className
+    ? className.replace("language-", "")
+    : "javascript";
 
-    return (
-        <SyntaxHighlighter language={language} style={customStyle}>
-            {children}
-        </SyntaxHighlighter>
-    );
+  return (
+    <SyntaxHighlighter language={language} style={customStyle}>
+      {children}
+    </SyntaxHighlighter>
+  );
 };
 
-CodeBlock.displayName = 'CodeBlock';
+CodeBlock.displayName = "CodeBlock";
 
 export default React.memo(CodeBlock);
