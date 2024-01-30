@@ -62,3 +62,25 @@ export async function insertMessageIntoChat(message: MessageSchema, project_id: 
         }
     })
 }
+
+export async function getMessagesByChat(chat_id: string): Promise<MessageSchema[]> {
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    const message_records = await prisma.message.findMany({
+        where: {
+            chat_id: chat_id
+        }
+    })
+
+    const messages: MessageSchema[] = message_records.map((record) => ({
+        id: record.id,
+        role: record.role as "function" | "system" | "user" | "assistant" | "data" | "tool",
+        content: record.content
+    }))
+
+    return messages
+}
