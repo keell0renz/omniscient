@@ -9,7 +9,7 @@ export default async function Page({
   const node = await getNodeById(params.nid)
   return (
     <>
-      <AIChat ai_context={node.ai_context || ""}/>
+      <AIChat node={node}/>
     </>
   );
 }

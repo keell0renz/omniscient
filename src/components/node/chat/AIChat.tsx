@@ -10,8 +10,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@clerk/nextjs";
 import CodeBlock from "@/components/node/chat/CodeBlock";
 import { Message } from "ai";
+import { Node } from "@prisma/client";
 
-const AIChat = ({ ai_context }: { ai_context: string }) => {
+const AIChat = ({ node }: { node: Node }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -30,8 +31,9 @@ const AIChat = ({ ai_context }: { ai_context: string }) => {
            Please USE markdown syntax to hightlight and structure your writing! YOU MUST make spaces,
            make titles bold, use headers. Please.
 
-           CONTEXT:
-           ${ai_context}
+           TITLE (lesson is about): ${node.title}
+           DESCRIPTION (for humans): ${node.about} 
+           CONTEXT (instructions for you, you MUST follow them): ${node.ai_context}
           `,
         id: "system",
       },
