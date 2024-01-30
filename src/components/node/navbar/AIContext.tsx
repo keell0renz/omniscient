@@ -22,29 +22,35 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import LoadingButton from "@/components/ui/LoadingButton";
+import { setNodeAIContext } from "@/server/roadmap";
 
 function AIContextForm({
   params,
   setOpen,
+  ai_context
 }: {
   params: { pid: string; nid: string };
   setOpen: (set: boolean) => void;
+  ai_context: string
 }) {
+  
+
   const form = useForm<NodeAIContext>({
     resolver: zodResolver(validateSetNodeAIContext),
     defaultValues: {
-      ai_context: "",
+      ai_context: ai_context,
     },
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   async function onSetAIContext(input: NodeAIContext) {
     console.log(input);
-    console.log(params.pid);
-    console.log(params.nid);
+    setIsLoading(true);
+    await setNodeAIContext(input, params.pid, params.nid)
+    setIsLoading(false);
     setOpen(false);
   }
-
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Form {...form}>
@@ -79,8 +85,10 @@ function AIContextForm({
 
 export default function AIContext({
   params,
+  ai_context
 }: {
   params: { pid: string; nid: string };
+  ai_context: string
 }) {
   const [openDialog, setIsOpenedDialog] = useState(false);
   return (
@@ -98,7 +106,7 @@ export default function AIContext({
             Here you can edit AI context of the current node.
           </DialogDescription>
         </DialogHeader>
-        <AIContextForm params={params} setOpen={setIsOpenedDialog} />
+        <AIContextForm params={params} setOpen={setIsOpenedDialog} ai_context={ai_context}/>
       </DialogContent>
     </Dialog>
   );

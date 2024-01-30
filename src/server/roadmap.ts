@@ -3,18 +3,19 @@
 import prisma from "@/lib/prisma"
 import { Node as NodeSchema } from "@prisma/client"
 import { auth } from "@clerk/nextjs"
-import { GraphNodeValidator, GraphNodeSchema, validateNodeAIContext, NodeAIContext } from "@/schema/roadmap"
+import { GraphNodeValidator, GraphNodeSchema } from "@/schema/roadmap"
+import { validateSetNodeAIContext, NodeAIContext } from "@/schema/node"
 import { Node, Edge, Connection } from "reactflow"
 import { revalidatePath } from "next/cache"
 
-export async function setNodeAIContext(schema: NodeAIContext, node_id: string) {
+export async function setNodeAIContext(schema: NodeAIContext, project_id: string, node_id: string) {
     const { userId } = auth()
 
     if (!userId) {
         throw new Error("Not authenticated!")
     }
 
-    const validated = validateNodeAIContext.safeParse(schema)
+    const validated = validateSetNodeAIContext.safeParse(schema)
 
     if (!validated.success) {
         throw new Error(`Schema validation failed: ${validated.error}`)
@@ -29,6 +30,8 @@ export async function setNodeAIContext(schema: NodeAIContext, node_id: string) {
             ai_context: validated.data.ai_context
         }
     })
+
+    revalidatePath(`/p/${project_id}/c/${node_id}/`)
 }
 
 export async function getNodeById(node_id: string): Promise<NodeSchema> {

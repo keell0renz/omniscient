@@ -11,7 +11,7 @@ import { useUser } from "@clerk/nextjs";
 import CodeBlock from "@/components/node/chat/CodeBlock";
 import { Message } from "ai";
 
-const AIChat = () => {
+const AIChat = ({ ai_context }: { ai_context: string }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -29,6 +29,9 @@ const AIChat = () => {
 
            Please USE markdown syntax to hightlight and structure your writing! YOU MUST make spaces,
            make titles bold, use headers. Please.
+
+           CONTEXT:
+           ${ai_context}
           `,
         id: "system",
       },

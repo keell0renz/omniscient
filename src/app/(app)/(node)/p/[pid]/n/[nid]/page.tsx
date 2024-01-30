@@ -1,15 +1,15 @@
 import AIChat from "@/components/node/chat/AIChat";
+import { getNodeById } from "@/server/roadmap";
 
-export const runtime = "edge";
-
-export default function Page({
+export default async function Page({
   params,
 }: {
   params: { pid: string; nid: string };
 }) {
+  const node = await getNodeById(params.nid)
   return (
     <>
-      <AIChat />
+      <AIChat ai_context={node.ai_context || ""}/>
     </>
   );
 }
