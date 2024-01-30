@@ -10,4 +10,12 @@ export const GraphNodeValidator = z.object({
         .max(1024, "Description too long!"),
 });
 
+export const validateNodeAIContext = z.object({
+    ai_context: z
+        .string()
+        .max(2048, "AI context too long!")
+})
+
 export type GraphNodeSchema = z.infer<typeof GraphNodeValidator>;
+
+export type NodeAIContext = z.infer<typeof validateNodeAIContext>

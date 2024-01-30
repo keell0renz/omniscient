@@ -1,12 +1,50 @@
 "use server"
 
 import prisma from "@/lib/prisma"
-import { Project } from "@prisma/client"
+import { Node as NodeSchema } from "@prisma/client"
 import { redirect } from "next/navigation"
 import { auth, useOrganization } from "@clerk/nextjs"
-import { GraphNodeValidator, GraphNodeSchema } from "@/schema/roadmap"
+import { GraphNodeValidator, GraphNodeSchema, validateNodeAIContext, NodeAIContext } from "@/schema/roadmap"
 import { Node, Edge, Connection } from "reactflow"
 import { revalidatePath } from "next/cache"
+
+export async function setNodeAIContext(schema: NodeAIContext, node_id: string) {
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    const validated = validateNodeAIContext.safeParse(schema)
+
+    if (!validated.success) {
+        throw new Error(`Schema validation failed: ${validated.error}`)
+    }
+
+    await prisma.node.update({
+        where: {
+            id: node_id,
+            user_id: userId
+        },
+        data: {
+            ai_context: validated.data.ai_context
+        }
+    })
+}
+
+export async function getNodeById(node_id: string): Promise<NodeSchema> {
+    const { userId } = auth()
+
+    if (!userId) {
+        throw new Error("Not authenticated!")
+    }
+
+    return await prisma.node.findUniqueOrThrow({
+        where: {
+            id: node_id
+        }
+    })
+}
 
 export async function getNodesByProjectId(project_id: string): Promise<Node[]> {
     const { userId } = auth()

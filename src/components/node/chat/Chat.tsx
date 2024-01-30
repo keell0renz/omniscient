@@ -1,4 +1,4 @@
-import ChatPopover from "@/components/node/navbar/chat/ChatPopover";
+import ChatPopover from "@/components/node/chat/ChatPopover";
 
 export default function Chat({
   chat_id,

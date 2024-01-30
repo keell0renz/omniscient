@@ -1,6 +1,6 @@
 import NewChat from "./NewChat";
 import AIContext from "./AIContext";
-import Chats from "./chat/Chats";
+import Chats from "../chat/Chats";
 export default async function Navbar({
   params,
 }: {

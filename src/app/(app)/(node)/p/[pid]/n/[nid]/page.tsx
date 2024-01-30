@@ -1,4 +1,4 @@
-import AIChat from "@/components/node/navbar/chat/AIChat";
+import AIChat from "@/components/node/chat/AIChat";
 
 export const runtime = "edge";
 

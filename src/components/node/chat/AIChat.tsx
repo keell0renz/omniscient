@@ -8,7 +8,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@clerk/nextjs";
-import CodeBlock from "@/components/node/navbar/chat/CodeBlock";
+import CodeBlock from "@/components/node/chat/CodeBlock";
 import { Message } from "ai";
 
 const AIChat = () => {
