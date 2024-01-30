@@ -24,6 +24,8 @@ model Project {
   parent           Project?  @relation("Import", fields: [imported_from_id], references: [id], onDelete: SetNull, onUpdate: NoAction)
   children         Project[] @relation("Import")
 
+
+
   @@index([id])
 }
 
@@ -38,6 +40,8 @@ model Node {
   title      String?
   about      String? @db.Text
   ai_context String? @db.Text
+
+  chats Chat[] @relation("NodeChat")
 
   @@index([id, project_id, user_id])
   @@index([project_id, user_id])
@@ -55,4 +59,29 @@ model Edge {
 
   @@index([id, project_id, user_id])
   @@index([project_id, user_id])
+}
+
+model Chat {
+  id         String   @id @default(uuid())
+  title      String   @default("New Chat")
+  created_at DateTime @default(now())
+
+  project_id String
+  node_id String
+  node    Node   @relation("NodeChat", fields: [node_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  messages Message[] @relation("ChatMessage")
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  role       String
+  content    String   @db.Text
+
+  project_id String
+  node_id String
+  chat_id String
+
+  chat    Chat   @relation("ChatMessage", fields: [chat_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
