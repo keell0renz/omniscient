@@ -2,8 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { Node as NodeSchema } from "@prisma/client"
-import { redirect } from "next/navigation"
-import { auth, useOrganization } from "@clerk/nextjs"
+import { auth } from "@clerk/nextjs"
 import { GraphNodeValidator, GraphNodeSchema, validateNodeAIContext, NodeAIContext } from "@/schema/roadmap"
 import { Node, Edge, Connection } from "reactflow"
 import { revalidatePath } from "next/cache"

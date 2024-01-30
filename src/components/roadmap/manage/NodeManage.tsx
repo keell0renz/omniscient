@@ -75,7 +75,6 @@ const NodeManage = ({ project_id }: { project_id: string }) => {
           <Link
             href={`/p/${project_id}/n/${currentNode?.data.primary_key}`}
             className="w-1/2"
-            target="_blank"
           >
             <div className="w-full h-[50px] text-xl inline-flex items-center justify-center hover:border-foreground/70 rounded-xl border border-foreground">
               Open
