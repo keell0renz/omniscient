@@ -94,3 +94,49 @@
 .scrollbar-hide::-webkit-scrollbar-thumb {
   background-color: transparent;
 }
+
+.code-markdown ul li {
+  list-style: arabic;
+  margin: 5px 0;
+}
+
+.code-markdown ol li {
+  list-style: circle;
+  margin: 5px 0;
+}
+.code-markdown h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+}
+.code-markdown h1 {
+  font-size: 2rem;
+}
+.code-markdown h2 {
+  font-size: 1.7rem;
+}
+.code-markdown h3 {
+  font-size: 1.5rem;
+}
+.code-markdown h4 {
+  font-size: 1.3rem;
+}
+.code-markdown h5 {
+  font-size: 1.2rem;
+}
+.code-markdown h6 {
+  font-size: 1rem;
+}
+
+.code-markdown a {
+  text-decoration: underline;
+}
+
+.highlighter pre {
+  margin: 0px !important;
+  background-color: black !important;
+  @apply rounded-md;
+}

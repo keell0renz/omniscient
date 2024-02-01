@@ -33,7 +33,7 @@ function AIContextForm({
   setOpen: (set: boolean) => void;
   ai_context: string
 }) {
-  
+
 
   const form = useForm<NodeAIContext>({
     resolver: zodResolver(validateSetNodeAIContext),
@@ -45,7 +45,6 @@ function AIContextForm({
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSetAIContext(input: NodeAIContext) {
-    console.log(input);
     setIsLoading(true);
     await setNodeAIContext(input, params.pid, params.nid)
     setIsLoading(false);
@@ -106,7 +105,7 @@ export default function AIContext({
             Here you can edit AI context of the current node.
           </DialogDescription>
         </DialogHeader>
-        <AIContextForm params={params} setOpen={setIsOpenedDialog} ai_context={ai_context}/>
+        <AIContextForm params={params} setOpen={setIsOpenedDialog} ai_context={ai_context} />
       </DialogContent>
     </Dialog>
   );

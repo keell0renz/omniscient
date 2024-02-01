@@ -1,24 +1,29 @@
 "use client";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useChat } from "ai/react";
 import clsx from "clsx";
-import { Bot, SendIcon, StopCircle } from "lucide-react";
+import { ArrowBigDownDashIcon, Bot, SendIcon, StopCircle } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@clerk/nextjs";
 import CodeBlock from "@/components/node/chat/CodeBlock";
-import { Message } from "ai";
 import { Node } from "@prisma/client";
+import { createChat, insertMessageIntoChat } from "@/server/chats";
+import { Message as MessageSchema } from "ai"
+import useChatStore from "@/store/ChatStore";
+import { v4 as uuid } from "uuid";
+import Cognitar from "@/components/misc/Logo";
 
 const AIChat = ({ node }: { node: Node }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const { user } = useUser();
+  const { currentChat, setCurrentChat, chatMessages } = useChatStore();
 
-  const { messages, input, setInput, handleSubmit, isLoading, stop } = useChat({
+  const { messages, input, setInput, handleSubmit, isLoading, stop, setMessages } = useChat({
     initialMessages: [
       {
         role: "system",
@@ -38,56 +43,171 @@ const AIChat = ({ node }: { node: Node }) => {
         id: "system",
       },
     ],
+    onFinish: (message) => {
+      saveMessagesToDatabase(message)
+    }
   });
+
+  const [firstUserMessage, setFirstUserMessage] = useState<MessageSchema | null>(null);
+  const [firstBotMessage, setFirstBotMessage] = useState<MessageSchema | null>(null);
+
+  useEffect(() => {
+    console.log(chatMessages)
+    if (chatMessages) {
+      setMessages(chatMessages);
+    }
+  }, [currentChat?.id, chatMessages])
+
+
+  async function saveMessagesToDatabase(message: MessageSchema) {
+
+    const newUserMessage: MessageSchema = {
+      id: uuid(),
+      role: "user",
+      content: input,
+    };
+
+    const newBotMessage: MessageSchema = {
+      id: message.id,
+      role: message.role,
+      content: message.content,
+    };
+
+    if (currentChat?.id) {
+      if (firstBotMessage && firstUserMessage) {
+        insertMessageIntoChat(
+          firstUserMessage,
+          node.project_id,
+          node.id,
+          currentChat.id,
+        );
+
+        insertMessageIntoChat(
+          firstBotMessage,
+          node.project_id,
+          node.id,
+          currentChat.id,
+        );
+      }
+      insertMessageIntoChat(
+        newUserMessage,
+        node.project_id,
+        node.id,
+        currentChat.id,
+      );
+
+      insertMessageIntoChat(
+        newBotMessage,
+        node.project_id,
+        node.id,
+        currentChat.id,
+      );
+    } else {
+      setFirstBotMessage(newBotMessage);
+      setFirstUserMessage(newUserMessage);
+    }
+  }
 
   const disabled = isLoading || input.length === 0;
 
+  const [isScrolledDown, setIsScrolledDown] = useState(true);
+
+  useEffect(() => {
+    const chatParent = document.getElementById('chatParent');
+
+    if (!chatParent) {
+      console.error('Parent element with id "chatParent" not found.');
+      return;
+    }
+
+    const handleScroll = () => {
+      const isScrolled = chatParent.scrollTop + 300 < chatParent.scrollHeight - chatParent.clientHeight;
+
+      setIsScrolledDown(isScrolled)
+    };
+
+    chatParent.addEventListener('scroll', handleScroll);
+
+    return () => {
+      chatParent.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleScrollDown = () => {
+    const chatParent = document.getElementById('chatParent');
+    if (chatParent) {
+      chatParent.scrollTo({
+        top: chatParent.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-between pb-40">
+      {messages.length <= 1 &&
+        <div className="flex flex-col justify-center mt-[20vh] items-center gap-8">
+          <Cognitar height="169" width="169" />
+          <h1 className="font-semibold text-xl">What you would like to learn today?</h1>
+        </div>
+      }
       {messages.length > 0 &&
         messages.map((message, i) => (
-            message.role !== "system" && (
-          <div
-            key={i}
-            className="flex w-full items-center justify-center py-8 bg-transparent"
-          >
-            <div className="flex w-full max-w-screen-md items-start space-x-4 px-5 sm:px-0">
-              <div
-                className={clsx(
-                  "p-1.5 text-foreground rounded-full",
-                  message.role === "assistant" ? "bg-blue-600 m-1.5" : "",
-                )}
-              >
-                {message.role === "user" ? (
-                  <Avatar>
-                    <AvatarImage src={user?.imageUrl} />
-                    <AvatarFallback delayMs={600}>
-                      {user?.firstName![0]}
-                    </AvatarFallback>
-                  </Avatar>
-                ) : (
-                  <Bot height={28} width={28} className="text-white" />
-                )}
+          message.role !== "system" && (
+            <div
+              key={i}
+              className="flex w-full items-center justify-center py-8 bg-transparent"
+            >
+              <div className="flex w-full max-w-screen-md items-start space-x-4 px-5 sm:px-0">
+                <div
+                  className={clsx(
+                    "p-1.5 text-foreground rounded-full",
+                    message.role === "assistant" ? "bg-blue-600 m-1.5" : "",
+                  )}
+                >
+                  {message.role === "user" ? (
+                    <Avatar>
+                      <AvatarImage src={user?.imageUrl} />
+                      <AvatarFallback delayMs={600}>
+                        {user?.firstName![0]}
+                      </AvatarFallback>
+                    </Avatar>
+                  ) : (
+                    <Bot height={28} width={28} className="text-white" />
+                  )}
+                </div>
+                <ReactMarkdown
+                  className="prose mt-1 break-words prose-p:leading-relaxed code-markdown w-[85%]"
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    a: (props) => (
+                      <a {...props} target="_blank" rel="noopener noreferrer" />
+                    ),
+                    p: (props) => (
+                      <p className="my-5">
+                        {props.children}
+                      </p>
+                    ),
+                    code: (props) => <CodeBlock {...props} />,
+                  }}
+                >
+                  {message.content}
+                </ReactMarkdown>
               </div>
-              <ReactMarkdown
-                className="prose mt-1 w-full break-words prose-p:leading-relaxed"
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  a: (props) => (
-                    <a {...props} target="_blank" rel="noopener noreferrer" />
-                  ),
-                  code: (props) => <CodeBlock {...props} />,
-                }}
-              >
-                {message.content}
-              </ReactMarkdown>
             </div>
-          </div>
-        )))}
-      <div className="fixed w-full bottom-0 pt-16 flex flex-col items-center space-y-3 pb-4 sm:px-0">
+          )))}
+      <div className="fixed w-full max-w-screen-md bottom-0 pt-16 flex flex-col items-center space-y-3 pb-4 sm:px-0 z-0">
+        <ArrowBigDownDashIcon
+          className={`text-foreground h-8 w-8 bg-blue-600 active:bg-blue-800 rounded-full cursor-pointer ${messages.length > 8 && isScrolledDown ? "" : "hidden"}`}
+          onClick={() => handleScrollDown()}
+        />
         <form
           ref={formRef}
-          onSubmit={handleSubmit}
+          onSubmit={(e) => {
+            handleSubmit(e);
+            if (messages.length <= 1 && currentChat === null) {
+              createChat(node.project_id, node.id).then((data) => setCurrentChat(data));
+            }
+          }}
           className="h-full bg-background w-full rounded-full relative max-w-screen-md border bg-none px-4 shadow-lg shadow-blue-600/10"
         >
           <Textarea

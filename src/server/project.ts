@@ -4,11 +4,11 @@ import prisma from "@/lib/prisma"
 import { Project } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
-import { 
-    validateCreateProject, 
-    validateSetAIContext, 
-    CreateProjectSchema, 
-    SetAIContextSchema 
+import {
+    validateCreateProject,
+    validateSetAIContext,
+    CreateProjectSchema,
+    SetAIContextSchema
 } from "@/schema/project"
 import { auth } from "@clerk/nextjs"
 import { Node, Edge } from "@prisma/client"
@@ -210,7 +210,7 @@ export async function setProjectPublicity(published: boolean, project_id: string
     } catch (error) {
         throw new Error(`Failed to set project publicity: ${error}`);
     }
-    
+
     revalidatePath("/projects")
 }
 
@@ -221,14 +221,13 @@ export async function deleteProjectById(project_id: string): Promise<void> {
         throw new Error("Not authenticated!")
 
     try {
-        await prisma.project.delete({
+        await prisma.message.deleteMany({
             where: {
-                id: project_id,
-                user_id: userId
+                project_id: project_id
             }
-        });
+        })
 
-        await prisma.node.deleteMany({
+        await prisma.chat.deleteMany({
             where: {
                 project_id: project_id
             }
@@ -239,6 +238,20 @@ export async function deleteProjectById(project_id: string): Promise<void> {
                 project_id: project_id
             }
         })
+
+        await prisma.node.deleteMany({
+            where: {
+                project_id: project_id
+            }
+        })
+
+        await prisma.project.delete({
+            where: {
+                id: project_id,
+                user_id: userId
+            }
+        });
+
     } catch (error) {
         throw new Error(`Failed to delete project: ${error}`);
     }

@@ -6,10 +6,10 @@ export default async function Page({
 }: {
   params: { pid: string; nid: string };
 }) {
-  const node = await getNodeById(params.nid)
+  const node = await getNodeById(params.nid);
   return (
     <>
-      <AIChat node={node}/>
+      <AIChat node={node} />
     </>
   );
 }

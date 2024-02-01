@@ -10,7 +10,7 @@ export default async function Layout({
   return (
     <div className="flex flex-row h-screen w-screen">
       <Navbar params={params} />
-      <div className="h-full w-full bg-slate-600/10 overflow-x-hidden relative">
+      <div className="h-full w-full bg-slate-600/10 overflow-x-hidden relative" id="chatParent">
         {children}
       </div>
     </div>

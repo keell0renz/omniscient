@@ -6,6 +6,22 @@ import { Message as MessageSchema } from "ai"
 import { revalidatePath } from "next/cache"
 import { auth } from "@clerk/nextjs"
 
+export async function getListOfChatsByNodeId(node_id: string): Promise<Chat[]> {
+    const { userId } = auth();
+
+    if (!userId) {
+        throw new Error("Not authenticated!");
+    }
+
+    return await prisma.chat.findMany({
+        where: {
+            node_id: {
+                equals: node_id,
+            },
+        }
+    });
+}
+
 export async function createChat(project_id: string, node_id: string): Promise<Chat> {
     const { userId } = auth()
 
@@ -45,6 +61,25 @@ export async function deleteChat(project_id: string, node_id: string, chat_id: s
     revalidatePath(`/p/${project_id}/n/${node_id}`)
 }
 
+export async function editChatTitle(title: string, chat_id: string, project_id: string, node_id: string): Promise<Chat> {
+    const { userId } = auth();
+
+    if (!userId) {
+        throw new Error("Not authenticated!");
+    }
+
+    revalidatePath(`/p/${project_id}/n/${node_id}`);
+
+    return await prisma.chat.update({
+        where: {
+            id: chat_id,
+        },
+        data: {
+            title: title,
+        },
+    });
+}
+
 export async function insertMessageIntoChat(message: MessageSchema, project_id: string, node_id: string, chat_id: string) {
     const { userId } = auth()
 
@@ -64,23 +99,27 @@ export async function insertMessageIntoChat(message: MessageSchema, project_id: 
 }
 
 export async function getMessagesByChat(chat_id: string): Promise<MessageSchema[]> {
-    const { userId } = auth()
+    const { userId } = auth();
 
     if (!userId) {
-        throw new Error("Not authenticated!")
+        throw new Error("Not authenticated!");
     }
 
     const message_records = await prisma.message.findMany({
         where: {
-            chat_id: chat_id
-        }
-    })
+            chat_id: chat_id,
+        },
+        orderBy: {
+            created_at: 'asc', // for descending sort
+        },
+    });
 
-    const messages: MessageSchema[] = message_records.map((record) => ({
+    const messages: MessageSchema[] = message_records.map((record: Message) => ({
         id: record.id,
         role: record.role as "function" | "system" | "user" | "assistant" | "data" | "tool",
-        content: record.content
-    }))
+        content: record.content,
+        created_at: new Date(record.created_at),
+    }));
 
-    return messages
+    return messages;
 }
