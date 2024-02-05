@@ -5,7 +5,7 @@ export default async function Layout({
   params,
 }: {
   children: React.ReactNode;
-  params: { pid: string; nid: string };
+  params: { pid: string; nid: string, cid: string };
 }) {
   return (
     <div className="flex flex-row h-screen w-screen">
