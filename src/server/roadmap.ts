@@ -31,7 +31,7 @@ export async function setNodeAIContext(schema: NodeAIContext, project_id: string
         }
     })
 
-    revalidatePath(`/p/${project_id}/c/${node_id}/`)
+    revalidatePath(`/p/${project_id}/n/${node_id}/`)
 }
 
 export async function getNodeById(node_id: string): Promise<NodeSchema> {

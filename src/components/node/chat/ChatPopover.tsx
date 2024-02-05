@@ -22,7 +22,6 @@ import { Chat } from "@prisma/client";
 import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import { editChatTitle } from "@/server/chats";
-import useChatStore from "@/store/ChatStore";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SetChatTitleSchema, validateSetChatTitle } from "@/schema/chat";
@@ -52,8 +51,6 @@ const ChatPopover = ({
   const [isOpenedPopover, setIsOpenedPopover] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { currentChat, setCurrentChat, setChatMessages } = useChatStore();
-
   function handleOverlayClick(event: any) {
     if (event.target?.getAttribute("class")?.includes("bg-black/80")) {
       setIsOpenedDelete(false);
@@ -63,17 +60,13 @@ const ChatPopover = ({
   const form = useForm<SetChatTitleSchema>({
     resolver: zodResolver(validateSetChatTitle),
     defaultValues: {
-      title: currentChat?.title || "",
+      title: "",
     },
   });
 
   async function onDelete() {
     setIsLoading(true)
     await deleteChat(chat.project_id, chat.node_id, chat.id)
-    if (currentChat?.id === chat.id) {
-      setCurrentChat(null);
-      setChatMessages(null);
-    }
     setIsLoading(false)
     setIsOpenedDelete(false);
     setIsOpenedPopover(false);
@@ -90,7 +83,7 @@ const ChatPopover = ({
   return (
     <Popover open={isOpenedPopover} onOpenChange={setIsOpenedPopover}>
       <PopoverTrigger>
-        <MoreHorizontal className="opacity-0 group-hover:opacity-100 w-6" />
+        <MoreHorizontal id="moreHorizontal" className="opacity-0 group-hover:opacity-100 w-6" />
       </PopoverTrigger>
       <PopoverContent className="w-36 flex flex-col gap-1 px-2">
         <Dialog open={isOpenedEdit} onOpenChange={setIsOpenedEdit}>

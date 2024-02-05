@@ -1,13 +1,15 @@
 "use client"
-import useChatStore from "@/store/ChatStore";
 import { PlusCircleIcon } from "lucide-react";
+import { useRouter, usePathname } from 'next/navigation'
 
-const NavbarAddChat = () => {
-    const { setCurrentChat } = useChatStore();
+const NavbarAddChat = ({ pid, nid }: { pid: string, nid: string }) => {
+    const router = useRouter();
+    const currentPath = usePathname();
+
 
     function handleClick() {
-        setCurrentChat(null);
-        window.location.reload();
+        const newPath = `/p/${pid}/n/${nid}/c`;
+        newPath === currentPath ? window.location.reload() : router.push(newPath);
     }
 
     return (

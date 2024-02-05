@@ -9,19 +9,17 @@ import remarkGfm from "remark-gfm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@clerk/nextjs";
 import CodeBlock from "@/components/node/chat/CodeBlock";
-import { Node } from "@prisma/client";
+import { Chat, Node } from "@prisma/client";
 import { createChat, insertMessageIntoChat } from "@/server/chats";
 import { Message as MessageSchema } from "ai"
-import useChatStore from "@/store/ChatStore";
 import { v4 as uuid } from "uuid";
 import Cognitar from "@/components/misc/Logo";
 
-const AIChat = ({ node }: { node: Node }) => {
+const AIChat = ({ node, chatMessages, cid }: { node: Node, chatMessages?: any, cid?: string }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const { user } = useUser();
-  const { currentChat, setCurrentChat, chatMessages } = useChatStore();
 
   const { messages, input, setInput, handleSubmit, isLoading, stop, setMessages } = useChat({
     initialMessages: [
@@ -50,57 +48,60 @@ const AIChat = ({ node }: { node: Node }) => {
 
   const [firstUserMessage, setFirstUserMessage] = useState<MessageSchema | null>(null);
   const [firstBotMessage, setFirstBotMessage] = useState<MessageSchema | null>(null);
+  const [currentChat, setCurrentChat] = useState<Chat | null>(null);
 
   useEffect(() => {
-    console.log(chatMessages)
     if (chatMessages) {
       setMessages(chatMessages);
     }
-  }, [currentChat?.id, chatMessages])
+  }, [node, cid])
 
 
   async function saveMessagesToDatabase(message: MessageSchema) {
-
     const newUserMessage: MessageSchema = {
       id: uuid(),
       role: "user",
       content: input,
     };
-
     const newBotMessage: MessageSchema = {
       id: message.id,
       role: message.role,
       content: message.content,
     };
 
-    if (currentChat?.id) {
+    const chatIdToUse = cid || currentChat?.id;
+
+    if (chatIdToUse) {
       if (firstBotMessage && firstUserMessage) {
         insertMessageIntoChat(
           firstUserMessage,
           node.project_id,
           node.id,
-          currentChat.id,
+          chatIdToUse,
         );
 
         insertMessageIntoChat(
           firstBotMessage,
           node.project_id,
           node.id,
-          currentChat.id,
+          chatIdToUse,
         );
+
+        setFirstBotMessage(null);
+        setFirstUserMessage(null);
       }
       insertMessageIntoChat(
         newUserMessage,
         node.project_id,
         node.id,
-        currentChat.id,
+        chatIdToUse,
       );
 
       insertMessageIntoChat(
         newBotMessage,
         node.project_id,
         node.id,
-        currentChat.id,
+        chatIdToUse,
       );
     } else {
       setFirstBotMessage(newBotMessage);
@@ -197,16 +198,16 @@ const AIChat = ({ node }: { node: Node }) => {
           )))}
       <div className="fixed w-full max-w-screen-md bottom-0 pt-16 flex flex-col items-center space-y-3 pb-4 sm:px-0 z-0">
         <ArrowBigDownDashIcon
-          className={`text-foreground h-8 w-8 bg-blue-600 active:bg-blue-800 rounded-full cursor-pointer ${messages.length > 8 && isScrolledDown ? "" : "hidden"}`}
+          className={`text-foreground h-8 w-8 bg-blue-600 active:bg-blue-800 rounded-full cursor-pointer ${messages.length > 4 && isScrolledDown ? "" : "hidden"}`}
           onClick={() => handleScrollDown()}
         />
         <form
           ref={formRef}
           onSubmit={(e) => {
-            handleSubmit(e);
-            if (messages.length <= 1 && currentChat === null) {
-              createChat(node.project_id, node.id).then((data) => setCurrentChat(data));
+            if (messages.length <= 1) {
+              createChat(node.project_id, node.id).then((chat) => setCurrentChat(chat));
             }
+            handleSubmit(e);
           }}
           className="h-full bg-background w-full rounded-full relative max-w-screen-md border bg-none px-4 shadow-lg shadow-blue-600/10"
         >

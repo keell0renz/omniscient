@@ -101,7 +101,7 @@
 }
 
 .code-markdown ol li {
-  list-style: circle;
+  list-style: disc;
   margin: 5px 0;
 }
 .code-markdown h1,

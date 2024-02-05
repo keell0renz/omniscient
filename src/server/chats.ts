@@ -22,7 +22,7 @@ export async function getListOfChatsByNodeId(node_id: string): Promise<Chat[]> {
     });
 }
 
-export async function createChat(project_id: string, node_id: string): Promise<Chat> {
+export async function createChat(project_id: string, node_id: string, title?: string): Promise<Chat> {
     const { userId } = auth()
 
     if (!userId) {
@@ -34,7 +34,8 @@ export async function createChat(project_id: string, node_id: string): Promise<C
     return await prisma.chat.create({
         data: {
             node_id: node_id,
-            project_id: project_id
+            project_id: project_id,
+            title: title || "New Chat",
         }
     })
 }
