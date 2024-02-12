@@ -76,17 +76,17 @@ export default function Graph() {
 
   return (
     <ReactFlow
-    defaultNodes={homeNodes}
-    defaultEdges={homeEdges}
-    nodeTypes={nodeTypes}
-    className="h-full w-full"
-    proOptions={{ hideAttribution: true }}
-    zoomOnScroll={false}
-    zoomOnDoubleClick={false}
-    zoomOnPinch={false}
-    preventScrolling={false}
-  >
-    <Background color="#49495c" />
-  </ReactFlow>
+      defaultNodes={homeNodes}
+      defaultEdges={homeEdges}
+      nodeTypes={nodeTypes}
+      className="h-full w-full"
+      proOptions={{ hideAttribution: true }}
+      zoomOnScroll={false}
+      zoomOnDoubleClick={false}
+      zoomOnPinch={false}
+      preventScrolling={false}
+    >
+      <Background color="#49495c" />
+    </ReactFlow>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 import { useUser, useClerk } from "@clerk/nextjs";
-import Link from "next/link";
 import { LogOutIcon, UserRoundCogIcon, LayoutDashboard } from "lucide-react";
 import {
   AlertDialog,
