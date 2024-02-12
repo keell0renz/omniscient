@@ -10,34 +10,6 @@ const page = () => {
       <div className="flex flex-col justify-center items-center">
         <div className="text-center w-9/12 lg:w-8/12 xl:w-7/12 text-foreground my-16">
           <MissionBigText />
-
-          <hr className="w-full my-8" />
-
-          <div className="space-y-10">
-            <PersonCard
-              name="Bohdan Agarkov"
-              title="CEO and CTO"
-              avatar="/images/bohdan.jpg"
-              className="justify-start"
-              contacts={[
-                {
-                  title: "cognitar.ai@gmail.com",
-                  href: "mailto:cognitar.ai@gmail.com",
-                },
-                {
-                  title: "@keellorenz",
-                  href: "https://t.me/keellorenz",
-                },
-              ]}
-            />
-
-            <PersonCard
-              name="Dima Matushinets"
-              title="Developer"
-              avatar="/images/dima.jpg"
-              className="justify-end"
-            />
-          </div>
         </div>
       </div>
     </div>
