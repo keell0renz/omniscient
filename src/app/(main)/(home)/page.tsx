@@ -4,7 +4,7 @@ import "reactflow/dist/style.css";
 import { ReactFlow, Background, Edge, Node } from "reactflow";
 import CustomNode from "@/components/main/home/CustomNodes";
 
-const page = () => {
+export default function Page() {
   const homeNodes: Node[] = [
     {
       id: "1",
@@ -95,6 +95,4 @@ const page = () => {
       <TextAnimation />
     </div>
   );
-};
-
-export default page;
+}

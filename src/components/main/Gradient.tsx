@@ -5,7 +5,7 @@ import {
   gradientBackAnimation,
 } from "@/components/animations/framerAnimations";
 
-const Gradient = () => {
+export default function Gradient() {
   return (
     <>
       <motion.div
@@ -28,5 +28,4 @@ const Gradient = () => {
       />
     </>
   );
-};
-export default Gradient;
+}

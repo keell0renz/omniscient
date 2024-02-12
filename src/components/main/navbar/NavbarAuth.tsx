@@ -3,7 +3,7 @@ import { useUser } from "@clerk/nextjs";
 import UserAccount from "@/components/main/navbar/UserAccount";
 import Link from "next/link";
 
-const NavbarAuth = () => {
+export default function NavbarAuth() {
   const { isSignedIn } = useUser();
 
   if (!isSignedIn) {
@@ -21,6 +21,4 @@ const NavbarAuth = () => {
       <UserAccount />
     </div>
   );
-};
-
-export default NavbarAuth;
+}

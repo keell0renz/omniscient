@@ -20,7 +20,7 @@ import { UserProfile } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 
-const UserAccount = () => {
+export default function UserAccount() {
   const { user } = useUser();
   const { signOut } = useClerk();
   const { theme } = useTheme();
@@ -101,6 +101,4 @@ const UserAccount = () => {
       </PopoverContent>
     </Popover>
   );
-};
-
-export default UserAccount;
+}

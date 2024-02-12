@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { textSlide, textFade } from "@/components/animations/framerAnimations";
 
-const TextAnimation = () => {
+export default function TextAnimation() {
   return (
     <motion.div
       className="flex flex-col gap-5 max-w-[800px] w-fit p-0 sm:p-5 mt-10 mx-auto md:mx-0"
@@ -27,6 +27,4 @@ const TextAnimation = () => {
       </motion.p>
     </motion.div>
   );
-};
-
-export default TextAnimation;
+}

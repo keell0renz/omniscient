@@ -5,7 +5,7 @@ interface NavbarLinkProps {
   name: string;
 }
 
-const NavbarLink = ({ name, path }: NavbarLinkProps) => {
+export default function NavbarLink({ name, path }: NavbarLinkProps) {
   return (
     <Link
       href={path}
@@ -14,6 +14,4 @@ const NavbarLink = ({ name, path }: NavbarLinkProps) => {
       {name}
     </Link>
   );
-};
-
-export default NavbarLink;
+}
