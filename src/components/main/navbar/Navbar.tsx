@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Cognitar from "@/components/misc/Logo";
+import Cognitar from "@/components/main/Logo";
 import { NavbarAuth } from "@/components/main/navbar";
 
 interface NavbarProps {
