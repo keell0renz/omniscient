@@ -11,7 +11,7 @@ export default function RootLayout({
       <Navbar>
         <NavbarLink name="Mission" path="/mission" />
       </Navbar>
-      <div className="pt-40 min-h-screen overflow-x-hidden container mx-auto">
+      <div className="pt-40 min-h-screen overflow-x-hidden container">
         {children}
       </div>
       <div className="pointer-events-none">

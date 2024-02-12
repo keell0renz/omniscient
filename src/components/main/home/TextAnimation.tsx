@@ -22,8 +22,8 @@ export default function TextAnimation() {
         variants={textFade}
         custom={1.2}
       >
-        Omniscient is a platform where you build, refine <br />
-        and socialize your knowledge at scale.
+        Omniscient is a platform where you build, practice <br />
+        and socialize your tech skills at scale.
       </motion.p>
     </motion.div>
   );
