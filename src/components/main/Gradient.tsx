@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import {
   gradientAnimation,
   gradientBackAnimation,
-} from "@/components/animations/framerAnimations";
+} from "@/components/main/animations/framerAnimations";
 
 export default function Gradient() {
   return (

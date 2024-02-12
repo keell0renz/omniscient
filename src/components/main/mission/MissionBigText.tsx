@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { textFade } from "@/components/animations/framerAnimations";
+import { textFade } from "@/components/main/animations/framerAnimations";
 
 const MissionBigText = () => {
   return (
