@@ -1,6 +1,5 @@
 "use client";
 import TextAnimation from "@/components/main/home/TextAnimation";
-import ButtonsAnimation from "@/components/main/home/ButtonsAnimation";
 import "reactflow/dist/style.css";
 import { ReactFlow, Background, Edge, Node } from "reactflow";
 import CustomNode from "@/components/main/home/CustomNodes";
@@ -94,7 +93,6 @@ const page = () => {
         </ReactFlow>
       </div>
       <TextAnimation />
-      <ButtonsAnimation />
     </div>
   );
 };

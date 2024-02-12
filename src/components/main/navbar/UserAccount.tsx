@@ -61,13 +61,6 @@ const UserAccount = () => {
           </div>
         </div>
         <div className="flex flex-col rounded-md">
-          <Link
-            className="hover:bg-secondary rounded-lg p-3 inline-flex items-center gap-2"
-            href="/projects"
-          >
-            <LayoutDashboard className="h-5 w-5 text-primary" />
-            Dashboard
-          </Link>
           <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
             <AlertDialogTrigger asChild>
               <div className="cursor-pointer hover:bg-secondary rounded-lg p-3 inline-flex items-center gap-2">
