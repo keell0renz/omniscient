@@ -1,6 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
-import { textSlide, textFade } from "@/components/main/animations/framerAnimations";
+import {
+  textSlide,
+  textFade,
+} from "@/components/main/animations/framerAnimations";
 
 export default function TextAnimation() {
   return (
