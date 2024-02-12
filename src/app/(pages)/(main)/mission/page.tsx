@@ -32,23 +32,6 @@ const page = () => {
             />
 
             <PersonCard
-              name="Alina Voronina"
-              title="COO and CDO"
-              avatar="/images/alina.jpeg"
-              className="justify-center"
-              contacts={[
-                {
-                  title: "LinkedIn",
-                  href: "https://www.linkedin.com/in/alina-voronina-b7585723b/",
-                },
-                {
-                  title: "Instagram",
-                  href: "https://www.instagram.com/voroninalina_?igshid=OGQ5ZDc2ODk2ZA==",
-                },
-              ]}
-            />
-
-            <PersonCard
               name="Dima Matushinets"
               title="Developer"
               avatar="/images/dima.jpg"
