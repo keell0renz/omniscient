@@ -8,13 +8,8 @@ import {
     PublicProjectCard,
     CreateProject,
     EditProject,
-    SetAIContext,
 } from "@/types/projects";
-import {
-    validateCreateProject,
-    validateEditProject,
-    validateSetAIContext,
-} from "@/schema/projects";
+import { validateCreateProject, validateEditProject } from "@/schema/projects";
 import { auth } from "@clerk/nextjs/server";
 
 export async function searchPublicProjects(
@@ -122,7 +117,7 @@ export async function getProjectById(
     }
 }
 
-export async function createProject(schema: CreateProject) {
+export async function createProject(schema: CreateProject): Promise<Project> {
     const { userId } = auth();
 
     if (!userId) {
@@ -136,7 +131,7 @@ export async function createProject(schema: CreateProject) {
     }
 
     try {
-        await prisma.project.create({
+        return await prisma.project.create({
             data: {
                 title: validated.data.title,
                 description: validated.data.description,
@@ -148,7 +143,10 @@ export async function createProject(schema: CreateProject) {
     }
 }
 
-export async function editProject(schema: EditProject, project_id: string) {
+export async function editProjectById(
+    schema: EditProject,
+    project_id: string,
+): Promise<Project> {
     const { userId } = auth();
 
     if (!userId) {
@@ -162,7 +160,7 @@ export async function editProject(schema: EditProject, project_id: string) {
     }
 
     try {
-        await prisma.project.update({
+        return await prisma.project.update({
             where: {
                 id: project_id,
                 user_id: userId,
@@ -170,64 +168,12 @@ export async function editProject(schema: EditProject, project_id: string) {
             data: {
                 title: validated.data.title,
                 description: validated.data.description,
+                ai_context: validated.data.ai_context,
+                public: validated.data.public,
             },
         });
     } catch (error) {
         throw new Error(`Failed to update project: ${error}`);
-    }
-}
-
-export async function setAIContextForProject(
-    schema: SetAIContext,
-    project_id: string,
-) {
-    const { userId } = auth();
-
-    if (!userId) {
-        throw new Error("Not authenticated!");
-    }
-
-    const validated = validateSetAIContext.safeParse(schema);
-
-    if (!validated.success) {
-        throw new Error(`Failed schema validation: ${validated.error}`);
-    }
-
-    try {
-        await prisma.project.update({
-            where: {
-                id: project_id,
-                user_id: userId,
-            },
-            data: {
-                ai_context: validated.data.ai_context,
-            },
-        });
-    } catch (error) {
-        throw new Error(handlePrismaError(error));
-    }
-}
-
-export async function setProjectPublicity(
-    published: boolean,
-    project_id: string,
-) {
-    const { userId } = auth();
-
-    if (!userId) throw new Error("Not authenticated!");
-
-    try {
-        await prisma.project.update({
-            where: {
-                id: project_id,
-                user_id: userId,
-            },
-            data: {
-                public: published,
-            },
-        });
-    } catch (error) {
-        throw new Error(handlePrismaError(error));
     }
 }
 
@@ -248,7 +194,9 @@ export async function deleteProjectById(project_id: string): Promise<void> {
     }
 }
 
-export async function importPublicProject(project_id: string) {
+export async function importPublicProject(
+    project_id: string,
+): Promise<Project> {
     const { userId } = auth();
 
     if (!userId) throw new Error("Not authenticated!");
@@ -265,7 +213,7 @@ export async function importPublicProject(project_id: string) {
             throw new Error(`Project not found or not public!`);
         }
 
-        await prisma.project.create({
+        return await prisma.project.create({
             data: {
                 title: parent_project.title,
                 description: parent_project.description,

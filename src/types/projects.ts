@@ -1,12 +1,10 @@
 import { z } from "zod";
 import { Project as ProjectSchema } from "@prisma/client";
-import { validateCreateProject, validateSetAIContext } from "@/schema/projects";
+import { validateCreateProject, validateEditProject } from "@/schema/projects";
 
 export type CreateProject = z.infer<typeof validateCreateProject>;
 
-export type EditProject = CreateProject;
-
-export type SetAIContext = z.infer<typeof validateSetAIContext>;
+export type EditProject = z.infer<typeof validateEditProject>;
 
 export type ProjectPanelCard = ProjectSchema & { parent_user_id?: string };
 
