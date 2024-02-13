@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { handlePrismaError } from "@/lib/utils";
+import { handlePrismaError } from "@/utils/prisma";
 import {
     Project,
     ProjectPanelCard,
@@ -117,7 +117,9 @@ export async function getProjectById(
     }
 }
 
-export async function createProject(schema: CreateProject): Promise<Project> {
+export async function createProjectWithSchema(
+    schema: CreateProject,
+): Promise<Project> {
     const { userId } = auth();
 
     if (!userId) {
