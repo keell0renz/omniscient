@@ -2,10 +2,8 @@
 
 import { useToast } from "@/components/ui/use-toast";
 import useSWR from "swr";
-import { useSWRConfig } from "swr";
-import { unstable_serialize } from "swr";
 import useSWRInfinite from "swr/infinite";
-import { Project, CreateProject, EditProject } from "@/types/projects";
+import { Project } from "@/types/projects";
 import {
     getProjectById,
     searchProjectsByUser,
@@ -29,6 +27,7 @@ export function useUserProjects(query?: string) {
         setSize,
         isLoading,
         isValidating,
+        isFetching: isLoading || isValidating,
         mutate,
     };
 }
@@ -49,6 +48,7 @@ export function usePublicProjects(query?: string) {
         setSize,
         isLoading,
         isValidating,
+        isFetching: isLoading || isValidating,
         mutate,
     };
 }
@@ -77,6 +77,7 @@ export function useProject(project_id: string) {
         error,
         isLoading,
         isValidating,
-        mutate
+        isFetching: isLoading || isValidating,
+        mutate,
     };
 }

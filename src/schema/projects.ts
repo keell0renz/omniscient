@@ -1,10 +1,7 @@
 import { z } from "zod";
 
 export const validateCreateProject = z.object({
-    title: z
-        .string()
-        .min(1, "Title is required.")
-        .max(96, "Title too long!"),
+    title: z.string().min(1, "Title is required.").max(64, "Title too long!"),
     description: z
         .string()
         .min(1, "Description is required.")
@@ -15,7 +12,7 @@ export const validateEditProject = z.object({
     title: z
         .string()
         .min(1, "Title is required.")
-        .max(96, "Title too long!")
+        .max(64, "Title too long!")
         .optional(),
     description: z
         .string()
@@ -27,7 +24,5 @@ export const validateEditProject = z.object({
         .min(1, "AI context is required!")
         .max(1024, "AI context too long!")
         .optional(),
-    public: z
-        .boolean()
-        .optional(),
+    public: z.boolean().optional(),
 });
