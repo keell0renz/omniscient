@@ -7,7 +7,7 @@ export function useProjectPanel(query?: string) {
 
 }
 
-export function usePublicProjects() {
+export function usePublicProjects(query?: string) {
     
 }
 
