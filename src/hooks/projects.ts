@@ -18,7 +18,7 @@ export function useUserProjects(query?: string) {
                 query,
                 parseInt(key.split(":")[1]),
             );
-        });
+        }, { revalidateOnFocus: false });
 
     return {
         data,
@@ -39,7 +39,7 @@ export function usePublicProjects(query?: string) {
                 query,
                 parseInt(key.split(":")[1]),
             );
-        });
+        }, { revalidateOnFocus: false });
 
     return {
         data,
