@@ -45,7 +45,8 @@ export async function editProject(project_id: string, updatedData: EditProject) 
     try {
         await editProjectById(updatedData, project_id);
         mutate(`project_id:${project_id}`, undefined, {
-            optimisticData: (project) => ({...project, ...updatedData})
+            optimisticData: (project) => ({...project, ...updatedData}),
+            rollbackOnError: true
         })
 
     } catch (error) {
