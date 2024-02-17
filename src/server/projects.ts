@@ -11,6 +11,7 @@ import {
 } from "@/types/projects";
 import { validateCreateProject, validateEditProject } from "@/schema/projects";
 import { auth } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs";
 
 export async function searchPublicProjects(
     query?: string,
@@ -74,7 +75,8 @@ export async function searchProjectsByUser(
 
         const skip = (Math.max(page, 1) - 1) * limit;
 
-        const projects = await prisma.project.findMany({
+        // Renamed to avoid redeclaration
+        const foundProjects = await prisma.project.findMany({
             where: whereClause,
             skip,
             take: limit,
@@ -87,10 +89,42 @@ export async function searchProjectsByUser(
             },
         });
 
-        return projects.map((project) => ({
+        // Add the parent_user_id property to the project type if it doesn't exist
+        const projectsWithParent = foundProjects.map((project) => ({
             ...project,
-            parent_user_id: project.parent?.user_id,
+            parent_user_id: project.parent?.user_id || null, // Handle null case
         }));
+
+        const parentUserIds = projectsWithParent
+            .filter(project => project.parent_user_id)
+            .map(project => project.parent_user_id as string);
+
+        const parentUsers = await Promise.all(
+            parentUserIds.map(userId => clerkClient.users.getUser(userId))
+        );
+
+        const parentUsersMap = parentUsers.reduce((acc, user) => {
+            if (user && user.id) { // Check for null user.id
+                acc[user.id] = {
+                    username: user.username || '', // Handle null username
+                    avatarUrl: user.imageUrl || '', // Handle null avatarUrl
+                };
+            }
+            return acc;
+        }, {} as Record<string, { username: string; avatarUrl: string }>);
+
+        const enrichedProjects = projectsWithParent.map(project => {
+            const parentInfo = project.parent_user_id ? parentUsersMap[project.parent_user_id] : undefined;
+            return {
+                ...project,
+                parent_user_id: project.parent_user_id || undefined, // Change null to undefined
+                parent_username: parentInfo?.username,
+                parent_avatar_url: parentInfo?.avatarUrl,
+            };
+        });
+        
+        return enrichedProjects;
+
     } catch (error) {
         throw new Error(handlePrismaError(error));
     }
