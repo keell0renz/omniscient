@@ -7,7 +7,9 @@ import { useSearchParams } from "next/navigation";
 
 function ProjectsSkeleton({ className }: { className?: string }) {
   return (
-    <section className={`grid sm:grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-3 ${className}`}>
+    <section
+      className={`grid sm:grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-3 ${className}`}
+    >
       {[...Array(9)].map((_, index) => (
         <ProjectCardSkeleton key={index} />
       ))}
@@ -17,7 +19,9 @@ function ProjectsSkeleton({ className }: { className?: string }) {
 
 export default function Projects({ className }: { className?: string }) {
   const params = useSearchParams();
-  const { data, error, isLoading } = useUserProjects(params.get("q") || undefined);
+  const { data, error, isLoading } = useUserProjects(
+    params.get("q") || undefined,
+  );
   const { toast } = useToast();
 
   if (error)
@@ -34,7 +38,7 @@ export default function Projects({ className }: { className?: string }) {
   return (
     <section className={sectionClasses}>
       {data?.map((page) =>
-        page.map((project) => (
+        page?.map((project) => (
           <ProjectCard key={project.id} project={project} />
         )),
       )}

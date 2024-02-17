@@ -1,2 +1,2 @@
-export { default as NewPopover } from "./NewPopover"
-export { default as Search } from "./Search"
+export { default as NewPopover } from "./NewPopover";
+export { default as Search } from "./Search";
