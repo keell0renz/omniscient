@@ -63,8 +63,10 @@ export default function UserAccount() {
         <div className="flex flex-col rounded-md">
           <Link
             className="hover:bg-secondary rounded-lg p-3 inline-flex items-center gap-2"
-            href="/dashboard/projects" 
-          > {/* Later change to /dashboard when global dashboard will be developed. */}
+            href="/dashboard/projects"
+          >
+            {" "}
+            {/* Later change to /dashboard when global dashboard will be developed. */}
             <LayoutDashboard className="h-5 w-5 text-primary" />
             Dashboard
           </Link>

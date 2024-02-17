@@ -60,6 +60,6 @@ export async function deleteProject(project_id: string) {
             await deleteProjectById(project_id);
             return null; // Explicitly return null after deletion
         },
-        { revalidate: false }
-    )
+        { revalidate: false },
+    );
 }
