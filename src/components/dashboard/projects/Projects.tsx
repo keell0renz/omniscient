@@ -5,6 +5,7 @@ import { ProjectCard, ProjectCardSkeleton } from "./ProjectCard";
 import { useToast } from "@/components/ui/use-toast";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 function ProjectsSkeleton({ className }: { className?: string }) {
   return (
@@ -43,6 +44,9 @@ export default function Projects({ className }: { className?: string }) {
           <ProjectCard key={project.id} project={project} />
         )),
       )}
+      <Button onClick={() => {setSize(size + 1)}}>
+        Load More (Temporary)
+      </Button>
     </section>
   );
 }
