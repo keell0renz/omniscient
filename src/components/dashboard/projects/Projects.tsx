@@ -22,8 +22,6 @@ export default function Projects({ className }: { className?: string }) {
     params.get("q") || undefined,
   );
 
-  console.log(data);
-
   if (isLoading) return <ProjectsSkeleton className={className} />;
 
   const sectionClasses = `grid sm:grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-3 ${className}`;

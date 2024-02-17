@@ -81,7 +81,7 @@ export async function searchProjectsByUser(
             skip,
             take: limit,
             orderBy: {
-                created_at: "desc"
+                created_at: "desc",
             },
             include: {
                 parent: {
