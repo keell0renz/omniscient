@@ -96,25 +96,31 @@ export async function searchProjectsByUser(
         }));
 
         const parentUserIds = projectsWithParent
-            .filter(project => project.parent_user_id)
-            .map(project => project.parent_user_id as string);
+            .filter((project) => project.parent_user_id)
+            .map((project) => project.parent_user_id as string);
 
         const parentUsers = await Promise.all(
-            parentUserIds.map(userId => clerkClient.users.getUser(userId))
+            parentUserIds.map((userId) => clerkClient.users.getUser(userId)),
         );
 
-        const parentUsersMap = parentUsers.reduce((acc, user) => {
-            if (user && user.id) { // Check for null user.id
-                acc[user.id] = {
-                    username: user.username || '', // Handle null username
-                    avatarUrl: user.imageUrl || '', // Handle null avatarUrl
-                };
-            }
-            return acc;
-        }, {} as Record<string, { username: string; avatarUrl: string }>);
+        const parentUsersMap = parentUsers.reduce(
+            (acc, user) => {
+                if (user && user.id) {
+                    // Check for null user.id
+                    acc[user.id] = {
+                        username: user.username || "", // Handle null username
+                        avatarUrl: user.imageUrl || "", // Handle null avatarUrl
+                    };
+                }
+                return acc;
+            },
+            {} as Record<string, { username: string; avatarUrl: string }>,
+        );
 
-        const enrichedProjects = projectsWithParent.map(project => {
-            const parentInfo = project.parent_user_id ? parentUsersMap[project.parent_user_id] : undefined;
+        const enrichedProjects = projectsWithParent.map((project) => {
+            const parentInfo = project.parent_user_id
+                ? parentUsersMap[project.parent_user_id]
+                : undefined;
             return {
                 ...project,
                 parent_user_id: project.parent_user_id || undefined, // Change null to undefined
@@ -122,9 +128,8 @@ export async function searchProjectsByUser(
                 parent_avatar_url: parentInfo?.avatarUrl,
             };
         });
-        
-        return enrichedProjects;
 
+        return enrichedProjects;
     } catch (error) {
         throw new Error(handlePrismaError(error));
     }

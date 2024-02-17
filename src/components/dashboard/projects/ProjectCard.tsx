@@ -9,6 +9,7 @@ import {
   CardFooter,
   Card,
 } from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 
 export function ProjectCardSkeleton() {
@@ -27,12 +28,10 @@ export function ProjectCardSkeleton() {
           </div>
         </CardDescription>
       </CardHeader>
-      <CardFooter className="flex flex-row justify-between">
-        <div className="flex items-center">
-          <Skeleton className="w-10 h-10 rounded-full" />
-          <p className="text-sm ml-2">
-            <Skeleton className="w-24 h-3" />
-          </p>
+      <CardFooter className="flex items-center">
+        <Skeleton className="w-10 h-10 rounded-full" />
+        <div className="text-sm ml-2">
+          <Skeleton className="w-24 h-3" />
         </div>
       </CardFooter>
     </Card>
@@ -49,6 +48,17 @@ export function ProjectCard({ project }: { project: ProjectPanelCard }) {
             {project.description}
           </CardDescription>
         </CardHeader>
+        {project.parent_user_id && (
+          <CardFooter className="flex items-center">
+            <Avatar className="w-10 h-10">
+              <AvatarFallback></AvatarFallback>
+              <AvatarImage src={project.parent_avatar_url} />
+            </Avatar>
+            <Link className="text-sm ml-2 hover:underline hover:underline-offset-4" href="#">
+              <p>by @{project.parent_username}</p>
+            </Link>
+          </CardFooter>
+        )}
       </Card>
     </Link>
   );
