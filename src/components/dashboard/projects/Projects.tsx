@@ -15,7 +15,7 @@ function ProjectsSkeleton() {
 }
 
 export default function Projects({ query }: { query?: string }) {
-  const { data, error, isFetching } = useUserProjects(query);
+  const { data, error, isLoading } = useUserProjects(query);
   const { toast } = useToast();
 
   if (error)
@@ -25,7 +25,7 @@ export default function Projects({ query }: { query?: string }) {
       className: "bg-destructive text-destructive-foreground",
     });
 
-  if (isFetching) return <ProjectsSkeleton />;
+  if (isLoading) return <ProjectsSkeleton />;
 
   return (
     <section className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-3">

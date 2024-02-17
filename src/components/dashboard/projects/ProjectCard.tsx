@@ -1,3 +1,5 @@
+"use client"
+
 import { ProjectPanelCard } from "@/types/projects";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
