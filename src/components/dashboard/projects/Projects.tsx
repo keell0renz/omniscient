@@ -24,20 +24,6 @@ export default function Projects({ className }: { className?: string }) {
       params.get("q") || undefined,
     );
     const { toast } = useToast();
-  
-    useEffect(() => {
-      const onScroll = () => {
-        if (
-          window.innerHeight + document.documentElement.scrollTop
-          >= document.documentElement.offsetHeight
-        ) {
-          setSize(size + 1); 
-        }
-      };
-  
-      window.addEventListener('scroll', onScroll);
-      return () => window.removeEventListener('scroll', onScroll);
-    }, [size, setSize]);
 
   if (error)
     toast({

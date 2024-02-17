@@ -57,6 +57,8 @@ export async function searchProjectsByUser(
         throw new Error("Not authenticated!");
     }
 
+    console.log(page)
+
     try {
         const whereClause = query
             ? {
