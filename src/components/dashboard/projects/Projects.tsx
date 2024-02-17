@@ -4,9 +4,9 @@ import { useUserProjects } from "@/hooks/projects";
 import { ProjectCard, ProjectCardSkeleton } from "./ProjectCard";
 import { useToast } from "@/components/ui/use-toast";
 
-function ProjectsSkeleton() {
+function ProjectsSkeleton({ className }: { className?: string }) {
   return (
-    <section className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-3">
+    <section className={`grid sm:grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-3 ${className}`}>
       {[...Array(9)].map((_, index) => (
         <ProjectCardSkeleton key={index} />
       ))}
@@ -14,7 +14,7 @@ function ProjectsSkeleton() {
   );
 }
 
-export default function Projects({ query }: { query?: string }) {
+export default function Projects({ query, className }: { query?: string; className?: string }) {
   const { data, error, isLoading } = useUserProjects(query);
   const { toast } = useToast();
 
@@ -25,10 +25,12 @@ export default function Projects({ query }: { query?: string }) {
       className: "bg-destructive text-destructive-foreground",
     });
 
-  if (isLoading) return <ProjectsSkeleton />;
+  if (isLoading) return <ProjectsSkeleton className={className} />;
+
+  const sectionClasses = `grid sm:grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-3 ${className}`;
 
   return (
-    <section className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-3">
+    <section className={sectionClasses}>
       {data?.map((page) =>
         page.map((project) => (
           <ProjectCard key={project.id} project={project} />
