@@ -1,9 +1,8 @@
 "use client";
 
-import { useToast } from "@/components/ui/use-toast";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
-import { Project } from "@/types/projects";
+import { Project, ProjectPanelCard, PublicProjectCard } from "@/types/projects";
 import {
     getProjectById,
     searchProjectsByUser,
@@ -13,12 +12,13 @@ import { getUserProjectsKey, getPublicProjectsKey } from "@/utils/projects";
 
 export function useUserProjects(query?: string) {
     const { data, error, size, setSize, isValidating, isLoading, mutate } =
-        useSWRInfinite<Project[]>(getUserProjectsKey, async (key) => {
-            return await searchProjectsByUser(
-                query,
-                parseInt(key.split(":")[1]),
-            );
-        }, { revalidateOnFocus: false });
+        useSWRInfinite<ProjectPanelCard[]>(
+            getUserProjectsKey(query),
+            async (key) => {
+                return await searchProjectsByUser(key.query, key.page);
+            },
+            { revalidateOnFocus: false },
+        );
 
     return {
         data,
@@ -34,12 +34,13 @@ export function useUserProjects(query?: string) {
 
 export function usePublicProjects(query?: string) {
     const { data, error, size, setSize, isValidating, isLoading, mutate } =
-        useSWRInfinite<Project[]>(getPublicProjectsKey, async (key) => {
-            return await searchPublicProjects(
-                query,
-                parseInt(key.split(":")[1]),
-            );
-        }, { revalidateOnFocus: false });
+        useSWRInfinite<PublicProjectCard[]>(
+            getPublicProjectsKey(query),
+            async (key) => {
+                return await searchPublicProjects(key.query, key.page);
+            },
+            { revalidateOnFocus: false },
+        );
 
     return {
         data,
@@ -56,21 +57,12 @@ export function usePublicProjects(query?: string) {
 export function useProject(project_id: string) {
     const { data, error, isLoading, isValidating, mutate } =
         useSWR<Project | null>(
-            `project_id:${project_id}`,
+            { key: "project", project_id: project_id },
             async (key) => {
-                return await getProjectById(project_id);
+                return await getProjectById(key.project_id);
             },
-            { revalidateOnFocus: false },
+            { revalidateOnFocus: false, revalidateOnMount: false },
         );
-
-    const { toast } = useToast();
-
-    if (error) {
-        toast({
-            title: "An error occurred!",
-            description: `${error}`,
-        });
-    }
 
     return {
         data,

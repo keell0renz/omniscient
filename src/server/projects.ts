@@ -22,11 +22,11 @@ export async function searchPublicProjects(
             ? {
                   OR: [
                       {
-                          title: { contains: query, mode: "insensitive" },
+                          title: { contains: query },
                           public: true,
                       },
                       {
-                          description: { contains: query, mode: "insensitive" },
+                          description: { contains: query },
                           public: true,
                       },
                   ],
@@ -61,11 +61,11 @@ export async function searchProjectsByUser(
             ? {
                   OR: [
                       {
-                          title: { contains: query, mode: "insensitive" },
+                          title: { contains: query },
                           user_id: userId,
                       },
                       {
-                          description: { contains: query, mode: "insensitive" },
+                          description: { contains: query },
                           user_id: userId,
                       },
                   ],

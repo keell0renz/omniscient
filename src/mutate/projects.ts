@@ -1,7 +1,6 @@
 "use client";
 
-import { useToast } from "@/components/ui/use-toast";
-import { mutate, unstable_serialize } from "swr";
+import { mutate } from "swr";
 import { CreateProject, EditProject } from "@/types/projects";
 import {
     editProjectById,
@@ -9,47 +8,58 @@ import {
     createProjectWithSchema,
     importPublicProject,
 } from "@/server/projects";
-import { getUserProjectsKey } from "@/utils/projects";
 
 // Handle exceptions in components using toasters or other local messages, alerts, etc!
 
 export async function createProject(schema: CreateProject) {
-    try {
-        await createProjectWithSchema(schema);
-    } catch (error) {
-        throw error;
-    } finally {
-        mutate(unstable_serialize(getUserProjectsKey));
-    }
+    mutate(
+        (key: any) => key?.key === "user_projects",
+        async () => await createProjectWithSchema(schema),
+        {
+            populateCache: (new_project, projects) => {
+                return [...projects, new_project];
+            },
+            revalidate: false,
+        },
+    );
 }
 
 export async function importProject(project_id: string) {
-    try {
-        await importPublicProject(project_id);
-    } catch (error) {
-        throw error;
-    }
+    mutate(
+        (key: any) => key?.key === "user_projects",
+        async () => await importPublicProject(project_id),
+        {
+            populateCache: (new_project, projects) => {
+                return [...projects, new_project];
+            },
+            revalidate: false,
+        },
+    );
 }
 
 export async function editProject(
     project_id: string,
     updatedData: EditProject,
 ) {
-    try {
-        await editProjectById(updatedData, project_id);
-        mutate(`project_id:${project_id}`, undefined, {
-            optimisticData: (project) => ({ ...project, ...updatedData }),
-            rollbackOnError: true,
-        });
-    } catch (error) {
-        throw error;
-    }
+    mutate(
+        (key: any) => key?.key === "project" && key?.project_id === project_id,
+        async () => await editProjectById(updatedData, project_id),
+        {
+            populateCache: (updated_project, projects) => {
+                return { ...projects, ...updated_project };
+            },
+            revalidate: false,
+        },
+    );
 }
 
 export async function deleteProject(project_id: string) {
-    try {
-        await deleteProjectById(project_id);
-    } catch (error) {
-        throw error;
-    }
+    mutate(
+        (key: any) => key?.key === "project" && key?.project_id === project_id,
+        async () => {
+            await deleteProjectById(project_id);
+            return null; // Explicitly return null after deletion
+        },
+        { revalidate: false }
+    )
 }
