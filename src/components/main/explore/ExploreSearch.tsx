@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useDebounceCallback } from 'usehooks-ts';
 import { Input } from "@/components/ui/input";
@@ -32,7 +32,7 @@ export default function ExploreSearch({ query }: ExploreSearchProps) {
         setSearchQuery("")
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         debouncedNavigate(searchQuery);
     }, [searchQuery]);
 

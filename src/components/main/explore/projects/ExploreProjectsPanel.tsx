@@ -10,10 +10,9 @@ type ExploreProjectsPanelProps = {
 
 export default function ExploreProjectsPanel({ query }: ExploreProjectsPanelProps) {
     const { data, error, isFetching } = usePublicProjects(query); // projects are in the data[0]
+    const { toast } = useToast();
 
     if (error) {
-        const { toast } = useToast();
-
         toast({
             title: "An error occured",
             description: `Error: ${error}`,

@@ -25,7 +25,7 @@ export default function ProjectsPanel({ query }: ProjectsPanelProps) {
             <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-3">
                 {data[0][0]
                     ? data[0].map((project) => (
-                        <ProjectCard project={project} />
+                        <ProjectCard key={project.id} project={project} />
                     ))
                     :
                     <h2 className="text-2xl col-span-full text-center text-muted-foreground">
