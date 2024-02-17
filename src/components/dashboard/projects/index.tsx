@@ -1,3 +1,3 @@
 export { default as Projects } from "./Projects";
-export { default as AddNew } from "./controls/NewPopover";
-export { default as Search } from "./controls/Search";
+export { default as AddProject } from "./new/AddProject";
+export { default as Search } from "./new/Search";

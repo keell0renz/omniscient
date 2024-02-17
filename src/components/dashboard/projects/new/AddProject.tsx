@@ -1,15 +1,14 @@
-import { ChevronDown, FilePlus } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import Link from "next/link";
-import { DownloadCloud } from "lucide-react";
 import {
   PopoverTrigger,
   Popover,
   PopoverContent,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import NewProject from "./NewProject";
+import CreateProject from "./CreateProject";
 
-export default function NewPopover() {
+export default function AddProject() {
   return (
     <>
       <Popover>
@@ -21,19 +20,18 @@ export default function NewPopover() {
         </PopoverTrigger>
         <PopoverContent
           align="end"
-          className="w-36 flex flex-col gap-1"
+          className="w-36 flex flex-col gap-1 p-2 rounded-xl"
           sideOffset={10}
         >
-          <Button variant={"ghost"} asChild>
+          <Button variant={"ghost"} asChild className="flex flex-row justify-start items-center">
             <Link
               href="/explore"
-              className="flex flex-row justify-between items-center"
             >
-              <DownloadCloud />
-              Import
+              <Search className="h-5 w-5 mr-2" />
+              Explore
             </Link>
           </Button>
-          <NewProject />
+          <CreateProject />
         </PopoverContent>
       </Popover>
     </>
