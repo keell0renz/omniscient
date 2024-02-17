@@ -21,34 +21,20 @@ import {
 import { getUserProjectsKey, getPublicProjectsKey } from "@/utils/projects";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export function useUserProjects(query?: string, options?: object) {
-
-    const params = useSearchParams();
-
-    const q = query ? query : params.get("q") || undefined
-
-    const { data, error, size, setSize, isValidating, isLoading, mutate } =
-        useSWRInfinite<ProjectPanelCard[]>(
-            getUserProjectsKey(q),
-            async (key) => {
-                return await searchProjectsByUser(key.query, key.page);
-            },
-            { revalidateOnFocus: false, ...options },
-        );
-
+export function useNewProject() {
+    const router = useRouter();
     const [isMutating, setIsMutating] = useState(false);
-
     const { toast } = useToast();
 
     const createProject = async (schema: CreateProject) => {
         try {
             setIsMutating(true);
 
-            await createProjectWithSchema(schema);
+            const new_project = await createProjectWithSchema(schema);
 
-            mutate();
+            router.push(`/p/${new_project.id}`);
         } catch (error) {
             toast({
                 title: "An error occurred",
@@ -66,7 +52,7 @@ export function useUserProjects(query?: string, options?: object) {
 
             await importPublicProject(parent_id);
 
-            mutate();
+            router.push("/dashboard/projects");
         } catch (error) {
             toast({
                 title: "An error occurred",
@@ -79,34 +65,69 @@ export function useUserProjects(query?: string, options?: object) {
     };
 
     return {
+        isMutating,
+        createProject,
+        importProject,
+    };
+}
+
+export function useUserProjects(query?: string) {
+    const { data, error, size, setSize, isValidating, isLoading, mutate } =
+        useSWRInfinite<ProjectPanelCard[]>(
+            getUserProjectsKey(query),
+            async (key) => {
+                return await searchProjectsByUser(key.query, key.page);
+            },
+            {
+                revalidateOnMount: true,
+                revalidateAll: true,
+                revalidateOnFocus: false,
+            },
+        );
+
+    const { toast } = useToast();
+
+    if (error)
+        toast({
+            title: "Error!",
+            description: error,
+            className: "bg-destructive text-destructive-foreground",
+        });
+
+    return {
         data,
         error,
         size,
         setSize,
         isLoading,
         isValidating,
-        isMutating,
         isFetching: isLoading || isValidating,
         mutate,
-        createProject,
-        importProject
     };
 }
 
-export function usePublicProjects(query?: string, options?: object) {
-
-    const params = useSearchParams();
-
-    const q = query ? query : params.get("q") || undefined
-
+export function usePublicProjects(query?: string) {
     const { data, error, size, setSize, isValidating, isLoading, mutate } =
         useSWRInfinite<PublicProjectCard[]>(
-            getPublicProjectsKey(q),
+            getPublicProjectsKey(query),
             async (key) => {
                 return await searchPublicProjects(key.query, key.page);
             },
-            { revalidateOnFocus: false, ...options },
+            {
+                revalidateOnMount: true,
+                revalidateAll: true,
+                revalidateOnFocus: false,
+            },
         );
+
+    const { toast } = useToast();
+
+    if (error)
+        toast({
+            title: "Error!",
+            description: error,
+            className: "bg-destructive text-destructive-foreground",
+        });
 
     return {
         data,
@@ -169,6 +190,13 @@ export function useProject(project_id: string) {
             setIsMutating(false);
         }
     };
+
+    if (error)
+        toast({
+            title: "Error!",
+            description: error,
+            className: "bg-destructive text-destructive-foreground",
+        });
 
     return {
         data,

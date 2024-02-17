@@ -57,8 +57,6 @@ export async function searchProjectsByUser(
         throw new Error("Not authenticated!");
     }
 
-    console.log(`Page: ${page}, Time: ${new Date().toISOString()}`);
-    
     try {
         const whereClause = query
             ? {
@@ -82,6 +80,9 @@ export async function searchProjectsByUser(
             where: whereClause,
             skip,
             take: limit,
+            orderBy: {
+                created_at: "desc"
+            },
             include: {
                 parent: {
                     select: {

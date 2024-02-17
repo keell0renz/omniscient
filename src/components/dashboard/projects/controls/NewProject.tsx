@@ -27,11 +27,11 @@ import { validateCreateProject } from "@/schema/projects";
 import type { CreateProject } from "@/types/projects";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingButton from "@/components/ui/LoadingButton";
-import { useUserProjects } from "@/hooks/projects";
+import { useNewProject } from "@/hooks/projects";
 
 export default function NewProject() {
   const [isOpenedDialog, setIsOpenedDialog] = useState(false);
-  const { createProject, isMutating } = useUserProjects(undefined, { revalidateOnMount: false });
+  const { createProject, isMutating } = useNewProject();
   const form = useForm<CreateProject>({
     resolver: zodResolver(validateCreateProject),
     defaultValues: {
@@ -44,7 +44,7 @@ export default function NewProject() {
     await createProject(input);
 
     setIsOpenedDialog(false);
-    form.reset()
+    form.reset();
   }
 
   return (
