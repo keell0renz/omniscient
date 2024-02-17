@@ -14,11 +14,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingButton from "@/components/ui/LoadingButton";
 import { createProject } from "@/mutate/projects";
 import { useToast } from "@/components/ui/use-toast";
+import { useUserProjects } from "@/hooks/projects";
 
 export default function NewProject() {
   const [isOpenedDialog, setIsOpenedDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
+  const { createProject, isMutating } = useUserProjects()
   const form = useForm<CreateProject>({
     resolver: zodResolver(validateCreateProject),
     defaultValues: {
@@ -28,20 +29,9 @@ export default function NewProject() {
   });
 
   async function onCreate(input: CreateProject) {
-    try {
-      setIsLoading(true);
-      await createProject(input);
-    } catch (e) {
-      toast({
-        title: "An error occurred",
-        description: `${e}`,
-        className: "text-red-600 text-lg",
-      });
-    } finally {
-      setIsOpenedDialog(false);
-      setIsLoading(false);
-      form.reset();
-    }
+    await createProject(input)
+
+    setIsOpenedDialog(false)
   }
 
   return (
@@ -82,7 +72,7 @@ export default function NewProject() {
               </FormItem>
             )} />
             <div className="flex justify-end w-full">
-              <LoadingButton isLoading={isLoading}>Create</LoadingButton>
+              <LoadingButton isLoading={isMutating}>Create</LoadingButton>
             </div>
           </form>
         </Form>

@@ -2,13 +2,19 @@
 
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
-import { Project, ProjectPanelCard, PublicProjectCard } from "@/types/projects";
+import { CreateProject, Project, ProjectPanelCard, PublicProjectCard } from "@/types/projects";
 import {
     getProjectById,
     searchProjectsByUser,
     searchPublicProjects,
+    editProjectById,
+    deleteProjectById,
+    createProjectWithSchema,
+    importPublicProject,
 } from "@/server/projects";
 import { getUserProjectsKey, getPublicProjectsKey } from "@/utils/projects";
+import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
 
 export function useUserProjects(query?: string) {
     const { data, error, size, setSize, isValidating, isLoading, mutate } =
@@ -17,8 +23,30 @@ export function useUserProjects(query?: string) {
             async (key) => {
                 return await searchProjectsByUser(key.query, key.page);
             },
-            { },
+            { revalidateOnFocus: false },
         );
+
+    const [ isMutating, setIsMutating ] = useState(false)
+
+    const { toast } = useToast()
+
+    const createProject = async (schema: CreateProject) => {
+        try {
+            setIsMutating(true)
+
+            await createProjectWithSchema(schema)
+
+            mutate()
+        } catch(error) {
+            toast({
+                title: "An error occurred",
+                description: `${error}`,
+                className: "bg-desctructive text-destructive-foreground",
+              });
+        } finally {
+            setIsMutating(false)
+        }
+    }
 
     return {
         data,
@@ -27,8 +55,10 @@ export function useUserProjects(query?: string) {
         setSize,
         isLoading,
         isValidating,
+        isMutating,
         isFetching: isLoading || isValidating,
         mutate,
+        createProject
     };
 }
 
