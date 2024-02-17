@@ -11,9 +11,9 @@ export default async function Layout({
         <NavbarLink href="/" title="Home" />
         <NavbarLink href="/dashboard/projects" title="Projects" />
       </Navbar>
-      <div className="overflow-x-hidden min-h-[80vh] container mx-auto">
+      <main className="overflow-x-hidden min-h-[80vh] container mx-auto">
         {children}
-      </div>
+      </main>
     </>
   );
 }

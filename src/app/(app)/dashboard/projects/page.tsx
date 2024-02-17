@@ -17,13 +17,13 @@ const Projects = dynamic(
 
 export default function Page({ params }: { params: { q?: string } }) {
   return (
-    <main>
-      <aside className="flex w-full h-fit space-x-2 pt-6">
+    <>
+      <section className="flex w-full h-fit space-x-2 pt-8">
         <Search />
         <AddNew />
-      </aside>
+      </section>
 
-      <Projects className="pt-6" />
-    </main>
+      <Projects className="pt-8" />
+    </>
   );
 }

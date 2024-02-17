@@ -13,7 +13,7 @@ import Link from "next/link";
 
 export function ProjectCardSkeleton() {
   return (
-    <Card className="w-full min-h-48 h-48 flex flex-col justify-between hover:border-primary cursor-pointer">
+    <Card className="w-full h-44 flex flex-col justify-between hover:border-primary cursor-pointer">
       <CardHeader>
         <CardTitle className="flex flex-row justify-between">
           <div className="text-lg">
@@ -42,7 +42,7 @@ export function ProjectCardSkeleton() {
 export function ProjectCard({ project }: { project: ProjectPanelCard }) {
   return (
     <Link href={`/p/${project.id}`}>
-      <Card className="w-full min-h-48 h-48 flex flex-col justify-between hover:border-primary cursor-pointer">
+      <Card className="w-full h-44 flex flex-col justify-between hover:border-primary cursor-pointer">
         <CardHeader>
           <CardTitle className="text-xl">{project.title}</CardTitle>
           <CardDescription className="truncate-2-lines">
