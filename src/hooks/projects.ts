@@ -2,7 +2,13 @@
 
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
-import { CreateProject, Project, ProjectPanelCard, PublicProjectCard } from "@/types/projects";
+import {
+    CreateProject,
+    EditProject,
+    Project,
+    ProjectPanelCard,
+    PublicProjectCard,
+} from "@/types/projects";
 import {
     getProjectById,
     searchProjectsByUser,
@@ -26,27 +32,45 @@ export function useUserProjects(query?: string) {
             { revalidateOnFocus: false },
         );
 
-    const [ isMutating, setIsMutating ] = useState(false)
+    const [isMutating, setIsMutating] = useState(false);
 
-    const { toast } = useToast()
+    const { toast } = useToast();
 
     const createProject = async (schema: CreateProject) => {
         try {
-            setIsMutating(true)
+            setIsMutating(true);
 
-            await createProjectWithSchema(schema)
+            await createProjectWithSchema(schema);
 
-            mutate()
-        } catch(error) {
+            mutate();
+        } catch (error) {
             toast({
                 title: "An error occurred",
                 description: `${error}`,
                 className: "bg-desctructive text-destructive-foreground",
-              });
+            });
         } finally {
-            setIsMutating(false)
+            setIsMutating(false);
         }
-    }
+    };
+
+    const importProject = async (parent_id: string) => {
+        try {
+            setIsMutating(true);
+
+            await importPublicProject(parent_id);
+
+            mutate();
+        } catch (error) {
+            toast({
+                title: "An error occurred",
+                description: `${error}`,
+                className: "bg-desctructive text-destructive-foreground",
+            });
+        } finally {
+            setIsMutating(false);
+        }
+    };
 
     return {
         data,
@@ -58,7 +82,8 @@ export function useUserProjects(query?: string) {
         isMutating,
         isFetching: isLoading || isValidating,
         mutate,
-        createProject
+        createProject,
+        importProject
     };
 }
 
@@ -94,12 +119,54 @@ export function useProject(project_id: string) {
             { revalidateOnFocus: false, revalidateOnMount: false },
         );
 
+    const [isMutating, setIsMutating] = useState(false);
+
+    const { toast } = useToast();
+
+    const editProject = async (schema: EditProject) => {
+        try {
+            setIsMutating(true);
+
+            await editProjectById(schema, project_id);
+
+            mutate();
+        } catch (error) {
+            toast({
+                title: "An error occurred",
+                description: `${error}`,
+                className: "bg-desctructive text-destructive-foreground",
+            });
+        } finally {
+            setIsMutating(false);
+        }
+    };
+
+    const deleteProject = async () => {
+        try {
+            setIsMutating(true);
+
+            await deleteProjectById(project_id);
+
+            mutate(null, { revalidate: false });
+        } catch (error) {
+            toast({
+                title: "An error occurred",
+                description: `${error}`,
+                className: "bg-desctructive text-destructive-foreground",
+            });
+        } finally {
+            setIsMutating(false);
+        }
+    };
+
     return {
         data,
         error,
         isLoading,
         isValidating,
+        isMutating,
         isFetching: isLoading || isValidating,
         mutate,
+        editProject,
     };
 }
