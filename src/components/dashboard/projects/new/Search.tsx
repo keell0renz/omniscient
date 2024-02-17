@@ -30,7 +30,7 @@ export default function ProjectsSearchInput() {
   return (
     <div className="h-fit w-full relative flex flex-row items-center">
       <Input
-        className="w-full bg-secondary/25 h-10 focus-visible:ring-0 focus-visible:border-sky-100"
+        className="w-full bg-background-secondary h-10 focus-visible:ring-0 focus-visible:border-sky-100"
         defaultValue={searchQuery || undefined}
         onChange={(e) => {
           debouncedSetQuery(e.target.value);
