@@ -14,7 +14,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingButton from "@/components/ui/LoadingButton";
 import { createProject } from "@/mutate/projects";
 import { useToast } from "@/components/ui/use-toast";
-import { mutate } from "swr";
 
 export default function NewProject() {
   const [isOpenedDialog, setIsOpenedDialog] = useState(false);
