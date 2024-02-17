@@ -3,7 +3,6 @@
 import { useUserProjects } from "@/hooks/projects";
 import { ProjectCard, ProjectCardSkeleton } from "./ProjectCard";
 import { useToast } from "@/components/ui/use-toast";
-import { useSearchParams } from "next/navigation";
 
 function ProjectsSkeleton({ className }: { className?: string }) {
   return (
@@ -18,10 +17,7 @@ function ProjectsSkeleton({ className }: { className?: string }) {
 }
 
 export default function Projects({ className }: { className?: string }) {
-  const params = useSearchParams();
-  const { data, error, isLoading, size, setSize, mutate } = useUserProjects(
-    params.get("q") || undefined,
-  );
+  const { data, error, isLoading, size, setSize, mutate } = useUserProjects();
   const { toast } = useToast();
 
   if (error)

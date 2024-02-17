@@ -21,15 +21,21 @@ import {
 import { getUserProjectsKey, getPublicProjectsKey } from "@/utils/projects";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
-export function useUserProjects(query?: string) {
+export function useUserProjects(query?: string, options?: object) {
+
+    const params = useSearchParams();
+
+    const q = query ? query : params.get("q") || undefined
+
     const { data, error, size, setSize, isValidating, isLoading, mutate } =
         useSWRInfinite<ProjectPanelCard[]>(
-            getUserProjectsKey(query),
+            getUserProjectsKey(q),
             async (key) => {
                 return await searchProjectsByUser(key.query, key.page);
             },
-            { revalidateOnFocus: false },
+            { revalidateOnFocus: false, ...options },
         );
 
     const [isMutating, setIsMutating] = useState(false);
@@ -87,14 +93,19 @@ export function useUserProjects(query?: string) {
     };
 }
 
-export function usePublicProjects(query?: string) {
+export function usePublicProjects(query?: string, options?: object) {
+
+    const params = useSearchParams();
+
+    const q = query ? query : params.get("q") || undefined
+
     const { data, error, size, setSize, isValidating, isLoading, mutate } =
         useSWRInfinite<PublicProjectCard[]>(
-            getPublicProjectsKey(query),
+            getPublicProjectsKey(q),
             async (key) => {
                 return await searchPublicProjects(key.query, key.page);
             },
-            { revalidateOnFocus: false },
+            { revalidateOnFocus: false, ...options },
         );
 
     return {
