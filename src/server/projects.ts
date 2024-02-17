@@ -34,7 +34,7 @@ export async function searchPublicProjects(
               }
             : { public: true };
 
-        const skip = (Math.max(page, 1) - 1) * limit;
+        const skip = page * limit;
 
         return await prisma.project.findMany({
             where: whereClause,
@@ -73,7 +73,7 @@ export async function searchProjectsByUser(
               }
             : { user_id: userId };
 
-        const skip = (Math.max(page, 1) - 1) * limit;
+        const skip = page * limit;
 
         // Renamed to avoid redeclaration
         const foundProjects = await prisma.project.findMany({
