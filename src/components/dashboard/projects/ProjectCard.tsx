@@ -54,7 +54,10 @@ export function ProjectCard({ project }: { project: ProjectPanelCard }) {
               <AvatarFallback></AvatarFallback>
               <AvatarImage src={project.parent_avatar_url} />
             </Avatar>
-            <Link className="text-sm ml-2 hover:underline hover:underline-offset-4" href="#">
+            <Link
+              className="text-sm ml-2 hover:underline hover:underline-offset-4"
+              href="#"
+            >
               <p>by @{project.parent_username}</p>
             </Link>
           </CardFooter>

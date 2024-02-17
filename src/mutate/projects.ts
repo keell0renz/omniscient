@@ -1,6 +1,6 @@
 "use client";
 
-import { mutate } from "swr";
+import { mutate, useSWRConfig } from "swr";
 import { CreateProject, EditProject } from "@/types/projects";
 import {
     editProjectById,
@@ -13,7 +13,7 @@ import {
 
 export async function createProject(schema: CreateProject) {
     mutate(
-        (key: any) => key?.key === "user_projects",
+        key => { console.log(key); return true },
         async () => await createProjectWithSchema(schema),
         {
             populateCache: (new_project, projects) => {
@@ -26,7 +26,7 @@ export async function createProject(schema: CreateProject) {
 
 export async function importProject(project_id: string) {
     mutate(
-        (key: any) => key?.key === "user_projects",
+        key => Array.isArray(key) && key[0] === "user_projects",
         async () => await importPublicProject(project_id),
         {
             populateCache: (new_project, projects) => {

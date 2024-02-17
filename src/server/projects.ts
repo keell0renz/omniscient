@@ -49,15 +49,13 @@ export async function searchPublicProjects(
 export async function searchProjectsByUser(
     query?: string,
     page: number = 1,
-    limit: number = 9
+    limit: number = 9,
 ): Promise<ProjectPanelCard[]> {
     const { userId } = auth();
 
     if (!userId) {
         throw new Error("Not authenticated!");
     }
-
-    console.log(page)
 
     try {
         const whereClause = query

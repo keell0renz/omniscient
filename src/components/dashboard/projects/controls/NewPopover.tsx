@@ -7,6 +7,7 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
+import NewProject from "./NewProject";
 
 export default function NewPopover() {
   return (
@@ -32,15 +33,7 @@ export default function NewPopover() {
               Import
             </Link>
           </Button>
-          <Button variant={"ghost"} asChild>
-            <Link
-              href="#"
-              className="flex flex-row justify-between items-center"
-            >
-              <FilePlus />
-              Create
-            </Link>
-          </Button>
+          <NewProject />
         </PopoverContent>
       </Popover>
     </>

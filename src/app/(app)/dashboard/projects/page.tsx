@@ -22,7 +22,7 @@ export default function Page({ params }: { params: { q?: string } }) {
         <Search />
         <AddNew />
       </section>
-      
+
       <Projects className="pt-8" />
     </>
   );
