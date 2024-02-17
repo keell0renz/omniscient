@@ -22,10 +22,8 @@ export default function Page({ params }: { params: { q?: string } }) {
         <Search />
         <AddNew />
       </section>
-
-      <div className="flex-1 overflow-auto">
-        <Projects className="pt-8" />
-      </div>
+      
+      <Projects className="pt-8" />
     </>
   );
 }
