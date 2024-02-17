@@ -18,12 +18,14 @@ const Projects = dynamic(
 export default function Page({ params }: { params: { q?: string } }) {
   return (
     <>
-      <section className="flex w-full h-fit space-x-2 pt-8">
+      <section className="flex w-full h-fit space-x-2 pt-6">
         <Search />
         <AddNew />
       </section>
 
-      <Projects className="pt-8" />
+      <div className="flex-1 overflow-auto">
+        <Projects className="pt-8" />
+      </div>
     </>
   );
 }

@@ -4,6 +4,7 @@ import { useUserProjects } from "@/hooks/projects";
 import { ProjectCard, ProjectCardSkeleton } from "./ProjectCard";
 import { useToast } from "@/components/ui/use-toast";
 import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 function ProjectsSkeleton({ className }: { className?: string }) {
   return (
@@ -18,11 +19,25 @@ function ProjectsSkeleton({ className }: { className?: string }) {
 }
 
 export default function Projects({ className }: { className?: string }) {
-  const params = useSearchParams();
-  const { data, error, isLoading } = useUserProjects(
-    params.get("q") || undefined,
-  );
-  const { toast } = useToast();
+    const params = useSearchParams();
+    const { data, error, isLoading, size, setSize } = useUserProjects(
+      params.get("q") || undefined,
+    );
+    const { toast } = useToast();
+  
+    useEffect(() => {
+      const onScroll = () => {
+        if (
+          window.innerHeight + document.documentElement.scrollTop
+          >= document.documentElement.offsetHeight
+        ) {
+          setSize(size + 1); 
+        }
+      };
+  
+      window.addEventListener('scroll', onScroll);
+      return () => window.removeEventListener('scroll', onScroll);
+    }, [size, setSize]);
 
   if (error)
     toast({

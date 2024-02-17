@@ -17,7 +17,7 @@ export function useUserProjects(query?: string) {
             async (key) => {
                 return await searchProjectsByUser(key.query, key.page);
             },
-            { revalidateOnFocus: false },
+            { revalidateOnFocus: false, initialSize: 1 },
         );
 
     return {

@@ -49,7 +49,7 @@ export async function searchPublicProjects(
 export async function searchProjectsByUser(
     query?: string,
     page: number = 1,
-    limit: number = 9,
+    limit: number = 9
 ): Promise<ProjectPanelCard[]> {
     const { userId } = auth();
 
