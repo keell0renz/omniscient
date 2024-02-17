@@ -18,6 +18,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { UserProfile } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function UserAccount() {
   const { user } = useUser();
@@ -60,6 +61,13 @@ export default function UserAccount() {
           </div>
         </div>
         <div className="flex flex-col rounded-md">
+          <Link
+            className="hover:bg-secondary rounded-lg p-3 inline-flex items-center gap-2"
+            href="/projects"
+          >
+            <LayoutDashboard className="h-5 w-5 text-primary" />
+            Dashboard
+          </Link>
           <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
             <AlertDialogTrigger asChild>
               <div className="cursor-pointer hover:bg-secondary rounded-lg p-3 inline-flex items-center gap-2">

@@ -53,8 +53,9 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground min-h-screen relative;
   }
 }
 
@@ -87,6 +88,7 @@
   list-style: disc;
   margin: 5px 0;
 }
+
 .code-markdown h1,
 h2,
 h3,
@@ -95,21 +97,27 @@ h5,
 h6 {
   font-weight: 700;
 }
+
 .code-markdown h1 {
   font-size: 2rem;
 }
+
 .code-markdown h2 {
   font-size: 1.7rem;
 }
+
 .code-markdown h3 {
   font-size: 1.5rem;
 }
+
 .code-markdown h4 {
   font-size: 1.3rem;
 }
+
 .code-markdown h5 {
   font-size: 1.2rem;
 }
+
 .code-markdown h6 {
   font-size: 1rem;
 }

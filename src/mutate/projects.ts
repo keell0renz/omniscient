@@ -1,6 +1,4 @@
 "use client";
-
-import { useToast } from "@/components/ui/use-toast";
 import { mutate, unstable_serialize } from "swr";
 import { CreateProject, EditProject } from "@/types/projects";
 import {

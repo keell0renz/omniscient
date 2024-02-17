@@ -16,18 +16,13 @@ export function handlePrismaError(error: any): string {
         error instanceof Prisma.PrismaClientInitializationError ||
         error instanceof Prisma.PrismaClientRustPanicError ||
         error instanceof Prisma.PrismaClientUnknownRequestError ||
-        error.code.startsWith("P1") || // Server errors like P1000, etc
-        error.code.startsWith("P6")
+        (error.code && (error.code.startsWith("P1") || error.code.startsWith("P6")))
     ) {
-        // Prisma Accelerate-related errors
         // Handle server-related errors
-
         console.error(error); // Log the error to the console
-
         return "Internal server error, please submit a support request.";
     } else {
         // Handle all other errors that are not specifically user-caused or server-related
-
         console.error(error); // Log the error to the console
         return "An unexpected error occurred.";
     }

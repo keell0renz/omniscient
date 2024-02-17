@@ -11,7 +11,10 @@ export const getUserProjectsKey = (
 export const getPublicProjectsKey = (
     pageIndex: number,
     previousPageData: Project[] | null,
+    query?: string // Add query as an argument
 ) => {
+    // Return null to stop fetching if we've fetched all data
     if (previousPageData && !previousPageData.length) return null;
-    return `public_projects_page:${pageIndex}`;
+    // Include the query in the key
+    return `public_projects_page:${pageIndex}:${query}`;
 };

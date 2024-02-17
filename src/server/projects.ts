@@ -18,25 +18,29 @@ export async function searchPublicProjects(
     limit: number = 9,
 ): Promise<PublicProjectCard[]> {
     try {
-        const whereClause = query
-            ? {
-                  OR: [
-                      {
-                          title: { contains: query, mode: "insensitive" },
-                          public: true,
-                      },
-                      {
-                          description: { contains: query, mode: "insensitive" },
-                          public: true,
-                      },
-                  ],
-              }
-            : { public: true };
+        const whereClause = () => {
+            if (query && query !== "undefined") {
+                return {
+                    OR: [
+                        {
+                            title: { contains: query },
+                            public: true,
+                        },
+                        {
+                            description: { contains: query },
+                            public: true,
+                        },
+                    ],
+                }
+            } else {
+                return { public: true }
+            }
+        }
 
-        const skip = (page - 1) * limit;
+        const skip = Math.max(0, (page - 1) * limit);
 
         return await prisma.project.findMany({
-            where: whereClause,
+            where: whereClause(),
             skip,
             take: limit,
         });
@@ -59,20 +63,20 @@ export async function searchProjectsByUser(
     try {
         const whereClause = query
             ? {
-                  OR: [
-                      {
-                          title: { contains: query, mode: "insensitive" },
-                          user_id: userId,
-                      },
-                      {
-                          description: { contains: query, mode: "insensitive" },
-                          user_id: userId,
-                      },
-                  ],
-              }
+                OR: [
+                    {
+                        title: { contains: query, mode: "insensitive" },
+                        user_id: userId,
+                    },
+                    {
+                        description: { contains: query, mode: "insensitive" },
+                        user_id: userId,
+                    },
+                ],
+            }
             : { user_id: userId };
 
-        const skip = (page - 1) * limit;
+        const skip = Math.max(0, (page - 1) * limit);
 
         const projects = await prisma.project.findMany({
             where: whereClause,

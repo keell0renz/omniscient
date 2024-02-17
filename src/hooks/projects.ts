@@ -12,13 +12,18 @@ import {
 import { getUserProjectsKey, getPublicProjectsKey } from "@/utils/projects";
 
 export function useUserProjects(query?: string) {
-    const { data, error, size, setSize, isValidating, isLoading, mutate } =
-        useSWRInfinite<Project[]>(getUserProjectsKey, async (key) => {
+    const { data, error, size, setSize, isValidating, isLoading, mutate } = useSWRInfinite<Project[]>(
+        (pageIndex, previousPageData) => getUserProjectsKey(pageIndex, previousPageData),
+        async (key) => {
+            // Extract pageIndex from the key
+            const pageIndex = parseInt(key.split(":")[1]);
             return await searchProjectsByUser(
-                query,
-                parseInt(key.split(":")[1]),
+                query, // Directly use the query passed to useUserProjects as it's not part of the key
+                pageIndex,
             );
-        }, { revalidateOnFocus: false });
+        },
+        { revalidateOnFocus: false }
+    );
 
     return {
         data,
@@ -33,13 +38,18 @@ export function useUserProjects(query?: string) {
 }
 
 export function usePublicProjects(query?: string) {
-    const { data, error, size, setSize, isValidating, isLoading, mutate } =
-        useSWRInfinite<Project[]>(getPublicProjectsKey, async (key) => {
+    const { data, error, size, setSize, isValidating, isLoading, mutate } = useSWRInfinite<Project[]>(
+        (pageIndex, previousPageData) => getPublicProjectsKey(pageIndex, previousPageData, query),
+        async (key) => {
+            // Extract pageIndex and query from the key
+            const [, pageIndex, queryValue] = key.split(":");
             return await searchPublicProjects(
-                query,
-                parseInt(key.split(":")[1]),
+                queryValue,
+                parseInt(pageIndex),
             );
-        }, { revalidateOnFocus: false });
+        },
+        { revalidateOnFocus: false }
+    );
 
     return {
         data,
