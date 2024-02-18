@@ -144,9 +144,9 @@ export function usePublicProjects(query?: string) {
 export function useProject(project_id: string) {
     const { data, error, isLoading, isValidating, mutate } =
         useSWR<Project>(
-            { key: "project", project_id: project_id },
+            project_id,
             async (key) => {
-                return await getProjectById(key.project_id);
+                return await getProjectById(key);
             },
             { revalidateOnFocus: false, revalidateOnMount: false },
         );
