@@ -14,6 +14,7 @@ import { useState } from "react";
 import type { CreateProject } from "@/types/projects";
 import { useNewProject } from "@/hooks/projects";
 import CreateProjectForm from "./CreateProjectForm";
+import { Sparkles } from "lucide-react";
 
 export default function CreateProject() {
   const [isOpenedDialog, setIsOpenedDialog] = useState(false);
@@ -27,16 +28,22 @@ export default function CreateProject() {
   return (
     <Dialog open={isOpenedDialog} onOpenChange={setIsOpenedDialog}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="flex flex-row justify-start items-center">
+        <Button
+          variant="ghost"
+          className="flex flex-row justify-start items-center"
+        >
           <Plus className="h-5 w-5 mr-2" />
           Create
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add new Project</DialogTitle>
+          <DialogTitle className="flex flex-row justify-start items-center text-2xl">
+            <Sparkles className="mr-1"/>
+            <h1>Create Project</h1>
+          </DialogTitle>
           <DialogDescription>
-            Edit title and description for a new project.
+            Create a self-learning project, your personal learning environment!
           </DialogDescription>
         </DialogHeader>
         <CreateProjectForm onCreate={onCreate} isMutating={isMutating} />

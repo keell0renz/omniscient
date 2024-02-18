@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const validateCreateProject = z.object({
-    title: z.string().min(1, "Title is required.").max(64, "Title too long!"),
+    title: z.string().min(1, "Title is required.").max(56, "Title too long!"),
     description: z
         .string()
         .min(1, "Description is required.")

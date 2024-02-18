@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { ProjectPanelCard } from "@/types/projects";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -11,10 +13,11 @@ import {
 } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
+import Hint from "./Hint";
 
 export function ProjectCardSkeleton() {
   return (
-    <Card className="w-full h-44 flex flex-col justify-between hover:border-primary cursor-pointer">
+    <Card className="w-full h-48 flex flex-col justify-between hover:border-primary cursor-pointer">
       <CardHeader>
         <CardTitle className="flex flex-row justify-between">
           <div className="text-lg">
@@ -39,27 +42,40 @@ export function ProjectCardSkeleton() {
 }
 
 export function ProjectCard({ project }: { project: ProjectPanelCard }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <Link href={`/p/${project.id}`}>
-      <Card className="w-full h-44 flex flex-col justify-between hover:border-primary cursor-pointer">
+    <Link href={`/p/${project.id}`} className="group">
+      <Card
+        className="w-full h-48 flex flex-col justify-between hover:border-primary cursor-pointer relative"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <CardHeader>
-          <CardTitle className="text-xl">{project.title}</CardTitle>
+          <CardTitle className="text-xl truncate">{project.title}</CardTitle>
           <CardDescription className="truncate-2-lines">
             {project.description}
           </CardDescription>
         </CardHeader>
-        {project.parent_user_id && (
-          <CardFooter className="flex items-center">
-            <Avatar className="w-10 h-10">
-              <AvatarFallback></AvatarFallback>
-              <AvatarImage src={project.parent_avatar_url} />
-            </Avatar>
-            <Link
-              className="text-sm ml-2 hover:underline hover:underline-offset-4"
-              href="#"
-            >
-              <p>by @{project.parent_username}</p>
-            </Link>
+        {project.parent_user_id ? (
+          <CardFooter className="flex flex-row justify-between items-center">
+            <div className="flex flex-row justify-start items-center">
+              <Avatar className="w-10 h-10">
+                <AvatarFallback></AvatarFallback>
+                <AvatarImage src={project.parent_avatar_url} />
+              </Avatar>
+              <Link
+                href="#"
+                className="text-sm ml-2 hover:underline hover:underline-offset-4"
+              >
+                by @{project.parent_username}
+              </Link>
+            </div>
+            <AnimatePresence>{isHovered && <Hint />}</AnimatePresence>
+          </CardFooter>
+        ) : (
+          <CardFooter className="flex flex-row justify-end items-center">
+            <AnimatePresence>{isHovered && <Hint />}</AnimatePresence>
           </CardFooter>
         )}
       </Card>

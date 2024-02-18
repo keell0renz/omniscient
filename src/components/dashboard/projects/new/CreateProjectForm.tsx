@@ -22,7 +22,10 @@ interface CreateProjectFormProps {
   isMutating: boolean;
 }
 
-export default function CreateProjectForm({ onCreate, isMutating }: CreateProjectFormProps) {
+export default function CreateProjectForm({
+  onCreate,
+  isMutating,
+}: CreateProjectFormProps) {
   const form = useForm<CreateProject>({
     resolver: zodResolver(validateCreateProject),
     defaultValues: {

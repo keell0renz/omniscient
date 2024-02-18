@@ -23,10 +23,12 @@ export default function AddProject() {
           className="w-36 flex flex-col gap-1 p-2 rounded-xl"
           sideOffset={10}
         >
-          <Button variant={"ghost"} asChild className="flex flex-row justify-start items-center">
-            <Link
-              href="/explore"
-            >
+          <Button
+            variant={"ghost"}
+            asChild
+            className="flex flex-row justify-start items-center"
+          >
+            <Link href="/explore">
               <Search className="h-5 w-5 mr-2" />
               Explore
             </Link>
