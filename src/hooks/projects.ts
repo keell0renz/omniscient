@@ -162,6 +162,8 @@ export function useProject(
             { revalidateOnFocus: false, revalidateIfStale: false },
         );
 
+    const router = useRouter();
+
     const [isMutating, setIsMutating] = useState(false);
 
     const { toast } = useToast();
@@ -180,6 +182,9 @@ export function useProject(
                 className: "bg-desctructive text-destructive-foreground",
             });
         } finally {
+            toast({
+                title: "Project updated successfully!",
+            });
             setIsMutating(false);
         }
     };
@@ -191,6 +196,8 @@ export function useProject(
             await deleteProjectById(project_id);
 
             mutate(null, { revalidate: false });
+
+            router.push(`/dashboard/projects`)
         } catch (error) {
             toast({
                 title: "An error occurred",
