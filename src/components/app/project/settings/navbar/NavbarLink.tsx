@@ -10,8 +10,8 @@ export default function NavbarLink({ title, href }: { title: string, href: strin
   return (
     <Link href={href} className="w-full">
       <div
-        className={`p-2 hover:bg-muted-foreground/10 rounded-md 
-        ${href.endsWith(currentPath ?? "") ? "bg-muted-foreground/10" : ""}`}
+        className={`p-2 hover:bg-secondary/70 font-roboto text-gray-400 hover:text-foreground/90 rounded-md 
+        ${href.endsWith(currentPath ?? "") ? "bg-secondary/70 !text-foreground hover:bg-secondary/60" : ""}`}
       >
         {title}
       </div>
