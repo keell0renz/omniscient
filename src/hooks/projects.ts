@@ -22,6 +22,8 @@ import { getUserProjectsKey, getPublicProjectsKey } from "@/utils/projects";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
+import { useEffect } from "react";
 
 export function useNewProject() {
     const router = useRouter();
@@ -87,12 +89,15 @@ export function useUserProjects(query?: string) {
 
     const { toast } = useToast();
 
-    if (error)
-        toast({
-            title: "Error!",
-            description: error,
-            className: "bg-destructive text-destructive-foreground",
-        });
+    useEffect(() => {
+        if (error) {
+            toast({
+                title: "Error!",
+                description: `${error.message}`,
+                className: "bg-destructive text-destructive-foreground",
+            });
+        }
+    }, [error]);
 
     return {
         data,
@@ -122,12 +127,15 @@ export function usePublicProjects(query?: string) {
 
     const { toast } = useToast();
 
-    if (error)
-        toast({
-            title: "Error!",
-            description: error,
-            className: "bg-destructive text-destructive-foreground",
-        });
+    useEffect(() => {
+        if (error) {
+            toast({
+                title: "Error!",
+                description: `${error.message}`,
+                className: "bg-destructive text-destructive-foreground",
+            });
+        }
+    }, [error]);
 
     return {
         data,
@@ -141,14 +149,18 @@ export function usePublicProjects(query?: string) {
     };
 }
 
-export function useProject(project_id: string) {
-    const { data, error, isLoading, isValidating, mutate } = useSWR<Project>(
-        { key: "project", project_id: project_id },
-        async (key) => {
-            return await getProjectById(key.project_id);
-        },
-        { revalidateOnFocus: false, revalidateIfStale: false },
-    );
+export function useProject(
+    project_id: string,
+    not_found_on_null: boolean = true,
+) {
+    const { data, error, isLoading, isValidating, mutate } =
+        useSWR<Project | null>(
+            { key: "project", project_id: project_id },
+            async (key) => {
+                return await getProjectById(key.project_id);
+            },
+            { revalidateOnFocus: false, revalidateIfStale: false },
+        );
 
     const [isMutating, setIsMutating] = useState(false);
 
@@ -178,7 +190,7 @@ export function useProject(project_id: string) {
 
             await deleteProjectById(project_id);
 
-            mutate(undefined, { revalidate: false });
+            mutate(null, { revalidate: false });
         } catch (error) {
             toast({
                 title: "An error occurred",
@@ -190,12 +202,27 @@ export function useProject(project_id: string) {
         }
     };
 
-    if (error)
-        toast({
-            title: "Error!",
-            description: error,
-            className: "bg-destructive text-destructive-foreground",
-        });
+    useEffect(() => {
+        if (error) {
+            toast({
+                title: "Error!",
+                description: `${error.message}`,
+                className: "bg-destructive text-destructive-foreground",
+            });
+        }
+    }, [error]);
+
+    useEffect(() => {
+        if (
+            !isLoading &&
+            !isValidating &&
+            data == null &&
+            not_found_on_null &&
+            !error
+        ) {
+            notFound();
+        }
+    }, [data, isLoading, isValidating, not_found_on_null]);
 
     return {
         data,

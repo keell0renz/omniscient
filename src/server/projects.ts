@@ -138,7 +138,9 @@ export async function searchProjectsByUser(
     }
 }
 
-export async function getProjectById(project_id: string): Promise<Project> {
+export async function getProjectById(
+    project_id: string,
+): Promise<Project | null> {
     const { userId } = auth();
 
     if (!userId) {
@@ -146,7 +148,7 @@ export async function getProjectById(project_id: string): Promise<Project> {
     }
 
     try {
-        return await prisma.project.findFirstOrThrow({
+        return await prisma.project.findFirst({
             where: {
                 user_id: userId,
                 id: project_id,
