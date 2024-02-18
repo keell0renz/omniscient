@@ -1,4 +1,8 @@
-import { Navbar, NavbarLink, NavbarPath } from "@/components/app/project/navbar";
+import {
+  Navbar,
+  NavbarLink,
+  NavbarPath,
+} from "@/components/app/project/navbar";
 
 export default async function Layout({
   children,
