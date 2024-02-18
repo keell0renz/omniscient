@@ -145,8 +145,6 @@ export async function getProjectById(project_id: string): Promise<Project> {
         throw new Error("Not authenticated!");
     }
 
-    console.log(`Searched for ${project_id}`);
-
     try {
         return await prisma.project.findFirstOrThrow({
             where: {
