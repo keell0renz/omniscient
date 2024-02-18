@@ -4,6 +4,8 @@ export function handlePrismaError(error: any): string {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
         // Handle user-caused errors
         switch (error.code) {
+            case "P2001": // Not found
+                return "Not found!"
             case "P2002": // Unique constraint failed
                 return "Unique data constraint failed, something wrong with your data or such data already exists.";
             case "P2025": // Record not found

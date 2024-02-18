@@ -140,7 +140,7 @@ export async function searchProjectsByUser(
 
 export async function getProjectById(
     project_id: string,
-): Promise<Project | null> {
+): Promise<Project> {
     const { userId } = auth();
 
     if (!userId) {
@@ -148,7 +148,7 @@ export async function getProjectById(
     }
 
     try {
-        return await prisma.project.findFirst({
+        return await prisma.project.findFirstOrThrow({
             where: {
                 user_id: userId,
                 id: project_id,

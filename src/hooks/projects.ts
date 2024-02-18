@@ -143,7 +143,7 @@ export function usePublicProjects(query?: string) {
 
 export function useProject(project_id: string) {
     const { data, error, isLoading, isValidating, mutate } =
-        useSWR<Project | null>(
+        useSWR<Project>(
             { key: "project", project_id: project_id },
             async (key) => {
                 return await getProjectById(key.project_id);
@@ -179,7 +179,7 @@ export function useProject(project_id: string) {
 
             await deleteProjectById(project_id);
 
-            mutate(null, { revalidate: false });
+            mutate(undefined, { revalidate: false });
         } catch (error) {
             toast({
                 title: "An error occurred",
