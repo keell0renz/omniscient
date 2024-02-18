@@ -22,26 +22,6 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { SquarePen } from "lucide-react";
 import { useEffect } from "react";
 
-function GeneralFormSkeleton() {
-  return (
-    <div className="w-full max-w-[600px] space-y-12">
-      <div>
-        <Skeleton className="h-6 w-1/4 mb-2" />
-        <Skeleton className="h-10 w-full" />
-      </div>
-
-      <div>
-        <Skeleton className="h-6 w-1/4 mb-2" />
-        <Skeleton className="h-48 w-full" />
-      </div>
-
-      <div className="w-full flex flex-row justify-end">
-        <Skeleton className="h-10 w-full" />
-      </div>
-    </div>
-  );
-}
-
 function GeneralForm() {
   const params = useParams<{ id: string }>();
   const { data, isLoading, isMutating, editProject } = useProject(params.id);
@@ -63,8 +43,6 @@ function GeneralForm() {
     }
   }, [data, form.reset]);
 
-  if (isLoading) return <GeneralFormSkeleton />;
-
   return (
     <div className="w-full">
       <Form {...form}>
@@ -75,13 +53,17 @@ function GeneralForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-lg font-semibold">Title</FormLabel>
-                <FormControl>
-                  <Input
-                    className="w-full"
-                    placeholder="Your title..."
-                    {...field}
-                  />
-                </FormControl>
+                {isLoading ? (
+                  <Skeleton className="w-full h-10" />
+                ) : (
+                  <FormControl>
+                    <Input
+                      className="w-full"
+                      placeholder="Your title..."
+                      {...field}
+                    />
+                  </FormControl>
+                )}
                 <FormMessage />
               </FormItem>
             )}
@@ -94,13 +76,17 @@ function GeneralForm() {
                 <FormLabel className="text-lg font-semibold">
                   Description
                 </FormLabel>
-                <FormControl>
-                  <Textarea
-                    className="w-full h-48 resize-none"
-                    placeholder="Your description..."
-                    {...field}
-                  />
-                </FormControl>
+                {isLoading ? (
+                  <Skeleton className="w-full h-48" />
+                ) : (
+                  <FormControl>
+                    <Textarea
+                      className="w-full h-48 resize-none"
+                      placeholder="Your description..."
+                      {...field}
+                    />
+                  </FormControl>
+                )}
                 <FormMessage />
                 <FormDescription>
                   This description is meant for humans, AI will not see this.
@@ -109,9 +95,13 @@ function GeneralForm() {
             )}
           />
           <div className="w-full flex flex-row justify-end">
-            <LoadingButton className="w-full" isLoading={isMutating}>
-              Save
-            </LoadingButton>
+            {isLoading ? (
+              <Skeleton className="w-full h-10" />
+            ) : (
+              <LoadingButton className="w-full" isLoading={isMutating}>
+                Save
+              </LoadingButton>
+            )}
           </div>
         </form>
       </Form>
