@@ -1,15 +1,15 @@
 import dynamic from "next/dynamic";
-import { Search } from "@/components/dashboard/projects";
+import { Search } from "@/components/app/dashboard/projects";
 
 const AddNew = dynamic(
-  () => import("@/components/dashboard/projects/new/AddProject"),
+  () => import("@/components/app/dashboard/projects/new/AddProject"),
   {
     ssr: false,
   },
 );
 
 const Projects = dynamic(
-  () => import("@/components/dashboard/projects/Projects"),
+  () => import("@/components/app/dashboard/projects/Projects"),
   {
     ssr: false,
   },

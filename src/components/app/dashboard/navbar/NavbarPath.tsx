@@ -1,7 +1,7 @@
 import { Slash } from "lucide-react";
 import Cognitar from "@/components/main/Logo";
 import Link from "next/link";
-import NavbarUser from "./NavbarUser";
+import NavbarUser from "../../shared/navbar/NavbarUser";
 
 export default async function NavbarPath() {
   return (
