@@ -50,9 +50,9 @@ export function useNewProject() {
         try {
             setIsMutating(true);
 
-            await importPublicProject(parent_id);
+            const new_project = await importPublicProject(parent_id);
 
-            router.push("/dashboard/projects");
+            router.push(`/p/${new_project.id}`);
         } catch (error) {
             toast({
                 title: "An error occurred",
