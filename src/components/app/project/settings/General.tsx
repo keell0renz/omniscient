@@ -43,92 +43,92 @@ function GeneralFormSkeleton() {
 }
 
 function GeneralForm() {
-    const params = useParams<{ id: string }>();
-    const { data, isLoading, isMutating, editProject } = useProject(params.id);
-  
-    const form = useForm<EditProject>({
-      resolver: zodResolver(validateEditProject),
-      defaultValues: {
-        title: data?.title,
-        description: data?.description,
-      },
-    });
+  const params = useParams<{ id: string }>();
+  const { data, isLoading, isMutating, editProject } = useProject(params.id);
 
-    useEffect(() => {
-        if (data) {
-          form.reset({
-            title: data.title,
-            description: data.description,
-          });
-        }
-      }, [data, form.reset]);
+  const form = useForm<EditProject>({
+    resolver: zodResolver(validateEditProject),
+    defaultValues: {
+      title: data?.title,
+      description: data?.description,
+    },
+  });
 
-    if (isLoading) return <GeneralFormSkeleton />;
-  
-    return (
-      <div className="w-full">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(editProject)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-semibold">Title</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="w-full"
-                      placeholder="Your title..."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-semibold">
-                    Description
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea
-                      className="w-full h-48 resize-none"
-                      placeholder="Your description..."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                  <FormDescription>
-                    This description is meant for humans, AI will not see this.
-                  </FormDescription>
-                </FormItem>
-              )}
-            />
-            <div className="w-full flex flex-row justify-end">
-              <LoadingButton className="w-full" isLoading={isMutating}>
-                Save
-              </LoadingButton>
-            </div>
-          </form>
-        </Form>
-      </div>
-    );
-  }  
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        title: data.title,
+        description: data.description,
+      });
+    }
+  }, [data, form.reset]);
+
+  if (isLoading) return <GeneralFormSkeleton />;
+
+  return (
+    <div className="w-full">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(editProject)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-lg font-semibold">Title</FormLabel>
+                <FormControl>
+                  <Input
+                    className="w-full"
+                    placeholder="Your title..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-lg font-semibold">
+                  Description
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    className="w-full h-48 resize-none"
+                    placeholder="Your description..."
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+                <FormDescription>
+                  This description is meant for humans, AI will not see this.
+                </FormDescription>
+              </FormItem>
+            )}
+          />
+          <div className="w-full flex flex-row justify-end">
+            <LoadingButton className="w-full" isLoading={isMutating}>
+              Save
+            </LoadingButton>
+          </div>
+        </form>
+      </Form>
+    </div>
+  );
+}
 
 export default function General() {
-    return (
-        <Card className="max-w-[600px]">
-            <CardHeader className="flex flex-row justify-start items-center text-xl font-semibold gap-2">
-                <SquarePen />
-                Edit Project
-            </CardHeader>
-            <CardContent>
-                <GeneralForm />
-            </CardContent>
-        </Card>
-    )
+  return (
+    <Card className="max-w-[600px]">
+      <CardHeader className="flex flex-row justify-start items-center text-xl font-semibold gap-2">
+        <SquarePen />
+        Edit Project
+      </CardHeader>
+      <CardContent>
+        <GeneralForm />
+      </CardContent>
+    </Card>
+  );
 }
