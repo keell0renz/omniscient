@@ -170,9 +170,9 @@ export function useProject(
         try {
             setIsMutating(true);
 
-            await editProjectById(schema, project_id);
+            const updated = await editProjectById(schema, project_id);
 
-            mutate();
+            mutate(updated, { revalidate: false })
         } catch (error) {
             toast({
                 title: "An error occurred",
