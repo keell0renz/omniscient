@@ -144,11 +144,11 @@ export function usePublicProjects(query?: string) {
 export function useProject(project_id: string) {
     const { data, error, isLoading, isValidating, mutate } =
         useSWR<Project>(
-            project_id,
+            { key: "project", project_id: project_id },
             async (key) => {
-                return await getProjectById(key);
+                return await getProjectById(key.project_id);
             },
-            { revalidateOnFocus: false, revalidateOnMount: false },
+            { revalidateOnFocus: false },
         );
 
     const [isMutating, setIsMutating] = useState(false);
