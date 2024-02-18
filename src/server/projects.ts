@@ -138,16 +138,14 @@ export async function searchProjectsByUser(
     }
 }
 
-export async function getProjectById(
-    project_id: string,
-): Promise<Project> {
+export async function getProjectById(project_id: string): Promise<Project> {
     const { userId } = auth();
 
     if (!userId) {
         throw new Error("Not authenticated!");
     }
 
-    console.log(`Searched for ${project_id}`)
+    console.log(`Searched for ${project_id}`);
 
     try {
         return await prisma.project.findFirstOrThrow({

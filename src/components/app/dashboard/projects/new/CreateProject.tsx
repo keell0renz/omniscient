@@ -39,7 +39,7 @@ export default function CreateProject() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex flex-row justify-start items-center text-2xl">
-            <Sparkles className="mr-1"/>
+            <Sparkles className="mr-1" />
             <h1>Create Project</h1>
           </DialogTitle>
           <DialogDescription>

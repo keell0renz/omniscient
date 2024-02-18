@@ -1,4 +1,4 @@
-import { Navbar, NavbarLink } from "@/components/app/project/navbar";
+import { Navbar, NavbarLink, NavbarPath } from "@/components/app/project/navbar";
 
 export default async function Layout({
   children,
@@ -7,7 +7,7 @@ export default async function Layout({
 }) {
   return (
     <>
-      <Navbar>
+      <Navbar NavbarPath={<NavbarPath />}>
         <NavbarLink href="/dashboard/projects" title="Projects" />
         <NavbarLink href="/" title="Projects" />
       </Navbar>

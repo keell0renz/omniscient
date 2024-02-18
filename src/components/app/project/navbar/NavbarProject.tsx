@@ -9,8 +9,15 @@ export default function NavbarProject() {
     const { data, error, isLoading } = useProject(params.id)
 
     return (
-        <p className="mt-1">
-            {data?.title}
-        </p>
+        <>
+        { isLoading ? (
+            <Skeleton className="w-64 h-4 my-auto" />
+        ): (
+            <p className="mt-1">
+                {data?.title}
+            </p>
+        ) 
+        }
+        </>
     )
 }

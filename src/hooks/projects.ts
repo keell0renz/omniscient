@@ -142,14 +142,13 @@ export function usePublicProjects(query?: string) {
 }
 
 export function useProject(project_id: string) {
-    const { data, error, isLoading, isValidating, mutate } =
-        useSWR<Project>(
-            { key: "project", project_id: project_id },
-            async (key) => {
-                return await getProjectById(key.project_id);
-            },
-            { revalidateOnFocus: false },
-        );
+    const { data, error, isLoading, isValidating, mutate } = useSWR<Project>(
+        { key: "project", project_id: project_id },
+        async (key) => {
+            return await getProjectById(key.project_id);
+        },
+        { revalidateOnFocus: false, revalidateIfStale: false },
+    );
 
     const [isMutating, setIsMutating] = useState(false);
 
@@ -207,6 +206,6 @@ export function useProject(project_id: string) {
         isFetching: isLoading || isValidating,
         mutate,
         editProject,
-        deleteProject
+        deleteProject,
     };
 }

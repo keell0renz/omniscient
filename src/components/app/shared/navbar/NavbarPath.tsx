@@ -2,7 +2,11 @@ import { Slash } from "lucide-react";
 import Cognitar from "@/components/main/Logo";
 import Link from "next/link";
 
-export default async function NavbarPath({ children }: { children: React.ReactNode }) {
+export default async function NavbarPath({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex flex-row justify-start space-x-2">
       <Link href="/">

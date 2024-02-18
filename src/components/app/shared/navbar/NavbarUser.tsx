@@ -10,7 +10,10 @@ export default function NavbarUser() {
   return (
     <>
       {isLoaded ? (
-        <Link href="#" className="mt-1 hover:underline hover:underline-offset-4 cursor-pointer">{`@${user?.username}`}</Link>
+        <Link
+          href="#"
+          className="mt-1 hover:underline hover:underline-offset-4 cursor-pointer"
+        >{`@${user?.username}`}</Link>
       ) : (
         <Skeleton className="w-20 h-4 my-auto" />
       )}
