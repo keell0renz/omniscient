@@ -207,5 +207,6 @@ export function useProject(project_id: string) {
         isFetching: isLoading || isValidating,
         mutate,
         editProject,
+        deleteProject
     };
 }
