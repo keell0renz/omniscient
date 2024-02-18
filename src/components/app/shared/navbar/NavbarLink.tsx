@@ -11,7 +11,10 @@ interface NavbarLinkProps {
 
 export default function NavbarLink({ title, href }: NavbarLinkProps) {
   const pathname = usePathname();
-  const isCurrent = pathname === href || (pathname.split("/")[3] === "settings" && href.split("/")[3] === "settings");
+  const isCurrent =
+    pathname === href ||
+    (pathname.split("/")[3] === "settings" &&
+      href.split("/")[3] === "settings");
 
   return (
     <Button

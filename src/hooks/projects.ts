@@ -174,7 +174,7 @@ export function useProject(
 
             const updated = await editProjectById(schema, project_id);
 
-            mutate(updated, { revalidate: false })
+            mutate(updated, { revalidate: false });
         } catch (error) {
             toast({
                 title: "An error occurred",
@@ -182,9 +182,6 @@ export function useProject(
                 className: "bg-desctructive text-destructive-foreground",
             });
         } finally {
-            toast({
-                title: "Project updated successfully!",
-            });
             setIsMutating(false);
         }
     };
@@ -197,7 +194,7 @@ export function useProject(
 
             mutate(null, { revalidate: false });
 
-            router.push(`/dashboard/projects`)
+            router.push(`/dashboard/projects`);
         } catch (error) {
             toast({
                 title: "An error occurred",
