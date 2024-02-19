@@ -1,13 +1,9 @@
 import dynamic from "next/dynamic";
 import { Search } from "@/components/main/explore";
 
-const Projects = dynamic(
-  () => import("@/components/main/explore/Projects"),
-  {
-    ssr: false,
-  },
-);
-
+const Projects = dynamic(() => import("@/components/main/explore/Projects"), {
+  ssr: false,
+});
 
 export default function Page() {
   return (
