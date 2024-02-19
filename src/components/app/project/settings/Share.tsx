@@ -77,21 +77,25 @@ const ShareDialog = () => {
 
 export default function ShareSettings() {
   const params = useParams<{ id: string }>();
-  const { isLoading, data } = useProject(params.id);
+  const { data } = useProject(params.id);
 
   return (
     <Card className="flex flex-col justify-between items-center w-full max-w-[800px]">
       <CardHeader className="w-full">
         <CardTitle className="flex flex-row justify-start items-center text-xl font-semibold gap-2">
-            <Upload />
-            Project Publicity
+          <Upload />
+          Project Publicity
         </CardTitle>
       </CardHeader>
       <CardFooter className="px-4 py-2 flex flex-row justify-between border-t w-full">
-            <p className="mx-2 text-sm text-muted-foreground">
-              Make the project {data?.public ? "unavailable for the community to clone." : "available for the community to clone."} <br />
-            </p>
-            <ShareDialog />
+        <p className="mx-2 text-sm text-muted-foreground">
+          Make the project{" "}
+          {data?.public
+            ? "unavailable for the community to clone."
+            : "available for the community to clone."}{" "}
+          <br />
+        </p>
+        <ShareDialog />
       </CardFooter>
     </Card>
   );

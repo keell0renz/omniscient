@@ -12,6 +12,7 @@ import {
   Card,
 } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import Hint from "./Hint";
 
@@ -52,7 +53,12 @@ export function ProjectCard({ project }: { project: ProjectPanelCard }) {
         onMouseLeave={() => setIsHovered(false)}
       >
         <CardHeader>
-          <CardTitle className="text-xl truncate">{project.title}</CardTitle>
+          <CardTitle className="text-xl truncate flex flex-row justify-start items-center gap-2">
+            {project.public && (
+              <Badge className="bg-blue-600 text-white">Public</Badge>
+            )}
+            {project.title}
+          </CardTitle>
           <CardDescription className="truncate-2-lines">
             {project.description}
           </CardDescription>

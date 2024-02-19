@@ -45,7 +45,9 @@ function DeleteProjectDialog() {
   return (
     <AlertDialog open={isOpenDialog} onOpenChange={setIsOpenDialog}>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" disabled={isLoading}>Delete</Button>
+        <Button variant="destructive" disabled={isLoading}>
+          Delete
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogOverlay onClick={handleOverlayClick}>
         <AlertDialogContent>
@@ -60,7 +62,7 @@ function DeleteProjectDialog() {
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <LoadingButton
               onClick={handleDelete}
-              className="bg-destructive hover:bg-destructive/90 text-destructive-foreground font-bold"
+              className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
               isLoading={isMutating}
               disabled={isLoading}
             >
@@ -78,8 +80,8 @@ export default function DangerSettings() {
     <Card className="flex flex-col justify-between items-center w-full max-w-[800px]">
       <CardHeader className="w-full">
         <CardTitle className="flex flex-row justify-start items-center text-xl font-semibold gap-2">
-            <Trash2 />
-            Delete Project
+          <Trash2 />
+          Delete Project
         </CardTitle>
         <CardDescription>
           This action is permanent and cannot be undone.

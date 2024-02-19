@@ -95,9 +95,13 @@ function GeneralForm() {
             )}
           />
           <div className="w-full flex flex-row justify-end">
-              <LoadingButton className="w-full" isLoading={isMutating} disabled={isLoading}>
-                Save
-              </LoadingButton>
+            <LoadingButton
+              className="w-full"
+              isLoading={isMutating}
+              disabled={isLoading}
+            >
+              Save
+            </LoadingButton>
           </div>
         </form>
       </Form>

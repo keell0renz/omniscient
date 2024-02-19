@@ -217,7 +217,7 @@ export async function editProjectById(
             },
         });
     } catch (error) {
-        throw new Error(`Failed to update project: ${error}`);
+        throw new Error(handlePrismaError(error));
     }
 }
 

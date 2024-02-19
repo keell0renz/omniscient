@@ -9,7 +9,7 @@ import {
   FormField,
   FormItem,
   FormMessage,
-  FormDescription
+  FormDescription,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import LoadingButton from "@/components/ui/LoadingButton";
@@ -66,7 +66,11 @@ function ContextForm() {
           )}
         />
         <div className="w-full flex flex-row justify-end mt-6">
-          <LoadingButton className="w-full" isLoading={isMutating} disabled={isLoading}>
+          <LoadingButton
+            className="w-full"
+            isLoading={isMutating}
+            disabled={isLoading}
+          >
             Set
           </LoadingButton>
         </div>

@@ -3,6 +3,7 @@
 import { useProject } from "@/hooks/projects";
 import { useParams } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
 
 export default function NavbarProject() {
   const params = useParams<{ id: string }>();
@@ -13,5 +14,10 @@ export default function NavbarProject() {
 
   if (error) return <Skeleton className="w-64 h-4 my-auto bg-destructive" />;
 
-  return <p className="mt-1">{data?.title}</p>;
+  return (
+    <div className="mt-1 flex flex-row justify-start items-center gap-2">
+      <p>{data?.title}</p>
+      {data?.public && <Badge className="bg-blue-600 text-white">Public</Badge>}
+    </div>
+  );
 }

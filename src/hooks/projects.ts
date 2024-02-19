@@ -179,11 +179,12 @@ export function useProject(
             toast({
                 title: "Success!",
                 description: "Project edited successfully!",
-                className: "border-blue-600 border-2"
-            })
+                className: "border-blue-600 border-2",
+                duration: 2000
+            });
         } catch (error) {
             toast({
-                title: "An error occurred",
+                title: "Error!",
                 description: `${error}`,
                 className: "bg-desctructive text-destructive-foreground",
             });
@@ -198,23 +199,22 @@ export function useProject(
 
             await deleteProjectById(project_id);
 
-            mutate(undefined, { revalidate: false });
-
             router.push("/dashboard/projects");
+
+            mutate(undefined, { revalidate: false });
 
             toast({
                 title: "Success!",
                 description: "Project deleted successfully!",
-                className: "border-destructive border-2"
-            })
+                className: "border-destructive border-2",
+            });
         } catch (error) {
             toast({
-                title: "An error occurred",
+                title: "Error!",
                 description: `${error}`,
                 className: "bg-desctructive text-destructive-foreground",
             });
         } finally {
-            
         }
     };
 
