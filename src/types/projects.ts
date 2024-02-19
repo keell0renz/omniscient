@@ -12,6 +12,9 @@ export type ProjectPanelCard = ProjectSchema & {
     parent_avatar_url?: string;
 };
 
-export type PublicProjectCard = ProjectSchema;
+export type PublicProjectCard = ProjectSchema & {
+    author_username: string;
+    author_avatar_url: string;
+};
 
 export type Project = ProjectSchema;

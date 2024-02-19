@@ -36,11 +36,25 @@ export async function searchPublicProjects(
 
         const skip = page * limit;
 
-        return await prisma.project.findMany({
+        const projects = await prisma.project.findMany({
             where: whereClause,
             skip,
             take: limit,
         });
+
+        // Map projects to include author's username and avatar URL
+        const enrichedProjects = await Promise.all(
+            projects.map(async (project) => {
+                const user = await clerkClient.users.getUser(project.user_id);
+                return {
+                    ...project,
+                    author_username: user?.username || "",
+                    author_avatar_url: user?.imageUrl || "",
+                };
+            }),
+        );
+
+        return enrichedProjects;
     } catch (error) {
         throw new Error(handlePrismaError(error));
     }

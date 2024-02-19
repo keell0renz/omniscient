@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import type { ProjectPanelCard } from "@/types/projects";
+import type { PublicProjectCard } from "@/types/projects";
 import { LoaderIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -8,7 +8,7 @@ interface ProjectLoaderProps {
   size: number;
   setSize: (
     size: number | ((size: number) => number),
-  ) => Promise<ProjectPanelCard[][] | undefined>;
+  ) => Promise<PublicProjectCard[][] | undefined>;
   data: any;
 }
 
@@ -37,7 +37,7 @@ export default function ProjectLoader({
         {data[1] && (
           <>
             <h2 className="text-center text-muted-foreground font-normal font-mono w-fit h-fit mx-auto col-span-full">
-              You&apos;ve reached the end of your projects.
+              You&apos;ve reached the end of public projects.
             </h2>
             <Button onClick={() => scrollTop()}>Add new +</Button>
           </>
