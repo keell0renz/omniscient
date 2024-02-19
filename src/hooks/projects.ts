@@ -180,7 +180,7 @@ export function useProject(
                 title: "Success!",
                 description: "Project edited successfully!",
                 className: "border-blue-600 border-2",
-                duration: 2000,
+                duration: 2000
             });
         } catch (error) {
             toast({
@@ -207,6 +207,7 @@ export function useProject(
                 title: "Success!",
                 description: "Project deleted successfully!",
                 className: "border-blue-600 border-2",
+                duration: 2000
             });
         } catch (error) {
             toast({
