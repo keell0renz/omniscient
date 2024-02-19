@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import { PublicProjectCard } from "@/types/projects";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -13,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import {
   AlertDialog,
-  AlertDialogOverlay,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogDescription,
@@ -89,30 +86,28 @@ function ImportDialog({ parent_id }: { parent_id: string }) {
 
 export function ProjectCard({ project }: { project: PublicProjectCard }) {
   return (
-    <Link href={`/p/${project.id}`} className="group">
-      <Card className="w-full h-48 flex flex-col justify-between hover:border-primary cursor-pointer relative">
-        <CardHeader>
-          <CardTitle className="text-xl truncate">{project.title}</CardTitle>
-          <CardDescription className="truncate-2-lines">
-            {project.description}
-          </CardDescription>
-        </CardHeader>
-        <CardFooter className="flex flex-row justify-between items-center">
-          <div className="flex flex-row justify-start items-center">
-            <Avatar className="w-10 h-10">
-              <AvatarFallback></AvatarFallback>
-              <AvatarImage src={project.author_avatar_url} />
-            </Avatar>
-            <Link
-              href="#"
-              className="text-sm ml-2 hover:underline hover:underline-offset-4"
-            >
-              by @{project.author_username}
-            </Link>
-          </div>
-          <ImportDialog parent_id={project.id} />
-        </CardFooter>
-      </Card>
-    </Link>
+    <Card className="w-full h-48 flex flex-col justify-between hover:border-primary cursor-pointer relative">
+      <CardHeader>
+        <CardTitle className="text-xl truncate">{project.title}</CardTitle>
+        <CardDescription className="truncate-2-lines">
+          {project.description}
+        </CardDescription>
+      </CardHeader>
+      <CardFooter className="flex flex-row justify-between items-center">
+        <div className="flex flex-row justify-start items-center">
+          <Avatar className="w-10 h-10">
+            <AvatarFallback></AvatarFallback>
+            <AvatarImage src={project.author_avatar_url} />
+          </Avatar>
+          <Link
+            href="#"
+            className="text-sm ml-2 hover:underline hover:underline-offset-4"
+          >
+            by @{project.author_username}
+          </Link>
+        </div>
+        <ImportDialog parent_id={project.id} />
+      </CardFooter>
+    </Card>
   );
 }
