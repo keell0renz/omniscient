@@ -175,6 +175,12 @@ export function useProject(
             const updated = await editProjectById(schema, project_id);
 
             mutate(updated, { revalidate: false });
+
+            toast({
+                title: "Success!",
+                description: "Project edited successfully!",
+                className: "border-blue-600 border-2"
+            })
         } catch (error) {
             toast({
                 title: "An error occurred",
@@ -192,7 +198,15 @@ export function useProject(
 
             await deleteProjectById(project_id);
 
-            mutate(null, { revalidate: false });
+            mutate(undefined, { revalidate: false });
+
+            router.push("/dashboard/projects");
+
+            toast({
+                title: "Success!",
+                description: "Project deleted successfully!",
+                className: "border-destructive border-2"
+            })
         } catch (error) {
             toast({
                 title: "An error occurred",
@@ -200,7 +214,7 @@ export function useProject(
                 className: "bg-desctructive text-destructive-foreground",
             });
         } finally {
-            setIsMutating(false);
+            
         }
     };
 
@@ -218,7 +232,7 @@ export function useProject(
         if (
             !isLoading &&
             !isValidating &&
-            data == null &&
+            data === null &&
             not_found_on_null &&
             !error
         ) {
