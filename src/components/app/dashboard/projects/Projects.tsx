@@ -31,7 +31,9 @@ export default function Projects({ className }: { className?: string }) {
           <ProjectCard key={project.id} project={project} />
         )),
       )}
-      <ProjectLoader size={size} setSize={setSize} data={data} />
+      {data &&
+        <ProjectLoader size={size} setSize={setSize} data={data} />
+      }
     </section>
   );
 }

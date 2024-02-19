@@ -18,7 +18,14 @@ export default function ProjectLoader({ size, setSize, data }: ProjectLoaderProp
     return;
   }
 
-  if (data[0].length < 9) return;
+  function scrollTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }
+
+  if (data && data[0].length < 9) return;
 
   if (data && data[data.length - 1][0] === undefined) {
     return (
@@ -26,13 +33,10 @@ export default function ProjectLoader({ size, setSize, data }: ProjectLoaderProp
         {data[1] &&
           <>
             <h2 className="text-center text-muted-foreground font-normal font-mono w-fit h-fit mx-auto col-span-full">
-              You've reached the end of your projects
+              You&apos;ve reached the end of your projects
             </h2>
             <Button
-              onClick={() => window.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-              })}
+              onClick={() => scrollTop()}
             >Add new +</Button>
           </>
         }
