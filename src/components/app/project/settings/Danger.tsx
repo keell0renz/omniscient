@@ -83,9 +83,6 @@ export default function DangerSettings() {
           <Trash2 />
           Delete Project
         </CardTitle>
-        <CardDescription>
-          This action is permanent and cannot be undone.
-        </CardDescription>
       </CardHeader>
       <CardFooter className="px-4 py-2 flex flex-row justify-between border-t w-full">
         <p className="mx-2 text-sm text-muted-foreground">
