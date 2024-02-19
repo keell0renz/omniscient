@@ -3,6 +3,7 @@
 import { useUserProjects } from "@/hooks/projects";
 import { ProjectCard, ProjectCardSkeleton } from "./ProjectCard";
 import { useSearchParams } from "next/navigation";
+import ProjectLoader from "./ProjectLoader";
 
 export default function Projects({ className }: { className?: string }) {
   const params = useSearchParams();
@@ -30,6 +31,7 @@ export default function Projects({ className }: { className?: string }) {
           <ProjectCard key={project.id} project={project} />
         )),
       )}
+      <ProjectLoader size={size} setSize={setSize} />
     </section>
   );
 }
