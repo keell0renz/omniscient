@@ -9,6 +9,7 @@ export default function RootLayout({
   return (
     <>
       <Navbar>
+        <NavbarLink name="Explore" path="/explore" />
         <NavbarLink name="Mission" path="/mission" />
       </Navbar>
       <div className="pt-40 min-h-screen overflow-x-hidden container">
