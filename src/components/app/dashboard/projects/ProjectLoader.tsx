@@ -12,7 +12,11 @@ interface ProjectLoaderProps {
   data: any;
 }
 
-export default function ProjectLoader({ size, setSize, data }: ProjectLoaderProps) {
+export default function ProjectLoader({
+  size,
+  setSize,
+  data,
+}: ProjectLoaderProps) {
   function handleView() {
     setSize(size + 1);
     return;
@@ -21,7 +25,7 @@ export default function ProjectLoader({ size, setSize, data }: ProjectLoaderProp
   function scrollTop() {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   }
 
@@ -30,16 +34,14 @@ export default function ProjectLoader({ size, setSize, data }: ProjectLoaderProp
   if (data && data[data.length - 1][0] === undefined) {
     return (
       <div className="flex flex-col items-center justify-center col-span-full my-10 gap-4">
-        {data[1] &&
+        {data[1] && (
           <>
             <h2 className="text-center text-muted-foreground font-normal font-mono w-fit h-fit mx-auto col-span-full">
               You&apos;ve reached the end of your projects
             </h2>
-            <Button
-              onClick={() => scrollTop()}
-            >Add new +</Button>
+            <Button onClick={() => scrollTop()}>Add new +</Button>
           </>
-        }
+        )}
       </div>
     );
   }
