@@ -206,7 +206,7 @@ export function useProject(
             toast({
                 title: "Success!",
                 description: "Project deleted successfully!",
-                className: "border-destructive border-2",
+                className: "border-blue-600 border-2",
             });
         } catch (error) {
             toast({
