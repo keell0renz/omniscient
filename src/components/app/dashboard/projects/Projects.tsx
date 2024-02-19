@@ -3,10 +3,11 @@
 import { useUserProjects } from "@/hooks/projects";
 import { ProjectCard, ProjectCardSkeleton } from "./ProjectCard";
 import { useSearchParams } from "next/navigation";
+import ProjectLoader from "@/components/app/dashboard/projects/ProjectLoader";
 
 export default function Projects({ className }: { className?: string }) {
   const params = useSearchParams();
-  const { data, isLoading, isValidating, size, setSize } = useUserProjects(
+  const { data, isLoading, size, setSize } = useUserProjects(
     params.get("q") || undefined,
   );
 
@@ -30,6 +31,7 @@ export default function Projects({ className }: { className?: string }) {
           <ProjectCard key={project.id} project={project} />
         )),
       )}
+      <ProjectLoader size={size} setSize={setSize} data={data} />
     </section>
   );
 }
