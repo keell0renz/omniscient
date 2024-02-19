@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { SearchIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -6,20 +6,20 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Search() {
-    const router = useRouter()
-    const [query, setQuery] = useState<string>()
+  const router = useRouter();
+  const [query, setQuery] = useState<string>();
 
-    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-        const params = new URLSearchParams()
+    const params = new URLSearchParams();
 
-        if (!query) return
+    if (!query) return;
 
-        params.set("q", query)
+    params.set("q", query);
 
-        router.push(`/explore?${params.toString()}`)
-    }
+    router.push(`/explore?${params.toString()}`);
+  };
 
   return (
     <form onSubmit={onSubmit}>
