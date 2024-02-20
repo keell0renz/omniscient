@@ -63,12 +63,13 @@ function ImportDialog({ parent_id }: { parent_id: string }) {
   const router = useRouter();
   const { isSignedIn } = useUser();
 
-  function handleImport(parent_id: string) {
+  function handleImport(e: React.MouseEvent<HTMLElement>) {
     if (!isSignedIn) {
+      e.preventDefault();
       router.push(`/sign-in?redirect_url=/explore?i=${parent_id}`);
-    } else if (isSignedIn) {
-      importProject(parent_id)
+      return
     }
+    setIsDialogOpened(!isDialogOpened);
   };
 
   useEffect(() => {
@@ -80,7 +81,7 @@ function ImportDialog({ parent_id }: { parent_id: string }) {
   return (
     <AlertDialog open={isDialogOpened} onOpenChange={setIsDialogOpened}>
       <AlertDialogTrigger asChild>
-        <Button className="flex flex-row justify-start items-center">
+        <Button onClick={(e) => handleImport(e)} className="flex flex-row justify-start items-center">
           Learn <GraduationCap className="ml-1.5 h-5 w-5" />
         </Button>
       </AlertDialogTrigger>
@@ -99,7 +100,7 @@ function ImportDialog({ parent_id }: { parent_id: string }) {
           </AlertDialogCancel>
           <LoadingButton
             isLoading={isMutating}
-            onClick={() => handleImport(parent_id)}
+            onClick={() => importProject(parent_id)}
             className="bg-blue-600 hover:bg-blue-500 text-white"
           >
             Import
