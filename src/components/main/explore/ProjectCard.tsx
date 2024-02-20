@@ -25,6 +25,9 @@ import { useNewProject } from "@/hooks/projects";
 import { Button } from "@/components/ui/button";
 import { GraduationCap } from "lucide-react";
 import LoadingButton from "@/components/ui/LoadingButton";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 
 export function ProjectCardSkeleton() {
   return (
@@ -54,9 +57,28 @@ export function ProjectCardSkeleton() {
 
 function ImportDialog({ parent_id }: { parent_id: string }) {
   const { importProject, isMutating } = useNewProject();
+  const [isDialogOpened, setIsDialogOpened] = useState(false);
+
+  const importId = useSearchParams().get('i');
+  const router = useRouter();
+  const { isSignedIn } = useUser();
+
+  function handleImport(parent_id: string) {
+    if (!isSignedIn) {
+      router.push(`/sign-in?redirect_url=/explore?i=${parent_id}`);
+    } else if (isSignedIn) {
+      importProject(parent_id)
+    }
+  };
+
+  useEffect(() => {
+    if (importId && isSignedIn) {
+      setIsDialogOpened(true)
+    }
+  }, [importId, isSignedIn]);
 
   return (
-    <AlertDialog>
+    <AlertDialog open={isDialogOpened} onOpenChange={setIsDialogOpened}>
       <AlertDialogTrigger asChild>
         <Button className="flex flex-row justify-start items-center">
           Learn <GraduationCap className="ml-1.5 h-5 w-5" />
@@ -70,10 +92,14 @@ function ImportDialog({ parent_id }: { parent_id: string }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel
+            onClick={() => router.replace("/explore")}
+          >
+            Cancel
+          </AlertDialogCancel>
           <LoadingButton
             isLoading={isMutating}
-            onClick={() => importProject(parent_id)}
+            onClick={() => handleImport(parent_id)}
             className="bg-blue-600 hover:bg-blue-500 text-white"
           >
             Import
