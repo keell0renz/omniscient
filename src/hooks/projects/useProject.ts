@@ -76,11 +76,9 @@ export default function useProject(
     const editProjectMutation = useMutation({
         mutationFn: async ({
             schema,
-            project_id,
         }: {
             schema: EditProject;
-            project_id: string;
-        }) => editProjectById(schema, project_id),
+        }) => editProjectById(schema, project_id || params.id),
         onSuccess: async (updatedProject) => {
             queryClient.setQueryData(
                 ["project", updatedProject.id],
@@ -100,11 +98,10 @@ export default function useProject(
     });
 
     const deleteProjectMutation = useMutation({
-        mutationFn: async ({ project_id }: { project_id: string }) =>
-            deleteProjectById(project_id),
-        onSuccess: async (result, variables) => {
+        mutationFn: async () => deleteProjectById(project_id || params.id),
+        onSuccess: async () => {
             queryClient.removeQueries({
-                queryKey: ["project", variables.project_id],
+                queryKey: ["project", project_id || params.id],
                 exact: true,
             });
 
