@@ -24,7 +24,7 @@ const useProjectDefaultOptions = {
     toastOnError: true,
     toastOnSuccess: true,
     redirectAfterEditTo: null,
-    redirectAfterDeleteTo: null,
+    redirectAfterDeleteTo: "/dashboard/projects",
 } satisfies useProjectOptions;
 
 export default function useProject(
@@ -47,6 +47,7 @@ export default function useProject(
         enabled: !!project_id,
         refetchOnMount: false,
         refetchOnWindowFocus: false,
+        retryOnMount: false,
     });
 
     useEffect(() => {
@@ -74,7 +75,8 @@ export default function useProject(
     }, [data, options.throwNotFoundOnNull, options.toastOnError, toast]);
 
     const editProjectMutation = useMutation({
-        mutationFn: async (schema: EditProject) => editProjectById(schema, project_id || params.id),
+        mutationFn: async (schema: EditProject) =>
+            editProjectById(schema, project_id || params.id),
         onSuccess: async (updatedProject) => {
             queryClient.setQueryData(
                 ["project", updatedProject.id],
@@ -100,6 +102,8 @@ export default function useProject(
                 queryKey: ["project", project_id || params.id],
                 exact: true,
             });
+
+            console.log(options.redirectAfterDeleteTo)
 
             if (options.redirectAfterDeleteTo)
                 router.push(options.redirectAfterDeleteTo);

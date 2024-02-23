@@ -46,7 +46,10 @@ function GeneralForm() {
   return (
     <div className="w-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(editProject)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit((data) => editProject(data))}
+          className="space-y-8"
+        >
           <FormField
             control={form.control}
             name="title"

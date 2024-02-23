@@ -7,7 +7,7 @@ import ProjectLoader from "./ProjectLoader";
 
 export default function Projects({ className }: { className?: string }) {
   const params = useSearchParams();
-  const { data, isLoading, size, setSize } = usePublicProjects(
+  const { data, isLoading, fetchNextPage, hasNextPage } = usePublicProjects(
     params.get("q") || undefined,
   );
 
@@ -26,12 +26,14 @@ export default function Projects({ className }: { className?: string }) {
 
   return (
     <section className={sectionClasses}>
-      {data?.map((page) =>
-        page?.map((project) => (
+      {data?.pages.map((page) =>
+        page.map((project) => (
           <ProjectCard key={project.id} project={project} />
         )),
       )}
-      {data && <ProjectLoader size={size} setSize={setSize} data={data} />}
+      {/* {data && <ProjectLoader size={size} setSize={setSize} data={data} />} */}
     </section>
   );
 }
+
+// TODO LOADER!

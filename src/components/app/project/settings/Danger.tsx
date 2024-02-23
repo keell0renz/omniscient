@@ -30,11 +30,7 @@ function DeleteProjectDialog() {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
 
   async function handleDelete() {
-    try {
-      await deleteProject();
-    } finally {
-      setIsOpenDialog(false);
-    }
+    await deleteProject();
   }
 
   function handleOverlayClick(event: any) {

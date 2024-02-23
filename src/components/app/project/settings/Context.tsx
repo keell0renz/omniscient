@@ -41,7 +41,7 @@ function ContextForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(editProject)}>
+      <form onSubmit={form.handleSubmit((data) => editProject(data))}>
         <FormField
           control={form.control}
           name="ai_context"

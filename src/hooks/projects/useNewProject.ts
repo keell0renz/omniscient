@@ -12,15 +12,15 @@ import { useRouter } from "next/navigation";
 interface useNewProjectOptions {
     toastOnError?: boolean;
     toastOnSuccess?: boolean;
-    redirectAfterCreationTo: string | null;
-    redirectAfterImportTo: string | null;
+    redirectAfterCreationToProject: boolean;
+    redirectAfterImportToProject: boolean;
 }
 
 const useNewProjectDefaultOptions = {
     toastOnError: true,
     toastOnSuccess: true,
-    redirectAfterCreationTo: null,
-    redirectAfterImportTo: null,
+    redirectAfterCreationToProject: true,
+    redirectAfterImportToProject: true,
 } satisfies useNewProjectOptions;
 
 export default function useNewProject(
@@ -31,11 +31,11 @@ export default function useNewProject(
     const { toast } = useToast();
 
     const createProjectMutation = useMutation({
-        mutationFn: async ({ schema }: { schema: CreateProject }) =>
+        mutationFn: async (schema: CreateProject) =>
             createProjectWithSchema(schema),
-        onSuccess: async () => {
-            if (options.redirectAfterCreationTo)
-                router.push(options.redirectAfterCreationTo);
+        onSuccess: async (newProject) => {
+            if (options.redirectAfterCreationToProject)
+                router.push(`/p/${newProject.id}`);
         },
         onError: (error) => {
             toast({
@@ -47,11 +47,11 @@ export default function useNewProject(
     });
 
     const importProjectMutation = useMutation({
-        mutationFn: async ({ parent_id }: { parent_id: string }) =>
+        mutationFn: async (parent_id: string) =>
             importPublicProject(parent_id),
-        onSuccess: async () => {
-            if (options.redirectAfterImportTo)
-                router.push(options.redirectAfterImportTo);
+        onSuccess: async (newProject) => {
+            if (options.redirectAfterImportToProject)
+                router.push(`/p/${newProject.id}`);
         },
         onError: (error) => {
             toast({
