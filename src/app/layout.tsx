@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Toaster } from "@/components/ui/toaster";
 import { Analytics } from "@vercel/analytics/react";
+import QueryProvider from "@/components/main/ReactQuery";
 
 export const metadata: Metadata = {
   title: "Cognitar",
@@ -31,11 +32,13 @@ export default function RootLayout({
             },
           }}
         >
-          <ThemeProvider attribute="class" defaultTheme="dark">
-            {children}
-            <Toaster />
-            <Analytics />
-          </ThemeProvider>
+          <QueryProvider>
+            <ThemeProvider attribute="class" defaultTheme="dark">
+              {children}
+              <Toaster />
+              <Analytics />
+            </ThemeProvider>
+          </QueryProvider>
         </ClerkProvider>
       </body>
     </html>

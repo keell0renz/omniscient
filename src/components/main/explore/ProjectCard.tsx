@@ -59,7 +59,7 @@ function ImportDialog({ parent_id }: { parent_id: string }) {
   const { importProject, isMutating } = useNewProject();
   const [isDialogOpened, setIsDialogOpened] = useState(false);
 
-  const importId = useSearchParams().get('i');
+  const importId = useSearchParams().get("i");
   const router = useRouter();
   const { isSignedIn } = useUser();
 
@@ -67,21 +67,24 @@ function ImportDialog({ parent_id }: { parent_id: string }) {
     if (!isSignedIn) {
       e.preventDefault();
       router.push(`/sign-in?redirect_url=/explore?i=${parent_id}`);
-      return
+      return;
     }
     setIsDialogOpened(!isDialogOpened);
-  };
+  }
 
   useEffect(() => {
     if (importId && isSignedIn) {
-      setIsDialogOpened(true)
+      setIsDialogOpened(true);
     }
   }, [importId, isSignedIn]);
 
   return (
     <AlertDialog open={isDialogOpened} onOpenChange={setIsDialogOpened}>
       <AlertDialogTrigger asChild>
-        <Button onClick={(e) => handleImport(e)} className="flex flex-row justify-start items-center">
+        <Button
+          onClick={(e) => handleImport(e)}
+          className="flex flex-row justify-start items-center"
+        >
           Learn <GraduationCap className="ml-1.5 h-5 w-5" />
         </Button>
       </AlertDialogTrigger>
@@ -93,9 +96,7 @@ function ImportDialog({ parent_id }: { parent_id: string }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel
-            onClick={() => router.replace("/explore")}
-          >
+          <AlertDialogCancel onClick={() => router.replace("/explore")}>
             Cancel
           </AlertDialogCancel>
           <LoadingButton
