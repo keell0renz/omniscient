@@ -74,11 +74,7 @@ export default function useProject(
     }, [data, options.throwNotFoundOnNull, options.toastOnError, toast]);
 
     const editProjectMutation = useMutation({
-        mutationFn: async ({
-            schema,
-        }: {
-            schema: EditProject;
-        }) => editProjectById(schema, project_id || params.id),
+        mutationFn: async (schema: EditProject) => editProjectById(schema, project_id || params.id),
         onSuccess: async (updatedProject) => {
             queryClient.setQueryData(
                 ["project", updatedProject.id],
