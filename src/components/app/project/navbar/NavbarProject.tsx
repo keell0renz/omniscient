@@ -1,14 +1,11 @@
 "use client";
 
 import { useProject } from "@/hooks/projects";
-import { useParams } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 
 export default function NavbarProject() {
-  const params = useParams<{ id: string }>();
-
-  const { data, error, isLoading } = useProject(params.id);
+  const { data, error, isLoading } = useProject();
 
   if (isLoading) return <Skeleton className="w-64 h-4 my-auto" />;
 

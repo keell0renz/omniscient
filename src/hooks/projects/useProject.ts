@@ -4,7 +4,7 @@ import { notFound, useParams, useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { EditProject } from "@/types/projects";
+import { EditProject, Project } from "@/types/projects";
 import {
     getProjectById,
     editProjectById,
@@ -16,6 +16,7 @@ interface useProjectOptions {
     toastOnSuccess?: boolean;
     redirectAfterEditTo?: string | null;
     redirectAfterDeleteTo?: string | null;
+    initialData?: Project;
 }
 
 const useProjectDefaultOptions = {
@@ -26,7 +27,7 @@ const useProjectDefaultOptions = {
 } satisfies useProjectOptions;
 
 export default function useProject(
-    project_id: string | undefined,
+    project_id?: string,
     options: useProjectOptions = useProjectDefaultOptions,
 ) {
     const params = useParams<{ id: string }>();
@@ -46,6 +47,7 @@ export default function useProject(
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         retryOnMount: false,
+        initialData: options.initialData,
     });
 
     useEffect(() => {
@@ -87,7 +89,7 @@ export default function useProject(
                 exact: true,
             });
 
-            console.log(options.redirectAfterDeleteTo)
+            console.log(options.redirectAfterDeleteTo);
 
             if (options.redirectAfterDeleteTo)
                 router.push(options.redirectAfterDeleteTo);

@@ -47,8 +47,7 @@ export default function useNewProject(
     });
 
     const importProjectMutation = useMutation({
-        mutationFn: async (parent_id: string) =>
-            importPublicProject(parent_id),
+        mutationFn: async (parent_id: string) => importPublicProject(parent_id),
         onSuccess: async (newProject) => {
             if (options.redirectAfterImportToProject)
                 router.push(`/p/${newProject.id}`);

@@ -1,22 +1,13 @@
-"use client";
-
-import { useUser } from "@clerk/nextjs";
-import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
+import { currentUser } from "@clerk/nextjs";
 
-export default function NavbarUser() {
-  const { user, isLoaded } = useUser();
+export default async function NavbarUser() {
+  const user = await currentUser();
 
   return (
-    <>
-      {isLoaded ? (
-        <Link
-          href="#"
-          className="mt-1 hover:underline hover:underline-offset-4 cursor-pointer"
-        >{`@${user?.username}`}</Link>
-      ) : (
-        <Skeleton className="w-20 h-4 my-auto" />
-      )}
-    </>
+    <Link
+      href="#"
+      className="mt-1 hover:underline hover:underline-offset-4 cursor-pointer"
+    >{`@${user?.username}`}</Link>
   );
 }
