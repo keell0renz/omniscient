@@ -12,6 +12,7 @@ import {
 import { validateCreateProject, validateEditProject } from "@/schema/projects";
 import { auth } from "@clerk/nextjs/server";
 import { clerkClient } from "@clerk/nextjs";
+import NotFound from "@/app/not-found";
 
 export async function searchPublicProjects(
     query?: string,

@@ -12,7 +12,6 @@ import {
 } from "@/server/projects";
 
 interface useProjectOptions {
-    throwNotFoundOnNull?: boolean;
     toastOnError?: boolean;
     toastOnSuccess?: boolean;
     redirectAfterEditTo?: string | null;
@@ -20,7 +19,6 @@ interface useProjectOptions {
 }
 
 const useProjectDefaultOptions = {
-    throwNotFoundOnNull: true,
     toastOnError: true,
     toastOnSuccess: true,
     redirectAfterEditTo: null,
@@ -59,20 +57,6 @@ export default function useProject(
             });
         }
     }, [error, options.toastOnError]);
-
-    useEffect(() => {
-        if (data === null) {
-            if (options.throwNotFoundOnNull) {
-                notFound();
-            } else if (options.toastOnError) {
-                toast({
-                    title: "Project not found!",
-                    description: "The requested project could not be found.",
-                    className: "bg-destructive text-destructive-foreground",
-                });
-            }
-        }
-    }, [data, options.throwNotFoundOnNull, options.toastOnError, toast]);
 
     const editProjectMutation = useMutation({
         mutationFn: async (schema: EditProject) =>
