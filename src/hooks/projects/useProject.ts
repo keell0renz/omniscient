@@ -69,6 +69,13 @@ export default function useProject(
                 updatedProject,
             );
 
+            if (options.toastOnSuccess)
+                toast({
+                    title: "Success!",
+                    description: "Changes to the project are saved.",
+                    className: "border-green-600 border-2",
+                });
+
             if (options.redirectAfterEditTo)
                 router.push(options.redirectAfterEditTo);
         },
@@ -89,7 +96,12 @@ export default function useProject(
                 exact: true,
             });
 
-            console.log(options.redirectAfterDeleteTo);
+            if (options.toastOnSuccess)
+                toast({
+                    title: "Success!",
+                    description: "Project has beed deleted.",
+                    className: "border-destructive border-2",
+                });
 
             if (options.redirectAfterDeleteTo)
                 router.push(options.redirectAfterDeleteTo);

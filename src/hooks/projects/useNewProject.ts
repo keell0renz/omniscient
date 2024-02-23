@@ -26,7 +26,6 @@ const useNewProjectDefaultOptions = {
 export default function useNewProject(
     options: useNewProjectOptions = useNewProjectDefaultOptions,
 ) {
-    const queryClient = useQueryClient();
     const router = useRouter();
     const { toast } = useToast();
 
@@ -34,6 +33,13 @@ export default function useNewProject(
         mutationFn: async (schema: CreateProject) =>
             createProjectWithSchema(schema),
         onSuccess: async (newProject) => {
+            if (options.toastOnSuccess)
+            toast({
+                title: "Success!",
+                description: "Project has been created!",
+                className: "border-blue-600 border-2"
+            })
+
             if (options.redirectAfterCreationToProject)
                 router.push(`/p/${newProject.id}`);
         },
@@ -49,6 +55,13 @@ export default function useNewProject(
     const importProjectMutation = useMutation({
         mutationFn: async (parent_id: string) => importPublicProject(parent_id),
         onSuccess: async (newProject) => {
+            if (options.toastOnSuccess)
+            toast({
+                title: "Success!",
+                description: "Project has been imported!",
+                className: "border-blue-600 border-2"
+            })
+
             if (options.redirectAfterImportToProject)
                 router.push(`/p/${newProject.id}`);
         },

@@ -22,7 +22,7 @@ export default function CreateProject() {
 
   async function onCreate(input: CreateProject) {
     await createProject(input);
-    setIsOpenedDialog(false);
+    // setIsOpenedDialog(false);
   }
 
   return (
