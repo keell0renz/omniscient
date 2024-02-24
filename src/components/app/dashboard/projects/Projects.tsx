@@ -31,7 +31,7 @@ export default function Projects({ className }: { className?: string }) {
           <ProjectCard key={project.id} project={project} />
         )),
       )}
-      {/* {data && <ProjectLoader size={size} setSize={setSize} data={data} />} */}
+      {data && <ProjectLoader data={data} hasNextPage={hasNextPage} fetchNextPage={fetchNextPage} />}
     </section>
   );
 }

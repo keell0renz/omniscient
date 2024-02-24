@@ -1,45 +1,31 @@
 "use client";
 import { motion } from "framer-motion";
-import type { PublicProjectCard } from "@/types/projects";
 import { LoaderIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface ProjectLoaderProps {
-  size: number;
-  setSize: (
-    size: number | ((size: number) => number),
-  ) => Promise<PublicProjectCard[][] | undefined>;
-  data: any;
+  hasNextPage: boolean,
+  data: any,
+  fetchNextPage: () => void;
 }
 
 export default function ProjectLoader({
-  size,
-  setSize,
+  hasNextPage,
   data,
+  fetchNextPage,
 }: ProjectLoaderProps) {
   function handleView() {
-    setSize(size + 1);
+    fetchNextPage();
     return;
   }
 
-  function scrollTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
-
-  if (data && data[0].length < 9) return;
-
-  if (data && data[data.length - 1][0] === undefined) {
+  if (!hasNextPage) {
     return (
       <div className="flex flex-col items-center justify-center col-span-full my-10 gap-4">
-        {data[1] && (
+        {data.pages[1][0] && (
           <>
             <h2 className="text-center text-muted-foreground font-normal font-mono w-fit h-fit mx-auto col-span-full">
               You&apos;ve reached the end of public projects.
             </h2>
-            <Button onClick={() => scrollTop()}>Add new +</Button>
           </>
         )}
       </div>
